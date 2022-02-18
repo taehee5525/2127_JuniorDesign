@@ -20,10 +20,3 @@
 
 👤 **Hajin Kim**
 * Email: hkim971@gatech.edu
-=======
-Taehee Park, tpark942@gatech.edu
-Hyunhee Park, hpark458@gatech.edu
-Chaewon Park, cpark382@gatech.edu
-Jeonghoon Lee, jlee3688@gatech.edu
-Hajin Kim, hkim971@gatech.edu
->>>>>>> main
