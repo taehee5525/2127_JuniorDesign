@@ -8,7 +8,6 @@
 👤 **Taehee Park**
 * Email: tpark942@gatech.edu
 
-<<<<<<< test
 👤 **Hyunhee Park**
 * Email: hpark458@gatech.edu
 
