@@ -8,3 +8,4 @@
 
 Taehee Park, tpark942@gatech.edu
 Hyunhee Park, hpark458@gatech.edu
+Chaewon Park, cpark382@gatech.edu
