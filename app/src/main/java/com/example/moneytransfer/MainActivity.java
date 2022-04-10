@@ -40,6 +40,11 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
+                /**
+                 * Example of how to move on to the next Intent
+                 * IMPORTANT: need to finish() after start the next activity.
+                 * the current activity will be stayed if the method is not called.
+                 */
                 Intent intent = new Intent(getApplicationContext(), FirstPageActivity.class);
                 startActivity(intent);
                 finish();
