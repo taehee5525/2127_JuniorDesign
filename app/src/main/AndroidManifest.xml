@@ -19,6 +19,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".FirstPageActivity"/>
+        <activity android:name=".LoginPageActivity"/>
     </application>
 
 </manifest>
