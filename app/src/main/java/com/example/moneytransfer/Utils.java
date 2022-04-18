@@ -5,12 +5,12 @@ import java.util.regex.*;
 
 public class Utils {
     /**
-     * check validation of emaill address.
+     * check validation of email address.
      * see more details on : https://en.wikipedia.org/wiki/Email_address#Validation_and_verification
      * @param emailAddress
      * @return
      */
-    public static boolean checkEamailAddressValidation(String emailAddress) {
+    public static boolean checkEmailAddressValidation(String emailAddress) {
 
         // "@" cannot be occur more than 1 time.
         String[] splittedAddr = emailAddress.split("@");
@@ -21,7 +21,7 @@ public class Utils {
         String localPart = splittedAddr[0];
         String domain = splittedAddr[1];
         //local part check
-        if (!checkEmailLocalPartValidation(emailAddress) || !localcheckDominPartValidation(domain)) {
+        if (!checkEmailLocalPartValidation(emailAddress) || !checkEmailDomainPartValidation(domain)) {
             return false;
         }
         return true;
@@ -68,7 +68,7 @@ public class Utils {
      * @param domainPart the string contains the domain information
      * @return boolean value whether the domain is valid or not.
      */
-    private static boolean localcheckDominPartValidation(String domainPart) {
+    private static boolean checkEmailDomainPartValidation(String domainPart) {
         // This domain checker is only used for format validation
         // Does not check whether the domain is actually on-line
         // The function to check whether the valid domain
@@ -84,7 +84,7 @@ public class Utils {
         Pattern p = Pattern.compile(regex);
 
         // Checking whether the domainPart is null is not necessary
-        // Because it is coming from the checkEamailAddressValidation method
+        // Because it is coming from the checkEmailAddressValidation method
 
         // If the domain has at least two separate part
         // Use the regex to check
@@ -108,7 +108,7 @@ public class Utils {
         String uppercaseRegex = "(.*[A-Z].*)";
         String numberRegex = "(.*[0-9].*)";
         String specialCharRegex = "^(?=.*[_.()$&@]).*$";
-        
+
         return (password.length() >= 8
                     && password.matches(uppercaseRegex)
                     && password.matches(numberRegex)
