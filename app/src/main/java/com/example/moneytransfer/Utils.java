@@ -1,6 +1,7 @@
 package com.example.moneytransfer;
 
 import java.util.*;
+import java.util.regex.*;
 
 public class Utils {
     /**
@@ -20,7 +21,7 @@ public class Utils {
         String localPart = splittedAddr[0];
         String domain = splittedAddr[1];
         //local part check
-        if (!checkEmailLocalPartValidation(emailAddress) || !checkDominPartValidation(domain)) {
+        if (!checkEmailLocalPartValidation(emailAddress) || !localcheckDominPartValidation(domain)) {
             return false;
         }
         return true;
@@ -63,13 +64,34 @@ public class Utils {
     }
 
     /**
-     * To-Do
-     * @param domainPart
-     * @return
+     * Checking if the domain is valid
+     * @param domainPart the string contains the domain information
+     * @return boolean value whether the domain is valid or not.
      */
-    private static boolean checkDominPartValidation(String domainPart) {
-        return true;
+    private static boolean localcheckDominPartValidation(String domainPart) {
+        // This domain checker is only used for format validation
+        // Does not check whether the domain is actually on-line
+        // The function to check whether the valid domain
+        // is a working domain
+        // will be implemented next semester
+
+        // Regex to check valid domain name
+        String regex = "^((?!-)[A-Za-z0-9-]"
+                + "{1,63}(?<!-)\\.)"
+                + "+[A-Za-z]{2,6}";
+
+        // Compile the regex
+        Pattern p = Pattern.compile(regex);
+
+        // Checking whether the domainPart is null is not necessary
+        // Because it is coming from the checkEamailAddressValidation method
+
+        // If the domain has at least two separate part
+        // Use the regex to check
+        // It checks whether the domain part is valid or not
+        // by comparing the given string to the regex
+        Matcher m = p.matcher(domainPart);
+
+        return m.matches();
     }
-
-
 }
