@@ -94,4 +94,24 @@ public class Utils {
 
         return m.matches();
     }
+
+    /**
+     * This method checks if the user-entered password is valid during sign-up phase.
+     *
+     * @param password user-entered password
+     * @return true if the password has: 1. at least 8 characters
+     *                                   2. at least 1 uppercase letter
+     *                                   3. at least 1 number
+     *                                   4. at least 1 special character
+     */
+    private static boolean checkPasswordValidity(String password) {
+        String uppercaseRegex = "(.*[A-Z].*)";
+        String numberRegex = "(.*[0-9].*)";
+        String specialCharRegex = "^(?=.*[_.()$&@]).*$";
+        
+        return (password.length() >= 8
+                    && password.matches(uppercaseRegex)
+                    && password.matches(numberRegex)
+                    && password.matches(specialCharRegex));
+    }
 }
