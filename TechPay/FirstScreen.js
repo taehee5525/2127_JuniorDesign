@@ -6,9 +6,9 @@ import { ImageBackground, View, StyleSheet, Alert} from "react-native";
 const FirstScreen = () => {
     return  (
     <>
-    <AppBar
+    <AppBar titleStyle = {styles.titles}
             title = "Welcome"
-            color = "gainsboro"
+            color = "#F9F9F9"
             tintColor = "black"
             centerTitle = "True"
     />
@@ -21,8 +21,7 @@ const FirstScreen = () => {
         <Button style = {styles.button}
             title = "Sign In"
             color = "#B3A369"
-            tintColor = "white"
-            onPress={() => Alert.alert('Simple Button pressed')} />
+            tintColor = "white" />
         <Button style = {styles.button}
             title = "Sign Up"
             color = "#003057"
@@ -49,6 +48,13 @@ const styles = StyleSheet.create ( {
     button: {
         width: "90%",
         padding: 5
+    },
+
+    titles: {
+        color: "black",
+        fontSize: 18,
+        fontWeight: "bold",
+        fontFamily: 'System'
     }
 });
 
