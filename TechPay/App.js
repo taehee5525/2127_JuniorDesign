@@ -1,30 +1,15 @@
 import React from "react";
-import { AppBar, Button, Stack} from "@react-native-material/core";
 
-const App = () => (
-<>
+// These are the separate screens
+import FirstScreen from './FirstScreen';
 
+const App = () => {
+    return (
 
-  <AppBar
-    title="TechPay"
-    color="black"
-    tintColor="gold"
-    centerTitle="True"
-    />
-
-    <Stack fill center spacing = {4}>
-
-    <Button
-        title ="Try me"
-        loading = "true"
-        />
-    </Stack>
+        <FirstScreen />
+    )
 
 
-
-
-
-</>
-);
+}
 
 export default App;
