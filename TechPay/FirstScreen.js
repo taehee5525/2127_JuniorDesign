@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { AppBar, Button, Stack} from "@react-native-material/core";
 import { ImageBackground, View, StyleSheet, Alert} from "react-native";
-
+import { useNavigation } from '@react-navigation/native';
 
 const FirstScreen = () => {
+    const navigation = useNavigation();
     return  (
     <>
     <AppBar titleStyle = {styles.titles}
@@ -21,11 +22,12 @@ const FirstScreen = () => {
         <Button style = {styles.button}
             title = "Sign In"
             color = "#B3A369"
-            tintColor = "white" />
+            tintColor = "white"/>
         <Button style = {styles.button}
             title = "Sign Up"
             color = "#003057"
-            tintColor = "white"/>
+            tintColor = "white"
+            onPress = {() => navigation.navigate('SignUp') } />
     </Stack>
     </View>
     </>
@@ -33,8 +35,6 @@ const FirstScreen = () => {
 
 
 };
-
-
 
 const styles = StyleSheet.create ( {
     container: {
