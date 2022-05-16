@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
-import { AppBar, Button, Stack } from "@react-native-material/core";
-import { StyleSheet, Image, View, Text, TextInput} from "react-native";
+import { AppBar, Button, Stack} from "@react-native-material/core";
+import { Image, View, StyleSheet, Alert, Text, TextInput} from "react-native";
 import { useNavigation } from '@react-navigation/native';
 
-const SignUp = () => {
+const SignIn = () => {
     const navigation = useNavigation();
     return  (
     <>
         <AppBar titleStyle = {styles.titles}
-                title = "Create Account"
+                title = "Sign-In"
                 color = "#F9F9F9"
+                tintColor = "black"
                 centerTitle = "True"
         />
         <View style = {styles.container} >
@@ -17,15 +18,14 @@ const SignUp = () => {
             require('./images/bgimage.png')}
                 style = {{ width: 100, height: 100 }} />
             <Text style = {styles.centerText} >
-                {"Create account"}
-                {"\n"}
-            </Text>
+                {"Sign In"}
+                </Text>
+                <Text style = {styles.subTitle} >
+                    {"    Welcome back, \n"}
+                    {"Sign in to continue\n"}
+                </Text>
         </View>
 
-        <TextInput style= {styles.input}
-            placeholder = "Name"
-            keyboardType = "default"
-            />
         <TextInput style= {styles.input}
             placeholder = "Email"
             keyboardType = "default"
@@ -35,29 +35,29 @@ const SignUp = () => {
             keyboardType = "default"
             />
 
-        <Text style = {styles.condition}
+        <Text style = {styles.forgot}
             onPress = {() => navigation.navigate('Terms') } >
-            {"Terms and Condition"}
+            {"Forgot Password?   "}
         </Text>
 
         <Stack fill center spacing = { 20 }>
             <Button style = {styles.button}
-                title = "Sign Up"
+                title = "Sign In"
                 color = "#B3A369"
                 tintColor = "white" />
             <Text style = {{ color: 'black' }} >
-                {"Already have an account?"}
-            <Text style = {{ color : 'blue' }}
-                onPress = {() => navigation.navigate('SignIn') }>
-                {"  Sign In"}
-             </Text>
-             </Text>
+                {"Don't have an account? \n"}
+                <Text style = {{ color : 'blue' }}
+                    onPress = {() => navigation.navigate('SignUp') }>
+                    {"Create Account"}
+                 </Text>
+            </Text>
         </Stack>
-
     </>
     );
-};
 
+
+};
 
 const styles = StyleSheet.create ( {
     titles: {
@@ -68,7 +68,7 @@ const styles = StyleSheet.create ( {
     },
 
     container: {
-        alignItems: 'center'
+        alignItems: 'center',
     },
 
     centerText: {
@@ -76,7 +76,8 @@ const styles = StyleSheet.create ( {
         fontWeight: 'bold',
         color: 'black',
         fontSize: 40,
-        fontStyle: 'italic'
+        fontStyle: 'italic',
+        marginBottom: 10
     },
 
     input: {
@@ -85,9 +86,15 @@ const styles = StyleSheet.create ( {
         borderBottomWidth: 0.5
     },
 
-    condition: {
-        marginTop: 15,
-        textAlign: 'center',
+    subTitle: {
+        fontFamily: 'System',
+        color: 'gray',
+        fontSize: 15,
+        alignSelf: 'center'
+    },
+
+    forgot: {
+        textAlign: 'right',
         flex: 0.5,
         color: 'blue',
         fontWeight: 'bold',
@@ -95,11 +102,11 @@ const styles = StyleSheet.create ( {
     },
 
     button: {
-        width: '80%',
-        marginTop: 0
-    },
+        width: '80%'
+    }
 
 
 });
 
-export default SignUp;
+
+export default SignIn;
