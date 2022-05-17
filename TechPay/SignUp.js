@@ -34,6 +34,10 @@ const SignUp = () => {
             placeholder = "Password"
             keyboardType = "default"
             />
+        <TextInput style = {styles.input}
+            placeholder = "Confirm Password"
+            keyboardType = "default"
+            />
 
         <Text style = {styles.condition}
             onPress = {() => navigation.navigate('Terms') } >
