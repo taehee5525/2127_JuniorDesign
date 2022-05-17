@@ -1,7 +1,7 @@
 # Team 2127 Tech Innovators. !!!!!READ ME FIRST!!!!!
 ## Real-time person-to-person money transfer solution based on open source payment platform on Azure
 
-## How to Run this? (MacOS)
+## How to Run this (MacOS)
   1) Open Terminal
   2) Go inside the TechPay folder
   3) do "npm install"
