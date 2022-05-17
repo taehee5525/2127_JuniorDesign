@@ -1,10 +1,15 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 import { AppBar, Button, Stack} from "@react-native-material/core";
-import { ImageBackground, View, StyleSheet, Alert} from "react-native";
+import { ImageBackground, View, StyleSheet, BackHandler } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 
 const FirstScreen = () => {
     const navigation = useNavigation();
+    useEffect(() => {
+      const backHandler = BackHandler.addEventListener('', () => true)
+      return () => backHandler.remove()
+    }, [])
+
     return  (
     <>
     <AppBar titleStyle = {styles.titles}

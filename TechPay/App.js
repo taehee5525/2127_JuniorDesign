@@ -7,13 +7,15 @@ import FirstScreen from './FirstScreen';
 import SignUp from './SignUp';
 import Terms from './Terms';
 import SignIn from './SignIn';
+import SplashScreen from './SplashScreen';
 
 const Stack = createStackNavigator();
 
 const App = () => {
     return (
         <NavigationContainer>
-            <Stack.Navigator screenOptions = {{ headerShown: false }} initialRouterName = "Main" >
+            <Stack.Navigator screenOptions = {{ headerShown: false }} initialRouterName = "SplashScreen" >
+                <Stack.Screen name = "SplashScreen" component = { SplashScreen } />
                 <Stack.Screen name = "First" component = { FirstScreen } />
                 <Stack.Screen name = "SignUp" component = { SignUp } />
                 <Stack.Screen name = "SignIn" component = { SignIn } />
