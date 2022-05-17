@@ -3,6 +3,11 @@
 # Team 2127 Tech Innovators
 ## Real-time person-to-person money transfer solution based on open source payment platform on Azure
 
+## How to Run this? (MacOS)
+  1) Open Terminal
+  2) Go inside the TechPay folder
+  3) do "npm install"
+  4) once the installation is completed, do "npx react-native run-android"
 
 
 
