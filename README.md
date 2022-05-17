@@ -10,6 +10,7 @@
   6) Open android studio, In the Device Manager section run "wipe data"
   7) Then in your terminal, do "cd android" then "./gradlew clean"
   8) Once the cleaning is doen, do "cd .." then do "npx react-native run-android" again. It should work now!
+  9) If it doesn't work repeat 6-8 until it works.. Well please let me know and update this readme if you find a better way!
 
 
 
