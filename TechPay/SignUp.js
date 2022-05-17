@@ -1,10 +1,46 @@
-import React, { Component } from 'react';
+import React, { Component, useState, createRef} from 'react';
 import { AppBar, Button, Stack } from "@react-native-material/core";
 import { StyleSheet, Image, View, Text, TextInput} from "react-native";
 import { useNavigation } from '@react-navigation/native';
 
 const SignUp = () => {
+
     const navigation = useNavigation();
+    const [UserName, setUserName] = useState('');
+    const [Email, setEmail] = useState('');
+    const [Password, setPassword] = useState('');
+    const [Confirm, setConfirm] = useState('');
+
+    const handleSignUpButton = () => {
+        const emailRegex = new RegExp("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$");
+        const strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
+        if (!UserName || !Email || !Password || !Confirm) {
+            alert('One or more required fields are missing\n Please check again');
+            return;
+        }
+
+        if (!emailRegex.test(Email)) {
+            alert('Email is not in correct format.\nPlease check again');
+            return;
+        }
+
+        if (!strongRegex.test(Password)) {
+            alert('Your password is not strong enough.\n'+
+                    'The password must contain\n' +
+                    '1 lowercase,\n' +
+                    '1 uppercase,\n' +
+                    '1 numeric character,\n' +
+                    '1 special character,\n' +
+                    'and must be 8 characters or longer');
+            return;
+        }
+
+        if (Password != Confirm) {
+            alert('Passwords are not matching');
+            return;
+        }
+        alert('Practiceeeee');
+    }
     return  (
     <>
         <AppBar titleStyle = {styles.titles}
@@ -25,18 +61,24 @@ const SignUp = () => {
         <TextInput style= {styles.input}
             placeholder = "Name"
             keyboardType = "default"
+            onChangeText = {(UserName) => setUserName(UserName)}
             />
         <TextInput style= {styles.input}
             placeholder = "Email"
             keyboardType = "default"
+            onChangeText = {(Email) => setEmail(Email)}
             />
         <TextInput style = {styles.input}
             placeholder = "Password"
             keyboardType = "default"
+            secureTextEntry = { true }
+            onChangeText = {(Password) => setPassword(Password)}
             />
         <TextInput style = {styles.input}
             placeholder = "Confirm Password"
             keyboardType = "default"
+            secureTextEntry =  { true }
+            onChangeText = {(Confirm) => setConfirm(Confirm)}
             />
 
         <Text style = {styles.condition}
@@ -48,7 +90,8 @@ const SignUp = () => {
             <Button style = {styles.button}
                 title = "Sign Up"
                 color = "#B3A369"
-                tintColor = "white" />
+                tintColor = "white"
+                onPress = {handleSignUpButton} />
             <Text style = {{ color: 'black' }} >
                 {"Already have an account?"}
             <Text style = {{ color : 'blue' }}
@@ -61,6 +104,7 @@ const SignUp = () => {
     </>
     );
 };
+
 
 
 const styles = StyleSheet.create ( {
