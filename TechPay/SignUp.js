@@ -15,7 +15,7 @@ const SignUp = () => {
         const emailRegex = new RegExp("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$");
         const strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
         if (!UserName || !Email || !Password || !Confirm) {
-            alert('One or more required fields are missing\n Please check again');
+            alert('One or more required fields are missing\nPlease check again');
             return;
         }
 

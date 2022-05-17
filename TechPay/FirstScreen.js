@@ -5,11 +5,6 @@ import { useNavigation } from '@react-navigation/native';
 
 const FirstScreen = () => {
     const navigation = useNavigation();
-    useEffect(() => {
-      const backHandler = BackHandler.addEventListener('', () => true)
-      return () => backHandler.remove()
-    }, [])
-
     return  (
     <>
     <AppBar titleStyle = {styles.titles}
