@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "269777593790",
+    "project_id": "tech-pay-b507a",
+    "storage_bucket": "tech-pay-b507a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:269777593790:android:5c6491b9e39d3c8cba05ef",
+        "android_client_info": {
+          "package_name": "com.techpay"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "269777593790-n9f0i2kshqvldtqvokmn0bc3c8ol8ip0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.techpay",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "269777593790-qi9sos475na9icfltb0528404i3mn0ou.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSAslFOuwjA_hw9zIGSItxZXXvTgHSTV8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "269777593790-qi9sos475na9icfltb0528404i3mn0ou.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

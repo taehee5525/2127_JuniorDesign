@@ -3,6 +3,17 @@ import { AppBar, Button, Stack} from "@react-native-material/core";
 import { Image, View, StyleSheet, Alert, Text, TextInput} from "react-native";
 import { useNavigation } from '@react-navigation/native';
 
+import {
+    GoogleSignin,
+    GoogleSigninButton
+} from '@react-native-google-signin/google-signin';
+
+async function onGooglePress() {
+    const { idToken } = await GoogleSignin.signIn();
+    const googleCred = auth.GoogleAuthProvider.credential(idToken);
+    return auth().signalWithCredential(googleCred);
+}
+
 const SignIn = () => {
     const navigation = useNavigation();
     return  (
@@ -45,6 +56,8 @@ const SignIn = () => {
                 title = "Sign In"
                 color = "#B3A369"
                 tintColor = "white" />
+            <Text> {"──────── Or ──────── "} </Text>
+            <GoogleSigninButton/>
             <Text style = {{ color: 'black' }} >
                 {"Don't have an account? \n"}
                 <Text style = {{ color : 'blue' }}
@@ -52,6 +65,7 @@ const SignIn = () => {
                     {"Create Account"}
                  </Text>
             </Text>
+
         </Stack>
     </>
     );

@@ -4,7 +4,6 @@ import { StyleSheet, Image, View, Text, TextInput} from "react-native";
 import { useNavigation } from '@react-navigation/native';
 
 const SignUp = () => {
-
     const navigation = useNavigation();
     const [UserName, setUserName] = useState('');
     const [Email, setEmail] = useState('');

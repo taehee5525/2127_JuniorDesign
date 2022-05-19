@@ -1,10 +1,34 @@
 import React, { Component, useEffect } from 'react';
 import { AppBar, Button, Stack} from "@react-native-material/core";
-import { ImageBackground, View, StyleSheet, BackHandler } from "react-native";
+import { ImageBackground, View, StyleSheet, BackHandler, Alert } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 
 const FirstScreen = () => {
     const navigation = useNavigation();
+    useEffect(() => {
+        const backAction = () => {
+            Alert.alert("Exit", "Do you want to exit the application?",
+                [
+                    {
+                        text: "Cancel",
+                        onPress: () => null,
+                        style: "cancel"
+                    },
+                    {
+                        text: "YES",
+                        onPress: () => BackHandler.exitApp()
+                    }
+                ]);
+            return true;
+        };
+
+        const backHandler = BackHandler.addEventListener(
+            "hardwareBackPress",
+            backAction
+        );
+
+        return () => backHandler.remove();
+    }, []);
     return  (
     <>
     <AppBar titleStyle = {styles.titles}

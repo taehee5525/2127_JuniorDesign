@@ -1,11 +1,13 @@
-import React, { Component, useEffect } from 'react';
+import React, { Component, useState, useEffect } from 'react';
 import { ImageBackground, View, StyleSheet } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 
 const SplashScreen = ({navigation}) => {
+
     useEffect(() => {
         const timer = setTimeout(()=>{
-          navigation.navigate('First');
+            const screen = 'First';
+            navigation.navigate(screen);
         }, 1000);
     },[]);
 
