@@ -1,34 +1,36 @@
-import React, { Component, useEffect } from 'react';
-import { AppBar, Button, Stack} from "@react-native-material/core";
-import { ImageBackground, View, StyleSheet, BackHandler, Alert } from "react-native";
-import { useNavigation } from '@react-navigation/native';
+import React, { Component } from 'react';
+import { AppBar, Button, Stack } from "@react-native-material/core";
+import { ImageBackground, View, StyleSheet, Alert, BackHandler } from "react-native";
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 
 const FirstScreen = () => {
     const navigation = useNavigation();
-    useEffect(() => {
-        const backAction = () => {
-            Alert.alert("Exit", "Do you want to exit the application?",
-                [
-                    {
-                        text: "Cancel",
-                        onPress: () => null,
-                        style: "cancel"
-                    },
-                    {
-                        text: "YES",
-                        onPress: () => BackHandler.exitApp()
-                    }
-                ]);
-            return true;
-        };
 
-        const backHandler = BackHandler.addEventListener(
-            "hardwareBackPress",
-            backAction
+    useFocusEffect(
+        React.useCallback(() => {
+            const onBackPress = () => {
+                Alert.alert("Exit", "Do you want to exit the application?",
+                    [
+                        {
+                            text: "Cancel",
+                            onPress: () => null,
+                            style: "cancel"
+                        },
+                        {
+                            text: "Yes",
+                            onPress: () => BackHandler.exitApp()
+                        }
+                    ]);
+                return true;
+            };
+
+            BackHandler.addEventListener('hardwareBackPress', onBackPress);
+
+            return () =>
+                BackHandler.removeEventListener('hardwareBackPress', onBackPress);
+            }, []),
         );
 
-        return () => backHandler.remove();
-    }, []);
     return  (
     <>
     <AppBar titleStyle = {styles.titles}
