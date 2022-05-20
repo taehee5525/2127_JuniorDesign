@@ -11,7 +11,6 @@ import SignIn from './component/SignIn';
 import SplashScreen from './component/SplashScreen';
 import Main from './component/Main';
 
-
 const googleConf = () => {
     GoogleSignin.configure({
         webClientId:
