@@ -3,11 +3,11 @@ import { NavigationContainer} from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 // These are the separate screens
-import FirstScreen from './FirstScreen';
-import SignUp from './SignUp';
-import Terms from './Terms';
-import SignIn from './SignIn';
-import SplashScreen from './SplashScreen';
+import FirstScreen from './component/FirstScreen';
+import SignUp from './component/SignUp';
+import Terms from './component/Terms';
+import SignIn from './component/SignIn';
+import SplashScreen from './component/SplashScreen';
 
 const Stack = createStackNavigator();
 
