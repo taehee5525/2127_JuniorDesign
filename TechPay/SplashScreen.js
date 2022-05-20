@@ -3,7 +3,6 @@ import { ImageBackground, View, StyleSheet } from "react-native";
 import { useNavigation } from '@react-navigation/native';
 
 const SplashScreen = ({navigation}) => {
-
     useEffect(() => {
         const timer = setTimeout(()=>{
             const screen = 'First';
