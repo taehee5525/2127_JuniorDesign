@@ -56,7 +56,9 @@ const SignIn = () => {
             <Button style = {styles.button}
                 title = "Sign In"
                 color = "#B3A369"
-                tintColor = "white" />
+                tintColor = "white"
+                 onPress = {() => navigation.navigate('Main') }
+                 />
             <Text> {"──────── Or ──────── "} </Text>
             <GoogleSigninButton
                 onPress = {() => {
