@@ -4,8 +4,6 @@ import { useNavigation } from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
 
 const SplashScreen = ({navigation}) => {
-    const [isLoadingEnd, setIsLoadingEnd] = useState(false);
-
     useEffect(() => {
         var screen = 'First';
         auth().onAuthStateChanged((user) => {

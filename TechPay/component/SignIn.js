@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState, createRef} from 'react';
 import { AppBar, Button, Stack} from "@react-native-material/core";
 import { Image, View, StyleSheet, Alert, Text, TextInput} from "react-native";
 import { useNavigation } from '@react-navigation/native';
@@ -17,6 +17,24 @@ const onGooglePress = async() => {
 
 const SignIn = () => {
     const navigation = useNavigation();
+    const [Email, setEmail] = useState('');
+    const [Password, setPassword] = useState('');
+
+    const handleSignInButton = () => {
+        const emailRegex = new RegExp("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$");
+
+        if (!Email || !Password) {
+            alert('One or more required fields are missing\nPlease check again');
+            return;
+        }
+
+        if (!emailRegex.test(Email)) {
+            alert('Email is not in correct format.\nPlease check again');
+            return;
+        }
+
+        alert('Here we go!');
+    }
     return  (
     <>
         <AppBar titleStyle = {styles.titles}
@@ -41,14 +59,16 @@ const SignIn = () => {
         <TextInput style= {styles.input}
             placeholder = "Email"
             keyboardType = "default"
+            onChangeText = {(Email) => setEmail(Email)}
             />
         <TextInput style = {styles.input}
             placeholder = "Password"
             keyboardType = "default"
+            onChangeText = {(Password) => setPassword(Password)}
             />
 
         <Text style = {styles.forgot}
-            onPress = {() => navigation.navigate('Terms') } >
+            onPress = {() => navigation.navigate('Forgot') } >
             {"Forgot Password?   "}
         </Text>
 
@@ -57,8 +77,7 @@ const SignIn = () => {
                 title = "Sign In"
                 color = "#B3A369"
                 tintColor = "white"
-                 onPress = {() => navigation.navigate('Main') }
-                 />
+                 onPress = {handleSignInButton} />
             <Text> {"──────── Or ──────── "} </Text>
             <GoogleSigninButton
                 onPress = {() => {
