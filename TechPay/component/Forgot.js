@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState, createRef} from 'react';
 import { AppBar, Button, Stack} from "@react-native-material/core";
 import { View, StyleSheet, Alert, Text, TextInput} from "react-native";
 import { useNavigation } from '@react-navigation/native';
@@ -7,7 +7,7 @@ const Forgot = () => {
     const navigation = useNavigation();
     const [Email, setEmail] = useState('');
 
-    const handleTPbutton () => {
+    const handleTPbutton = () => {
         const emailRegex = new RegExp("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$");
 
         if (!Email) {
@@ -36,7 +36,9 @@ const Forgot = () => {
                 {"Forgot Password?"}
                 </Text>
                 <Text style = {styles.subTitle} >
-                    {"    Don't worry\n"}
+                    {"Don't worry\n"}
+                </Text>
+                <Text style = {styles.subTitle} >
                     {"Here you can reset your password\n"}
                 </Text>
         </View>
