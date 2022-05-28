@@ -59,10 +59,12 @@ const SignIn = () => {
         <TextInput style= {styles.input}
             placeholder = "Email"
             keyboardType = "default"
+            onChangeText = {(Email) => setEmail(Email)}
             />
         <TextInput style = {styles.input}
             placeholder = "Password"
             keyboardType = "default"
+            onChangeText = {(Password) => setPassword(Password)}
             />
 
         <Text style = {styles.forgot}
