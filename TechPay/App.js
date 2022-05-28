@@ -10,6 +10,8 @@ import Terms from './component/Terms';
 import SignIn from './component/SignIn';
 import SplashScreen from './component/SplashScreen';
 import Main from './component/Main';
+import Forgot from './componenet/Forgot';
+
 
 const googleConf = () => {
     GoogleSignin.configure({
@@ -34,6 +36,7 @@ const App = () => {
                 <Stack.Screen name = "SignIn" component = { SignIn } />
                 <Stack.Screen name = "Main" component = { Main } />
                 <Stack.Screen name = "Terms" component = { Terms } />
+                <Stack.Screen name = "Forgot" component = { Forgot } />
             </Stack.Navigator>
         </NavigationContainer>
     )
