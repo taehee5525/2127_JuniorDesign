@@ -15,15 +15,29 @@ Creating a payment application like Venmo, Zelle on Mojaloop, an open source pay
 
 # Release Notes
 
-## Version: 0.1.0 Released: 09/11/2022
-
+## Version: 0.2.0 Released: 09/11/2022
 ### Features
 - [x] Splash Screen showing up when boot
-- [x] Login page is showing
+- [x] Email/Password Restrictions added
 - [x] Exit instruction is shown when trying to exit the application.
+- [x] "Back" button is functioning correctly
+- [x] Removed Registration Page
 
 ### Known-Issues
-No Known-Issues for the next sprint
+- [ ] Social Login is not correctly functioning
 
 ### Bug Fixes
-- [x] Unable to build the app
+- [x] ~~Occasioanlly unable to build the app~~
+    The app is now working
+
+## Version: 0.1.0 Released: 05/28/2022
+
+### Features
+- [x] Login Page is showing
+- [x] Registration Page is showing
+
+### Known-Issues
+- [ ] Occasioanlly unable to build the app
+
+### Bug Fixes
+- [ ] N/A (No bugs found!)
