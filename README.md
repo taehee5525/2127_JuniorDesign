@@ -3,15 +3,35 @@
 ## Real-time person-to-person money transfer solution based on open source payment Platform on Azure.
 Creating a payment application like Venmo, Zelle on Mojaloop, an open source payment platform, using Microsoft Azure.
 
-## Running this application (MacOS) Updated: (9/11/2022)
-  1) https://reactnative.dev/docs/environment-setup (Do this first! ~ Step 3.)
-  2) Go inside "techpay-new" folder
-  3) do "npm install"
-  4) do "npx react-native run-android"
-  5) If it doesn't work
-  6) Open android studio, in the Device Manager section, delete the current virtual device and re-create one
-  7) Then in terminal, do "cd android" then "./gradlew clean"
-  8) do "cd .." then re run "npx react-native run-android"
+
+# Release Notes
+
+## Version: 0.2.0 Released: 10/02/2022
+### Features
+
+
+### Known-Issues
+
+
+### Bug Fixes
+- [x] ~~Occasioanlly unable to build the app~~
+    The app is now working
+
+## New Version: 0.1.0 Released: 09/21/2022
+  Re-built the whole application due to the critical app building failure issue.
+  Changed the front-end language from React-Native to Java
+  
+### Features
+- [x] Login Page is showing
+
+### Known-Issues
+- [ ] 
+
+### Bug Fixes
+- [ ] N/A (No bugs found!)
+
+
+Below is the previous release notes we used. Archived for recording purpose
 
 # Release Notes
 
