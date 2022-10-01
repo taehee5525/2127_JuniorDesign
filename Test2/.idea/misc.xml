@@ -9,7 +9,8 @@
         <entry key="app/src/main/res/layout-w936dp/activity_login.xml" value="0.133984375" />
         <entry key="app/src/main/res/layout/activity_firstPage.xml" value="0.1546875" />
         <entry key="app/src/main/res/layout/activity_firstpage.xml" value="0.16614583333333333" />
-        <entry key="app/src/main/res/layout/activity_login.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_signup.xml" value="0.33" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.164" />
       </map>
     </option>
