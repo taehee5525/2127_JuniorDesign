@@ -5,6 +5,7 @@ import android.app.Activity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -22,6 +23,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.test2.CreateAccActivity;
 import com.example.test2.R;
 import com.example.test2.ui.login.LoginViewModel;
 import com.example.test2.ui.login.LoginViewModelFactory;
@@ -31,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
     private ActivityLoginBinding binding;
+    private Button button;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -122,6 +125,18 @@ public class LoginActivity extends AppCompatActivity {
                         passwordEditText.getText().toString());
             }
         });
+
+        button = (Button) findViewById(R.id.btnSignUp);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openSignup();
+            }
+        });
+    }
+    private void openSignup() {
+        Intent intent = new Intent(this, CreateAccActivity.class);
+        startActivity(intent);
     }
 
     private void updateUiWithUser(LoggedInUserView model) {
