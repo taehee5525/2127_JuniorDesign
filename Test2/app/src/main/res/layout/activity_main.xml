@@ -9,13 +9,13 @@
 
     <Button
         android:id="@+id/second_activity_transaction_button"
-        android:layout_width="300dp"
-        android:layout_height="60dp"
+        android:layout_width="369dp"
+        android:layout_height="61dp"
         android:layout_marginLeft="100dp"
         android:layout_marginTop="600dp"
-        android:backgroundTint="#9E8713"
+        android:backgroundTint="#bf9b30"
         android:text="Transfer Money"
-        android:textColor="@color/white"
+        android:textColor="#ffffffff"
         android:textSize="17sp"
         android:textStyle="bold"
         android:translationX="-40dp"
