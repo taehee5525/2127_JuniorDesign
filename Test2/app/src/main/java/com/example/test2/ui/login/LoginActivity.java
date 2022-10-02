@@ -19,11 +19,13 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.test2.CreateAccActivity;
+import com.example.test2.InstructionsPage;
 import com.example.test2.R;
 import com.example.test2.ui.login.LoginViewModel;
 import com.example.test2.ui.login.LoginViewModelFactory;
@@ -34,6 +36,7 @@ public class LoginActivity extends AppCompatActivity {
     private LoginViewModel loginViewModel;
     private ActivityLoginBinding binding;
     private Button button;
+    private ImageButton imgButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -133,9 +136,22 @@ public class LoginActivity extends AppCompatActivity {
                 openSignup();
             }
         });
+
+        imgButton = (ImageButton) findViewById(R.id.helpBtn);
+        imgButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openHelpPage();
+            }
+        });
     }
     private void openSignup() {
         Intent intent = new Intent(this, CreateAccActivity.class);
+        startActivity(intent);
+    }
+
+    private void openHelpPage() {
+        Intent intent = new Intent(this, InstructionsPage.class);
         startActivity(intent);
     }
 
