@@ -35,8 +35,9 @@ public class LoginActivity extends AppCompatActivity {
 
     private LoginViewModel loginViewModel;
     private ActivityLoginBinding binding;
-    private Button button;
+    private Button signupBtn;
     private ImageButton imgButton;
+    private Button loginBtn;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,7 +51,6 @@ public class LoginActivity extends AppCompatActivity {
 
         final EditText usernameEditText = binding.username;
         final EditText passwordEditText = binding.password;
-        final Button loginButton = binding.login;
         final ProgressBar loadingProgressBar = binding.loading;
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
@@ -122,8 +122,8 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        button = (Button) findViewById(R.id.btnSignUp);
-        button.setOnClickListener(new View.OnClickListener() {
+        signupBtn = (Button) findViewById(R.id.btnSignUp);
+        signupBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openSignup();
@@ -137,6 +137,15 @@ public class LoginActivity extends AppCompatActivity {
                 openHelpPage();
             }
         });
+
+        loginBtn = (Button) findViewById(R.id.login);
+        loginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("Here");
+                openMain();
+            }
+        });
     }
     private void openSignup() {
         Intent intent = new Intent(this, CreateAccActivity.class);
@@ -145,6 +154,10 @@ public class LoginActivity extends AppCompatActivity {
 
     private void openHelpPage() {
         Intent intent = new Intent(this, InstructionsPage.class);
+        startActivity(intent);
+    }
+    private void openMain() {
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
