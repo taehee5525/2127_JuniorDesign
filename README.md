@@ -13,7 +13,7 @@ Creating a payment application like Venmo, Zelle on Mojaloop, an open source pay
 - [x] The user can register and login.
 - [x] Now the registration requires the phone number of the user.
 - [x] The transitions between pages are implemented.
-- [x] The user can now enter the information about Payee information.
+- [x] The user can now enter the Payee information.
 - [x] The user can access the "help/instructions" page.
 
 
