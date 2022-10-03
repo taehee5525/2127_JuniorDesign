@@ -24,8 +24,13 @@ Creating a payment application like Venmo, Zelle on Mojaloop, an open source pay
 
 
 ### Bug Fixes
-- [x] ~~Occasioanlly unable to build the app~~
+- [x] ~~App is not working properly.~~
     The app is now working
+- [x] ~~ The layouts of certain pages were not displaying correctly on different devices ~~
+    Now the layouts are squared away and displaying correctly. They are in the right spot now!
+- [x] ~~Screen transition is not functioning~~
+    The screen transition function is correctly performing.
+    
 
 ## New Version: 0.1.0 Released: 09/21/2022
   Re-built the whole application due to the critical app building failure issue.
