@@ -24,11 +24,11 @@ Creating a payment application like Venmo, Zelle on Mojaloop, an open source pay
 
 
 ### Bug Fixes
-- [x] ~~App is not working properly.~~
+- [x] App is not working properly. =>
     The app is now working
-- [x] ~~The layouts of certain pages were not displaying correctly on different devices~~
+- [x] The layouts of certain pages were not displaying correctly on different devices. =>
     Now the layouts are squared away and displaying correctly. They are in the right spot now!
-- [x] ~~Screen transition is not functioning~~
+- [x] Screen transition is not functioning. =>
     The screen transition function is correctly performing.
     
 
