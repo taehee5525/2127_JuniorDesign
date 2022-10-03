@@ -35,7 +35,7 @@ Creating a payment application like Venmo, Zelle on Mojaloop, an open source pay
 - [x] Login Page is showing
 
 ### Known-Issues
-- [ ] 
+- [ ] App is not working properly.
 
 ### Bug Fixes
 - [ ] N/A (No bugs found!)
