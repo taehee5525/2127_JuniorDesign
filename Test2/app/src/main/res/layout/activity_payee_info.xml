@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CreateAccActivity">
+
+  <ImageView
+      android:id="@+id/imageView"
+      android:layout_width="115dp"
+      android:layout_height="88dp"
+      android:layout_marginTop="28dp"
+      android:layout_marginBottom="24dp"
+      app:layout_constraintBottom_toTopOf="@+id/textView"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      app:layout_constraintVertical_bias="0.0"
+      app:srcCompat="@drawable/t_pay_image"
+      tools:ignore="ImageContrastCheck" />
+
+  <TextView
+      android:id="@+id/textView"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="136dp"
+      android:text="Payee Information"
+      android:textColor="#000000"
+      android:textSize="32sp"
+      android:textStyle="bold|italic"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.497"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+  <EditText
+      android:id="@+id/username"
+      android:layout_width="380dp"
+      android:layout_height="55dp"
+      android:layout_marginTop="220dp"
+      android:autofillHints=""
+      android:hint="@string/prompt_email"
+      android:inputType="textEmailAddress"
+      android:minHeight="48dp"
+      android:selectAllOnFocus="true"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+  <EditText
+      android:id="@+id/phonenumber"
+      android:layout_width="380dp"
+      android:layout_height="55dp"
+      android:layout_marginTop="8dp"
+      android:autofillHints=""
+      android:hint="phone number"
+      android:inputType="number"
+      android:minHeight="48dp"
+      android:selectAllOnFocus="true"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/username" />
+  <EditText
+      android:id="@+id/bankaccount"
+      android:layout_width="380dp"
+      android:layout_height="55dp"
+      android:layout_marginTop="8dp"
+      android:hint="Bank Account Number"
+      android:imeActionLabel="@string/action_sign_in_short"
+      android:imeOptions="actionDone"
+      android:inputType="numberPassword"
+      android:selectAllOnFocus="true"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/phonenumber" />
+
+
+  <TextView
+      android:id="@+id/textView2"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="terms_and_conditions"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.542"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/bankaccount"
+      app:layout_constraintVertical_bias="0.055" />
+
+  <CheckBox
+      android:id="@+id/checkBox"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="I agree with the terms and conditions"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintHorizontal_bias="0.6"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/textView2"
+      app:layout_constraintVertical_bias="0.0" />
+
+  <Button
+      android:id="@+id/completeTransaction"
+      android:layout_width="369dp"
+      android:layout_height="61dp"
+      android:layout_gravity="start"
+      android:layout_marginTop="16dp"
+      android:layout_marginBottom="64dp"
+      android:backgroundTint="#bf9b30"
+      android:text="Complete Transaction"
+      android:textColor="#ffffffff"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/checkBox"
+      app:layout_constraintVertical_bias="0.0"
+      tools:ignore="DuplicateSpeakableTextCheck,TextContrastCheck" />
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

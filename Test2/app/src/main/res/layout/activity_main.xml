@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.login.MainActivity">
+
+
+    <Button
+        android:id="@+id/second_activity_transaction_button"
+        android:layout_width="369dp"
+        android:layout_height="61dp"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="600dp"
+        android:backgroundTint="#bf9b30"
+        android:text="Transfer Money"
+        android:textColor="#ffffffff"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:translationX="-40dp"
+        android:translationY="-250dp"
+        app:iconTint="#A4F4D218" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <EditText
+        android:id="@+id/editTextNumber"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="-80dp"
+        android:ems="10"
+        android:hint="$"
+        android:inputType="number"
+        android:selectAllOnFocus="true"
+        android:textSize="100sp"
+        android:translationX="-130dp"
+        android:translationY="200dp" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Jane Doe"
+        android:textSize="40sp"
+        android:translationX="150dp"
+        android:translationY="10dp" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="janedoe@gmail.com"
+        android:textSize="25sp"
+        android:translationX="150dp"
+        android:translationY="70dp" />
+
+</RelativeLayout>
