@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.os.Bundle;
 import com.example.test2.ui.login.LoginActivity;
 
+import org.json.JSONException;
+
 public class CreateAccActivity extends AppCompatActivity {
     private Button button;
 
@@ -20,6 +22,21 @@ public class CreateAccActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                openLogin();
+            }
+        });
+
+        button = (Button) findViewById(R.id.createAccount);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    HiServer.reqSignUp("asd", "asd");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
                 openLogin();
             }
         });
