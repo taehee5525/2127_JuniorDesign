@@ -30,6 +30,7 @@ Creating a payment application like Venmo, Zelle on Mojaloop, an open source pay
     Now the layouts are squared away and displaying correctly. They are in the right spot now!
 - [x] Screen transition is not functioning. =>
     The screen transition function is correctly performing.
+- [x] Pressing sign-in button stopped the application and exited out of the applicaion. => Now the sign-in button is correctly functioning.
     
 
 ## New Version: 0.1.0 Released: 09/21/2022
