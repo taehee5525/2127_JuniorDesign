@@ -19,8 +19,8 @@ Creating a payment application like Venmo, Zelle on Mojaloop, an open source pay
 
 ### Known-Issues
 
-- [] transactions cannot be made yet.
-- [] Email format, length restrictions are not implemented.
+- [ ] transactions cannot be made yet.
+- [ ] Email format, length restrictions are not implemented.
 
 
 ### Bug Fixes
