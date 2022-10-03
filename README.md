@@ -9,8 +9,18 @@ Creating a payment application like Venmo, Zelle on Mojaloop, an open source pay
 ## Version: 0.2.0 Released: 10/02/2022
 ### Features
 
+- [x] The user now can access to the create account page.
+- [x] The user can register and login.
+- [x] Now the registration requires the phone number of the user.
+- [x] The transitions between pages are implemented.
+- [x] The user can now enter the information about Payee information.
+- [x] The user can access the "help/instructions" page.
+
 
 ### Known-Issues
+
+- [] transactions cannot be made yet.
+- [] Email format, length restrictions are not implemented.
 
 
 ### Bug Fixes
