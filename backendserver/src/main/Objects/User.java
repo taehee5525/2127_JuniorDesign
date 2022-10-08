@@ -14,6 +14,11 @@ public class User {
     private String phoneNumber;
     private double balance;
 
+    public User(String email, String password) {
+        this.email = email;
+        makeHashSalt();
+        saltedPwHash = makeSaltedVal(password);
+    }
 
 
     private void makeHashSalt() {
@@ -33,12 +38,22 @@ public class User {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             md.update(temp.getBytes());
             byte[] hashedVal = md.digest();
-            ret = Util.byteArrToString(hashedVal);
+            ret = byteArrToString(hashedVal);
         } catch (NoSuchAlgorithmException e) {
         } finally {
             return ret;
         }
     }
+
+
+    private static String byteArrToString(byte[] temp) {
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i < temp.length; i++) {
+            sb.append(String.format("%02x", temp[i]));
+        }
+        return sb.toString();
+    }
+
 
     public String getPhoneNumber() {
         return phoneNumber;
@@ -60,7 +75,9 @@ public class User {
         return email;
     }
 
-    public String getSalt() { return salt; }
+    public String getSalt() { 
+        return salt; 
+    }
 
     public String getSaltedPwHash() {
         return saltedPwHash;
