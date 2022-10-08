@@ -14,13 +14,20 @@ public class User {
     private String phoneNumber;
     private double balance;
 
+    /**
+     * Creates an user with an email and a hashed password
+     * @param email email account used to sign up
+     * @param password user set password
+     */
     public User(String email, String password) {
         this.email = email;
         makeHashSalt();
         saltedPwHash = makeSaltedVal(password);
     }
 
-
+    /**
+     * Generates a random string (i.e., salt)
+     */
     private void makeHashSalt() {
         Random random = new Random();
         salt = random.ints(48, 123)
@@ -30,7 +37,11 @@ public class User {
                 .toString();
     }
 
-
+    /**
+     * Appends salt to password and hashes the modified password
+     * @param input user-input password
+     * @return hashed value of password + salt
+     */
     private String makeSaltedVal(String input) {
         String temp = input + salt;
         String ret = "0";
@@ -45,7 +56,6 @@ public class User {
         }
     }
 
-
     private static String byteArrToString(byte[] temp) {
         StringBuilder sb = new StringBuilder();
         for(int i = 0; i < temp.length; i++) {
@@ -54,7 +64,10 @@ public class User {
         return sb.toString();
     }
 
-
+    public boolean passwordChecker(String hashedPw) {
+        return hashedPw.equals(saltedPwHash);
+    }
+    
     public String getPhoneNumber() {
         return phoneNumber;
     }
