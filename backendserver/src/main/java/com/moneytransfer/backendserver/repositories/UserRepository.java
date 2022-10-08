@@ -19,15 +19,15 @@ public interface UserRepository {
 
     /**
      * User logs out from the system
-     * @param token User-specific token created upon log in
+     * @param token token of the user attempting to sign out
      * @return true if successfully logged out, false otherwise
      */
     boolean logout(String token);
 
     /**
      * Looks up other user using registered phone number
-     * @param phoneNumber phone number of target user
-     * @return found User object if look up was successful, null otherwise
+     * @param phoneNumber phone number of the user to be looked up
+     * @return User object if the user exists, null otherwise
      */
     User lookupUser(String phoneNumber);
 }
