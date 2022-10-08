@@ -56,6 +56,11 @@ public class User {
         }
     }
 
+    /**
+     * Converts an array of bytes to a String
+     * @param temp byte array to be converted
+     * @return String coverted from byte array
+     */
     private static String byteArrToString(byte[] temp) {
         StringBuilder sb = new StringBuilder();
         for(int i = 0; i < temp.length; i++) {
@@ -64,9 +69,15 @@ public class User {
         return sb.toString();
     }
 
+    /**
+     * Checks if the password is correct
+     * @param hashedPw hashed value of password user types in upon sign in
+     * @return true if the password is correct, false otherwise
+     */
     public boolean passwordChecker(String hashedPw) {
         return hashedPw.equals(saltedPwHash);
     }
+
     
     public String getPhoneNumber() {
         return phoneNumber;
