@@ -1,5 +1,6 @@
 package com.moneytransfer.backendserver.repositories;
 
+import com.moneytransfer.backendserver.Util;
 import com.moneytransfer.backendserver.objects.User;
 
 import java.security.MessageDigest;
@@ -47,7 +48,7 @@ public class TempUserRepository implements UserRepository {
                 MessageDigest md = MessageDigest.getInstance("SHA-256");
                 md.update(temp.getBytes());
                 byte[] hashedVal = md.digest();
-                ret = byteArrToString(hashedVal);
+                ret = Util.byteArrToString(hashedVal);
             } catch (NoSuchAlgorithmException e) {
                 e.printStackTrace();
             }
@@ -93,18 +94,5 @@ public class TempUserRepository implements UserRepository {
             }
         }
         return null;
-    }
-
-    /**
-     * Converts an array of bytes to a String
-     * @param temp byte array to be converted
-     * @return String coverted from byte array
-     */
-    private static String byteArrToString(byte[] temp) {
-        StringBuilder sb = new StringBuilder();
-        for(int i = 0; i < temp.length; i++) {
-            sb.append(String.format("%02x", temp[i]));
-        }
-        return sb.toString();
     }
 }
