@@ -19,9 +19,10 @@ public class Fragment implements ComponentCallbacks, View.OnCreateContextMenuLis
 
 */
 //public abstract class ActivityResultLauncher<I>
+    /*
 public class GetActivity {
 
-    /*
+
     // GetContent creates an ActivityResultLauncher<String> to allow you to pass
     // in the mime type you'd like to allow the user to select
     ActivityResultLauncher<String> mGetContent = registerForActivityResult(new GetContent(),
@@ -33,6 +34,7 @@ public class GetActivity {
                 }
             });
 
-     */
+
 
 }
+*/

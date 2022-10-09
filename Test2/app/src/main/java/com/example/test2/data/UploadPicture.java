@@ -15,9 +15,9 @@ import java.io.InputStream;
  *      content providers, broadcast receivers, services, etc.
  *      More info: https://www.javatpoint.com/android-intent-tutorial
  */
+/*
+public class UploadPicture {
 
-public class ProfilePicture {
-    /*
 
     Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
    photoPickerIntent.setType("image/*");
@@ -52,6 +52,8 @@ public class ProfilePicture {
         }
     }
 
-     */
- 
+
+
 }
+*/
+
