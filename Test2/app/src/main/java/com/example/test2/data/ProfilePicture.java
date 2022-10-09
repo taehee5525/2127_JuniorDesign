@@ -1,12 +1,14 @@
+/*
 import java.lang.Object;
 import android.content.Intent;
 import android.view.View;
 import java.net.URI;
 import android.graphics.Bitmap;
 import java.io.InputStream;
+*/
 
 
-/**
+/**             **NOTE**:commented out until file is completely finished
  * Started one way to implement adding profile picture to profile
  * Uses Android Intent
  *      Android Intent is the message that is passed between components such as activities,
@@ -15,7 +17,7 @@ import java.io.InputStream;
  */
 
 public class ProfilePicture {
-
+    /*
 
     Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
    photoPickerIntent.setType("image/*");
@@ -49,5 +51,7 @@ public class ProfilePicture {
 
         }
     }
+
+     */
 
 }
