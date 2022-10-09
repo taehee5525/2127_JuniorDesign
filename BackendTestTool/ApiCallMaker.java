@@ -1,22 +1,20 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.io.BufferedWriter;
 import java.io.OutputStreamWriter;
 import java.net.URL;
-import java.util.HashMap;
 import java.net.HttpURLConnection;
 import java.util.Map;
 import org.json.JSONObject; // add library manually using ./tempLibFiles/json-20220924.jar file. This will be added using gradle in Android Studio.
 //reference for gradle: https://mvnrepository.com/artifact/org.json/json/20220924
 
 
+/**
+ *  Class for make API Call
+ */
 public class ApiCallMaker {
 
-    /**
-     * method to make get Request.
-     */
-    /**
+	/**
 	 * Method for call API with GET method.
 	 * @param Url url to send
 	 * @param headerMap header option map <K = option name, V = option value>
@@ -76,18 +74,15 @@ public class ApiCallMaker {
 		if (!method.equalsIgnoreCase("GET") && !method.equalsIgnoreCase("POST") && !method.equalsIgnoreCase("PUT") && !method.equalsIgnoreCase("DELETE")){
 			throw new Exception("Method of API must be specified. Please check again.");
 		}
-		if ((method.equalsIgnoreCase("POST") || method.equalsIgnoreCase("PUT") && obj == null)) {
-			throw new Exception("Sending Object (JSON) is null. Please check again.");
-		}
 
-        URL url = new URL(Url);
-        HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+		URL url = new URL(Url);
+		HttpURLConnection connection = (HttpURLConnection)url.openConnection();
 		connection.setRequestMethod(method);
 
 		//if header has options
-        for (String key : headerMap.keySet()) {
-            connection.setRequestProperty(key, headerMap.get(key));
-        }
+		for (String key : headerMap.keySet()) {
+			connection.setRequestProperty(key, headerMap.get(key));
+		}
 
 		if (method.equalsIgnoreCase("POST") || method.equalsIgnoreCase("PUT") || method.equalsIgnoreCase("DELETE")) {
 			connection.setDoInput(true); //input required
