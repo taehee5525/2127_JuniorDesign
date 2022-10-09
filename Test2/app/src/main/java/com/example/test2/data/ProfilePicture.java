@@ -4,7 +4,6 @@ import android.view.View;
 import java.net.URI;
 import android.graphics.Bitmap;
 import java.io.InputStream;
-//import
 
 
 /**
@@ -25,9 +24,30 @@ public class ProfilePicture {
 
     @Override
     protected void onActivityResult(int reqCode, int resultCode, Intent data) {
+        super.onActivityResult(reqCode, resultCode, data);
 
 
+        if (resultCode == RESULT_OK) {
+            try {
+
+                final Uri imageUri = data.getData();
+                final InputStream imageStream = getContentResolver().openInputStream(imageUri);
+                final Bitmap selectedImage = BitmapFactory.decodeStream(imageStream);
+                image_view.setImageBitmap(selectedImage);
+
+            } catch (FileNotFoundException e) {
+
+                e.printStackTrace();
+                //Toast = displays info for a short period of time
+                Toast.makeText(PostImage.this, "Error occurred", Toast.LENGTH_LONG).show();
+
+            }
+
+        } else {
+
+            Toast.makeText(PostImage.this, "No image picked", Toast.LENGTH_LONG).show();
+
+        }
     }
-}
 
 }
