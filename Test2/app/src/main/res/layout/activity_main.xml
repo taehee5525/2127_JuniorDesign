@@ -67,7 +67,7 @@
         android:layout_marginTop="350dp"
         android:autofillHints="Note"
         android:hint="Note:"
-        android:inputType="textEmailAddress"
+        android:inputType="text"
         android:minHeight="48dp"
         android:selectAllOnFocus="true"
         android:translationX="65dp"
