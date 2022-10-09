@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Test2">
         <activity
+            android:name=".TransactionFail"
+            android:exported="false" />
+        <activity
             android:name=".TransactionSuccess"
             android:exported="false" />
         <activity
