@@ -13,4 +13,8 @@ public class Util {
         }
         return sb.toString();
     }
+
+    public static String errorDecoder(String input) {
+        return null;
+    }
 }
