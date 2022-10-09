@@ -75,6 +75,17 @@ public class TempUserRepository implements UserRepository {
         }
     }
 
+    @Override
+    public boolean logout(String token) {
+        if (tokenMap.containsKey(token)) {
+            tokenMap.remove(token);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
     /**
      * Converts an array of bytes to a String
      * @param temp byte array to be converted
