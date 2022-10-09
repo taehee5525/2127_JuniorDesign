@@ -4,15 +4,11 @@ import com.moneytransfer.backendserver.Util;
 import com.moneytransfer.backendserver.objects.User;
 import com.moneytransfer.backendserver.repositories.TempUserRepository;
 import com.moneytransfer.backendserver.repositories.UserRepository;
-import com.moneytransfer.backendserver.temp.TempController;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.UnsupportedEncodingException;
-import java.util.Map;
 import org.json.JSONObject;
-import java.net.*;
 
 @Controller
 public class CreateUserContoller {
