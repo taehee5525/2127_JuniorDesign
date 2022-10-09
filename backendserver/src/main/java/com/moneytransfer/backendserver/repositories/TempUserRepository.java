@@ -85,6 +85,15 @@ public class TempUserRepository implements UserRepository {
         }
     }
 
+    @Override
+    public User lookupUser(String phoneNumber) {
+        for (User user : db.values()) {
+            if (user.getPhoneNumber().equals(phoneNumber)) {
+                return user;
+            }
+        }
+        return null;
+    }
 
     /**
      * Converts an array of bytes to a String
