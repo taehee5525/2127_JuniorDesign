@@ -13,8 +13,7 @@ import org.json.JSONObject;
 @Controller
 public class CreateUserContoller {
 
-    UserRepository store = new TempUserRepository();
-
+    UserRepository usrRepo = new TempUserRepository();
 
     @PostMapping(value = "users/mkuser")
     @ResponseBody
@@ -25,7 +24,7 @@ public class CreateUserContoller {
 
         JSONObject ret = new JSONObject();
 
-        if (store.save(user)) {
+        if (usrRepo.save(user)) {
             ret.put("isSuccess", true);
         } else {
             ret.put("isSuccess", false);
@@ -35,36 +34,5 @@ public class CreateUserContoller {
     }
 
 
-    @PostMapping("users/userlogin")
-    @ResponseBody
-    public String userLogin(@RequestBody String data) throws UnsupportedEncodingException {
 
-        JSONObject req = new JSONObject(Util.errorDecoder(data));
-        String token = store.login(req.get("email").toString(), req.get("password").toString());
-        JSONObject res = new JSONObject();
-
-        if (token == null) {
-            res.put("isSuccess", false);
-            res.put("token", "");
-        } else {
-            res.put("isSuccess", true);
-            res.put("token", token);
-        }
-
-        return res.toString();
-    }
-
-
-
-    class LoginResponse {
-        boolean isSuccess;
-        String token;
-    }
-    class JoinResponse {
-        public void setSuccess(boolean success) {
-            isSuccess = success;
-        }
-
-        boolean isSuccess;
-    }
 }
