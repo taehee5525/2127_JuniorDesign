@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class TempFriendRepository implements FriendRepository{
+public class TempFriendRepository implements FriendRepository {
 
     private static Map<String, List<String>> friendMap = new HashMap<String, List<String>>();
     // K = friendA, V = List of friends.
@@ -55,17 +55,24 @@ public class TempFriendRepository implements FriendRepository{
         int cnt = 0;
 
         for (String friend : friendList) {
+            // FriendsList of user's friend
             List<String> friendsfriendlist = friendMap.get(friend);
-            for (int i = 0; i < friendsfriendlist.size(); i++) {
-                if (friendsfriendlist.get(i).equals(userEmail)) {
-                    friendsfriendlist.remove(i);
-                    cnt++;
-                    break;
-                }
+
+//            for (int i = 0; i < friendsfriendlist.size(); i++) {
+//                if (friendsfriendlist.get(i).equals(userEmail)) {
+//                    friendsfriendlist.remove(i);
+//                    cnt++;
+//                    break;
+//                }
+//            }
+            if (friendsfriendlist.remove(userEmail)) {
+                cnt++;
+                break;
             }
         }
 
-        int size = friendMap.size();
+//        int size = friendMap.size();
+        int size = friendList.size();
         friendMap.remove(userEmail);
 
         return cnt == size;
@@ -74,6 +81,7 @@ public class TempFriendRepository implements FriendRepository{
     /**
      * remove the relationship in store, this is the case for user removes
      * another users in his/her friendslist.
+     *
      * @param userEmail1 user1
      * @param userEmail2 user2
      * @return true if success, else return false
@@ -86,33 +94,35 @@ public class TempFriendRepository implements FriendRepository{
         List<String> friendList1 = friendMap.get(userEmail1);
         List<String> friendList2 = friendMap.get(userEmail2);
 
-        boolean removeFriend1 = false;
-        boolean removeFriend2 = false;
+//        boolean removeFriend1 = false;
+//        boolean removeFriend2 = false;
 
-        for (int i = 0; i < friendList1.size(); i++) {
-            if (friendList1.get(i).equals(userEmail2)) {
-                friendList1.remove(i);
-                removeFriend2 = true;
-                break;
-            }
-        }
+//        for (int i = 0; i < friendList1.size(); i++) {
+//            if (friendList1.get(i).equals(userEmail2)) {
+//                friendList1.remove(i);
+//                removeFriend2 = true;
+//                break;
+//            }
+//        }
 
-        for (int i = 0; i < friendList2.size(); i++) {
-            if (friendList2.get(i).equals(userEmail1)) {
-                friendList2.remove(i);
-                removeFriend1 = true;
-                break;
-            }
-        }
+//        for (int i = 0; i < friendList2.size(); i++) {
+//            if (friendList2.get(i).equals(userEmail1)) {
+//                friendList2.remove(i);
+//                removeFriend1 = true;
+//                break;
+//            }
+//        }
 
-        return removeFriend1 & removeFriend2;
+//        return removeFriend1 & removeFriend2;
+
+        return friendList1.remove(userEmail2) && friendList2.remove(userEmail1);
     }
 
     /**
-     * Getting the friends list from the store.
+     * Get the friends list from the store.
      *
      * @param userEmail user
-     * @return List of user's friends
+     * @return List of user's friends and null if user has no friend
      */
     @Override
     public List<String> getFriendList(String userEmail) {
