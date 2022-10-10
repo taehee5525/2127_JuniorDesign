@@ -2,6 +2,7 @@ package com.moneytransfer.backendserver;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.Random;
 
 public class Util {
     /**
@@ -31,5 +32,19 @@ public class Util {
     public static String errorDecoder(String input) throws UnsupportedEncodingException {
         String temp = URLDecoder.decode(input, "ASCII").replaceAll("/", "");
         return temp.substring(0, temp.length() - 1);
+    }
+
+    /**
+     * Create and return random String (alphabet/number)
+     * @param len length of str
+     * @return random str
+     */
+    public static String makeRandomString(int len) {
+        Random random = new Random();
+        return random.ints(48, 123)
+                .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
+                .limit(len)
+                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                .toString();
     }
 }
