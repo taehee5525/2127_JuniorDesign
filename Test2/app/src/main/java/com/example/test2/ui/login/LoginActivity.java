@@ -26,6 +26,8 @@ import android.widget.Toast;
 
 import com.example.test2.CreateAccActivity;
 import com.example.test2.InstructionsPage;
+import com.example.test2.LoginFail;
+import com.example.test2.LoginSuccess;
 import com.example.test2.R;
 import com.example.test2.ui.login.LoginViewModel;
 import com.example.test2.ui.login.LoginViewModelFactory;
@@ -139,11 +141,20 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         loginBtn = (Button) findViewById(R.id.login);
+
+        /*
+            Backend part:
+            If the id & password exist in the database
+         */
+
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("Here");
-                openMain();
+                if (true) {
+                    openLoginSuccess();
+                } else {
+                    openLoginFail();
+                }
             }
         });
     }
@@ -156,8 +167,19 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(this, InstructionsPage.class);
         startActivity(intent);
     }
-    private void openMain() {
-        Intent intent = new Intent(this, MainActivity.class);
+    // Not necessary anymore
+//    private void openMain() {
+//        Intent intent = new Intent(this, MainActivity.class);
+//        startActivity(intent);
+//    }
+
+    private void openLoginSuccess() {
+        Intent intent = new Intent(this, LoginSuccess.class);
+        startActivity(intent);
+    }
+
+    private void openLoginFail() {
+        Intent intent = new Intent(this, LoginFail.class);
         startActivity(intent);
     }
 
