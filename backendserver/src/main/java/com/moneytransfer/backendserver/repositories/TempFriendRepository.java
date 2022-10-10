@@ -80,10 +80,6 @@ public class TempFriendRepository implements FriendRepository {
         return cnt == size;
     }
 
-    @Override
-    public boolean removeByPhoneNumber(String pnum) {
-        remove(temp.lookupUser(pnum).getEmail());
-    }
 
     /**
      * remove the relationship in store, this is the case for user removes

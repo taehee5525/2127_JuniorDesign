@@ -21,12 +21,6 @@ public interface FriendRepository {
      */
     boolean remove(String userEmail);
 
-    /**
-     * remove user in store, this is the case for user removes the account.
-     * @param pnum user phone number
-     * @return true if success, else return false
-     */
-    boolean removeByPhoneNumber(String pnum);
 
     /**
      * disconnect the friends relationship in store, this is the case for user removes
