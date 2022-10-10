@@ -140,13 +140,8 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        // Backend part: check database & proceed to either success page or failed page
         loginBtn = (Button) findViewById(R.id.login);
-
-        /*
-            Backend part:
-            If the id & password exist in the database
-         */
-
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -167,11 +162,6 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(this, InstructionsPage.class);
         startActivity(intent);
     }
-    // Not necessary anymore
-//    private void openMain() {
-//        Intent intent = new Intent(this, MainActivity.class);
-//        startActivity(intent);
-//    }
 
     private void openLoginSuccess() {
         Intent intent = new Intent(this, LoginSuccess.class);
