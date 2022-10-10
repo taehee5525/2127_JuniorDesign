@@ -10,6 +10,8 @@ public class TempFriendRepository implements FriendRepository {
     private static Map<String, List<String>> friendMap = new HashMap<String, List<String>>();
     // K = friendA, V = List of friends.
 
+    private TempUserRepositoryX temp = new TempUserRepositoryX();
+
     /**
      * save user emails in store. userEmail1 and userEmail2 are friends
      *
@@ -78,6 +80,11 @@ public class TempFriendRepository implements FriendRepository {
         return cnt == size;
     }
 
+    @Override
+    public boolean removeByPhoneNumber(String pnum) {
+        remove(temp.lookupUser(pnum).getEmail());
+    }
+
     /**
      * remove the relationship in store, this is the case for user removes
      * another users in his/her friendslist.
@@ -116,6 +123,13 @@ public class TempFriendRepository implements FriendRepository {
 //        return removeFriend1 & removeFriend2;
 
         return friendList1.remove(userEmail2) && friendList2.remove(userEmail1);
+    }
+
+    @Override
+    public boolean disconnectByPhoneNum(String pnum1, String pnum2) {
+        String email1 = temp.lookupUser(pnum1).getEmail();
+        String email2 = temp.lookupUser(pnum2).getEmail();
+        disconnect(email1, email2);
     }
 
     /**
