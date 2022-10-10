@@ -18,6 +18,7 @@ public class CreateAccActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_acc);
 
+        //This is the sign in button at the bottom of the page
         button = (Button) findViewById(R.id.btnSignIn);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -35,14 +36,29 @@ public class CreateAccActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-
-                openLogin();
+                // Backend- needs to use the database and connect it to the sever
+                // But first, let the user always see the success page first
+                // That way, we can go to the other pages.
+                if (true) {
+                    openCreateAccSuccess();
+                } else {
+                    openCreateAccFail();
+                }
             }
         });
     }
     public void openLogin() {
         Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
+    }
+
+    public void openCreateAccSuccess() {
+        Intent intent = new Intent(this, CreateAccSuccess.class);
+        startActivity(intent);
+    }
+
+    public void openCreateAccFail() {
+        Intent intent = new Intent(this, CreateAccFail.class);
         startActivity(intent);
     }
 }

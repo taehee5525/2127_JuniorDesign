@@ -10,15 +10,15 @@ import android.widget.Button;
 import com.example.test2.ui.login.LoginActivity;
 
 public class LoginFail extends AppCompatActivity {
-    private Button loginButton;
+    private Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_fail);
 
-        loginButton = (Button) findViewById(R.id.backToLoginBtn);
-        loginButton.setOnClickListener(new View.OnClickListener() {
+        button = (Button) findViewById(R.id.backToLoginBtn);
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openLogin();
