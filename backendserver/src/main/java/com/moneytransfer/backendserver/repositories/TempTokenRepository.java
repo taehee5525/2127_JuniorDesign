@@ -18,7 +18,7 @@ public class TempTokenRepository implements TokenRepository{
      * @param userEmail   userEmail String
      * @param token       token String
      * @param currentTime currentTime
-     * @return true if successfully saved, else reuturn false.
+     * @return true if successfully saved, else return false.
      */
     @Override
     public boolean save(String userEmail, String token, String currentTime) {
@@ -65,7 +65,7 @@ public class TempTokenRepository implements TokenRepository{
      * getter for TimeString
      *
      * @param token token
-     * @return number of token expired and removed.
+     * @return time the token was referred for the last time
      */
     @Override
     public String getTime(String token) {

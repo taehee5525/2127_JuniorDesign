@@ -21,14 +21,24 @@ public interface FriendRepository {
      */
     boolean remove(String userEmail);
 
+
     /**
-     * remove the relationship in store, this is the case for user removes
-     * another users in his/her friendslist.
+     * disconnect the friends relationship in store, this is the case for user removes
+     * another users in his/her friendslist by email address.
      * @param userEmail1 user1
      * @param userEmail2 user2
      * @return true if success, else return false
      */
-    boolean remove(String userEmail1, String userEmail2);
+    boolean disconnect(String userEmail1, String userEmail2);
+
+    /**
+     * disconnect the friends relationship in store, this is the case for user removes
+     * another users in his/her friendslist by phone number.
+     * @param pnum1 phone number of user1
+     * @param pnum2 phone number of user2
+     * @return true if success, else return false
+     */
+    boolean disconnectByPhoneNum(String pnum1, String pnum2);
 
     /**
      * Getting the friends list from the store.
