@@ -1,6 +1,5 @@
 {
     "java.project.referencedLibraries": [
-        "lib/**/*.jar",
-        "c:\\Users\\jeong\\Desktop\\git\\JDsecret\\areYouAbandoningTeam\\Backend\\tempLibFiles\\json-20220924.jar"
+        "lib/**/*.jar"
     ]
 }
