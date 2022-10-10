@@ -9,7 +9,7 @@ public interface TokenRepository {
      * @param userEmail userEmail String
      * @param token token String
      * @param currentTime currentTime
-     * @return true if successfully saved, else reuturn false.
+     * @return true if successfully saved, else return false.
      */
     boolean save(String userEmail, String token, String currentTime);
 
@@ -31,7 +31,7 @@ public interface TokenRepository {
     /**
      * getter for TimeString
      * @param token token
-     * @return number of token expired and removed.
+     * @return time the token was referred for the last time
      */
     String getTime(String token);
 

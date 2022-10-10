@@ -8,7 +8,7 @@ public class Util {
     /**
      * Converts an array of bytes to a String.
      * @param temp byte array to be converted
-     * @return String coverted from byte array
+     * @return String converted from byte array
      */
     public static String byteArrToString(byte[] temp) {
         StringBuilder sb = new StringBuilder();
