@@ -28,6 +28,7 @@ public class CreateUserContoller {
             ret.put("isSuccess", true);
         } else {
             ret.put("isSuccess", false);
+            ret.put("reason", "user email already in use.");
         }
 
         return ret.toString();
