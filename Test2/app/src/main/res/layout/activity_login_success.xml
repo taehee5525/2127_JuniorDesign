@@ -8,31 +8,43 @@
 
     <ImageView
         android:id="@+id/imageView3"
-        android:layout_width="216dp"
-        android:layout_height="257dp"
-        app:srcCompat="@drawable/t_pay_image"
-        tools:layout_editor_absoluteX="97dp"
-        tools:layout_editor_absoluteY="123dp" />
+        android:layout_width="209dp"
+        android:layout_height="216dp"
+        android:layout_marginTop="152dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/t_pay_image" />
 
     <TextView
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Login Successful"
+        android:layout_marginTop="44dp"
+        android:text="Login Successful!"
         android:textColor="#2962FF"
         android:textSize="32sp"
         android:textStyle="bold"
-        tools:layout_editor_absoluteX="82dp"
-        tools:layout_editor_absoluteY="380dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/gotoMainPageBtn"
         android:layout_width="369dp"
         android:layout_height="61dp"
         android:layout_gravity="start"
+        android:layout_marginStart="21dp"
+        android:layout_marginEnd="21dp"
+        android:layout_marginBottom="206dp"
         android:backgroundTint="#bf9b30"
         android:text="Go to Main Page"
         android:textColor="#ffffffff"
-        tools:layout_editor_absoluteX="21dp"
-        tools:layout_editor_absoluteY="464dp" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView8"
+        app:layout_constraintVertical_bias="1.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>
