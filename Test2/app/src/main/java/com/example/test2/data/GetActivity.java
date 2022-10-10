@@ -48,7 +48,7 @@ public class GetActivity {
 
     public void onCreate(@Nullable Bundle savedInstanceState) {
 
-        Button selectButton = findViewByID(R./*pathtobutton*//*);
+        Button selectButton = findViewByID(R.pathtobutton);
 
         selectButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -58,8 +58,25 @@ public class GetActivity {
             }
 
         });
+
+        @Override
+        void onCreate(Bundle savedInstanceState) {
+
+            mObserver = new MyLifecycleObserver(requireActivity().getActivityResultRegistry());
+            getLifecycle().addObserver(mObserver);
+        }
+
+        @Override
+        void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+            Button selectButton = findViewById(R./*path*//*);
+            selectButton.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mObserver.selectImage();
+                }
+
+            }
+        }
     }
-
-
 }
 */
