@@ -86,7 +86,7 @@ public class TempFriendRepository implements FriendRepository {
      * @param userEmail2 user2
      * @return true if success, else return false
      */
-    public boolean remove(String userEmail1, String userEmail2) {
+    public boolean disconnect(String userEmail1, String userEmail2) {
         if (!friendMap.containsKey(userEmail1) || !friendMap.containsKey(userEmail2)) {
             return false;
         }

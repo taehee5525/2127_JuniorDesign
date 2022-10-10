@@ -20,8 +20,9 @@ public class CreateUserContoller {
     public String userJoin(@RequestBody String data) throws UnsupportedEncodingException {
 
         JSONObject req = new JSONObject(Util.errorDecoder(data));
-        User user = new User(req.get("email").toString(), req.get("password").toString());
-
+//        User user = new User(req.get("email").toString(), req.get("password").toString());
+        User user = new User(req.get("email").toString(), req.get("password").toString(),
+                req.opt("phone number") != null ? req.opt("phone number").toString() : null);
         JSONObject ret = new JSONObject();
 
         if (usrRepo.save(user)) {

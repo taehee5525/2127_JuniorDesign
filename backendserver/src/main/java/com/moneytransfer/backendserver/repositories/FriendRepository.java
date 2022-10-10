@@ -28,7 +28,7 @@ public interface FriendRepository {
      * @param userEmail2 user2
      * @return true if success, else return false
      */
-    boolean remove(String userEmail1, String userEmail2);
+    boolean disconnect(String userEmail1, String userEmail2);
 
     /**
      * Getting the friends list from the store.

@@ -22,9 +22,11 @@ public class User {
      * Creates an user with an email and a hashed password
      * @param email email account used to sign up
      * @param password user set password
+     * @param phoneNumber user phone number (optional)
      */
-    public User(String email, String password) {
+    public User(String email, String password, String phoneNumber) {
         this.email = email;
+        this.phoneNumber = phoneNumber;
         makeHashSalt();
         saltedPwHash = makeSaltedVal(password);
     }
