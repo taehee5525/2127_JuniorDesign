@@ -7,27 +7,28 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.test2.ui.login.LoginActivity;
 import com.example.test2.ui.login.MainActivity;
 
-public class LoginSuccess extends AppCompatActivity {
+public class CreateAccSuccess extends AppCompatActivity {
     private Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login_success);
+        setContentView(R.layout.activity_create_acc_success);
 
-        button = (Button) findViewById(R.id.gotoMainPageBtn);
+        button = (Button) findViewById(R.id.goToLoginBtn);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openMain();
+                openLogin();
             }
         });
     }
 
-    private void openMain() {
-        Intent intent = new Intent(this, MainActivity.class);
+    private void openLogin() {
+        Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
 }
