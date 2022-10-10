@@ -6,11 +6,12 @@ public interface TokenRepository {
 
     /**
      * save user with token into the store.
-     * @param user user Object
+     * @param userEmail userEmail String
      * @param token token String
+     * @param currentTime currentTime
      * @return true if successfully saved, else reuturn false.
      */
-    boolean save(User user, String token);
+    boolean save(String userEmail, String token, String currentTime);
 
     /**
      * remove user with assigned token.
@@ -23,16 +24,16 @@ public interface TokenRepository {
      * lookup user information from the store using token value,
      * and return the user object.
      * @param token token String.
-     * @return UserObject, if it is not exist then return null.
+     * @return userEmail, if it is not exist then return null.
      */
-    User lookupUser(String token);
+    String getUserEmail(String token);
 
     /**
-     * Iterate all the token we got and clear the expired token.
-     * @param time limit
+     * getter for TimeString
+     * @param token token
      * @return number of token expired and removed.
      */
-    int removeExpiredToken(long time);
+    String getTime(String token);
 
     /**
      * return number of token currently have.
