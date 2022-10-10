@@ -10,24 +10,23 @@ public interface UserRepository {
     boolean save(User user);
 
     /**
-     * User logs in to the system
-     * @param email email address of the user attempting to log in
-     * @param password password that user types in
-     * @return user-specific token if login was successful, null otherwise
+     * remove user with assigned token.
+     * @param email user email
+     * @return true if successfully saved, else return false.
      */
-    String login(String email, String password);
+    boolean remove(String email);
 
     /**
-     * User logs out from the system
-     * @param token token of the user attempting to sign out
-     * @return true if successfully logged out, false otherwise
+     * lookup user information from the store using email value,
+     * and return the user object.
+     * @param email email String.
+     * @return UserObject, if it is not exist then return null.
      */
-    boolean logout(String token);
+    User lookupUser(String email);
 
     /**
-     * Looks up other user using registered phone number
-     * @param phoneNumber phone number of the user to be looked up
-     * @return User object if the user exists, null otherwise
+     * return number of user currently have.
+     * @return size of user stored in store.
      */
-    User lookupUser(String phoneNumber);
+    int size();
 }

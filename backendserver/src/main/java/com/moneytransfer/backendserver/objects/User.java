@@ -63,11 +63,11 @@ public class User {
 
     /**
      * Checks if the password is correct
-     * @param hashedPw hashed value of password user types in upon sign in
+     * @param input input of password user types in upon sign in
      * @return true if the password is correct, false otherwise
      */
-    public boolean passwordChecker(String hashedPw) {
-        return hashedPw.equals(saltedPwHash);
+    public boolean passwordChecker(String input) {
+        return saltedPwHash.equals(makeSaltedVal(input));
     }
 
 
