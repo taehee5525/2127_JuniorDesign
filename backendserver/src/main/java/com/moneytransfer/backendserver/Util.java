@@ -7,6 +7,9 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Random;
 
 public class Util {
+
+    public final static long TOKEN_EXPIRE_LIMIT = 300000; // 300000ms == 300s = 5mins
+
     /**
      * Converts an array of bytes to a String.
      * @param temp byte array to be converted

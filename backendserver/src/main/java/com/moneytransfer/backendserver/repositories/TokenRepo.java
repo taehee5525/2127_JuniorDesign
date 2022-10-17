@@ -16,5 +16,7 @@ public interface TokenRepo {
 
     void deleteByUserEmail(String email);
 
+    void updateTimeStamp(String token, Long timeStamp);
+
     List<Token> findAll();
 }
