@@ -2,7 +2,7 @@ package com.moneytransfer.backendserver.services.userService;
 import com.moneytransfer.backendserver.Util;
 import com.moneytransfer.backendserver.objects.User2;
 import com.moneytransfer.backendserver.repositories.UserRepo;
-
+import org.springframework.stereotype.Service;
 
 public class CreateUserService {
 
