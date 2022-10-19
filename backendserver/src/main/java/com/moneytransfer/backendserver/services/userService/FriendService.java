@@ -15,14 +15,19 @@ import java.util.List;
 public class FriendService {
 
     private FriendRepo friendRepo;
+    private UserRepo userRepo;
 
-    public FriendService(FriendRepo friendRepo) {
+    public FriendService(FriendRepo friendRepo, UserRepo userRepo) {
+        this.userRepo = userRepo;
         this.friendRepo = friendRepo;
     }
 
     public boolean requestFriend(String requesterEmail, String friendEmail) throws FriendException {
+        if (userRepo.findByUserEmail(friendEmail).isEmpty()) {
+            throw new FriendException(1); //friend not exists
+        }
         if (friendRepo.checkRelationship(requesterEmail, friendEmail).isPresent()) {
-            throw new FriendException(0);
+            throw new FriendException(0); // relationship already exists
         }
 
         Friend friend = new Friend();
@@ -34,26 +39,55 @@ public class FriendService {
         return true;
     }
 
-    public boolean acceptFriend(String requesterEmail, String friendEmail) {
+    public boolean acceptFriend(String requesterEmail, String friendEmail) throws FriendException {
+        if (userRepo.findByUserEmail(friendEmail).isEmpty()) {
+            throw new FriendException(1); //friend not exists
+        }
+        if (friendRepo.checkRelationship(requesterEmail, friendEmail).isEmpty()) {
+            throw new FriendException(0); // relationship already exists
+        }
         friendRepo.updateAccepted(requesterEmail, friendEmail);
         return true;
     }
 
-    public boolean declineFriend(String requesterEmail, String friendEmail) {
+    public boolean declineFriend(String requesterEmail, String friendEmail) throws FriendException {
+        if (userRepo.findByUserEmail(friendEmail).isEmpty()) {
+            throw new FriendException(1); //friend not exists
+        }
+        if (friendRepo.checkRelationship(requesterEmail, friendEmail).isEmpty()) {
+            throw new FriendException(2); // relationship does not exist
+        }
         friendRepo.removeFriend(requesterEmail, friendEmail);
         return true;
     }
 
-    public boolean removeFriend(String user1Email, String user2Email) {
+    public boolean removeFriend(String user1Email, String user2Email) throws FriendException {
+        if (userRepo.findByUserEmail(user2Email).isEmpty()) {
+            throw new FriendException(1); //friend not exists
+        }
+        if (friendRepo.checkRelationship(user1Email, user2Email).isEmpty()) {
+            throw new FriendException(2); // relationship does not exist
+        }
         friendRepo.removeFriend(user1Email, user2Email);
         return true;
     }
 
-    public List<Friend> getFriendList(String userEmail) {
-        return friendRepo.getUserFriends(userEmail);
+    public List<String> getFriendList(String userEmail) {
+        List<Friend> fList = friendRepo.getUserFriends(userEmail);
+        List<String> retList = new ArrayList<>();
+        for (Friend friend : fList) {
+            retList.add(friend.getFriendAEmail().equals(userEmail)
+                    ? friend.getFriendBEmail() : friend.getFriendAEmail());
+        }
+        return retList;
     }
 
-    public List<Friend> getRequest(String userEmail) {
-        return friendRepo.getPendingList(userEmail);
+    public List<String> getRequest(String userEmail) {
+        List<Friend> fList = friendRepo.getPendingList(userEmail);
+        List<String> retList = new ArrayList<>();
+        for (Friend friend : fList) {
+            retList.add(friend.getFriendBEmail());
+        }
+        return retList;
     }
 }

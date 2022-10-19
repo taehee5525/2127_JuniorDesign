@@ -19,7 +19,9 @@ public class FriendException extends Exception {
         if (errorCode == 0) {
             this.errorDescription = "Relationship already exists";
         } else if (errorCode == 1) {
-
+            this.errorDescription = "Friend account does not exists";
+        }  else if (errorCode == 2) {
+            this.errorDescription = "Relationship does not exists";
         }
     }
 

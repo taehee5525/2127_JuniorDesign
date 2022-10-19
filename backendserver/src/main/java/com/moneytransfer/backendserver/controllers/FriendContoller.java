@@ -21,7 +21,7 @@ import java.util.List;
 public class FriendContoller {
 
     @Autowired
-    public FriendContoller(FriendService friendService) {
+    public FriendContoller(FriendService friendService, AuthService authService) {
         this.friendService = friendService;
         this.authService = authService;
     }
@@ -55,7 +55,80 @@ public class FriendContoller {
         return res.toString();
     }
 
-    @GetMapping(value = "friends/getList")
+    @GetMapping(value = "friends/getRequestList")
+    @ResponseBody
+    public String getRequestList(@RequestParam("token") String requesterToken) throws UnsupportedEncodingException {
+
+        String requesterEmail = new String();
+        try {
+            requesterEmail = authService.getUserIdFromToken(requesterToken);
+        } catch (AuthException e) {
+            return makeStatusResponse(e, null).toString();
+        }
+
+        List<String> friendList = friendService.getRequest(requesterEmail);
+        JSONObject res = makeStatusResponse(null, null);
+        res.put("requestList", friendList);
+
+        return res.toString();
+    }
+
+    @PostMapping(value = "friends/requestAccept")
+    @ResponseBody
+    public String acceptRequestFriend(@RequestBody String data) throws UnsupportedEncodingException {
+
+        JSONObject req = new JSONObject(Util.errorDecoder(data));
+
+        String requesterToken = req.get("token").toString();
+        String friendEmail = req.get("email").toString();
+        String acceptOrNot = req.get("accept").toString();
+
+        String requesterEmail = new String();
+        try {
+            requesterEmail = authService.getUserIdFromToken(requesterToken);
+        } catch (AuthException e) {
+            return makeStatusResponse(e, null).toString();
+        }
+
+        try {
+            if (acceptOrNot.equalsIgnoreCase("accept")) {
+                friendService.acceptFriend(requesterEmail, friendEmail);
+            } else {
+                friendService.declineFriend(requesterEmail, friendEmail);
+            }
+        } catch (FriendException e) {
+            return makeStatusResponse(null, e).toString();
+        }
+
+        JSONObject res = makeStatusResponse(null, null);
+        return res.toString();
+    }
+
+    @DeleteMapping(value = "friends/removeFriend")
+    @ResponseBody
+    public String removeFriends(@RequestBody String data) throws UnsupportedEncodingException {
+
+        JSONObject req = new JSONObject(Util.errorDecoder(data));
+
+        String requesterToken = req.get("token").toString();
+        String friendEmail = req.get("email").toString();
+
+        String requesterEmail = new String();
+        try {
+            requesterEmail = authService.getUserIdFromToken(requesterToken);
+        } catch (AuthException e) {
+            return makeStatusResponse(e, null).toString();
+        }
+        try {
+            friendService.removeFriend(requesterEmail, friendEmail);
+        } catch (FriendException e) {
+            return makeStatusResponse(null, e).toString();
+        }
+        JSONObject res = makeStatusResponse(null, null);
+        return res.toString();
+    }
+
+    @GetMapping(value = "friends/getFriendList")
     @ResponseBody
     public String getFriendsList(@RequestParam("token") String requesterToken) throws UnsupportedEncodingException {
 
@@ -66,7 +139,7 @@ public class FriendContoller {
             return makeStatusResponse(e, null).toString();
         }
 
-        List<Friend> friendList = friendService.getFriendList(requesterEmail);
+        List<String> friendList = friendService.getFriendList(requesterEmail);
         JSONObject res = makeStatusResponse(null, null);
         res.put("friendList", friendList);
 
