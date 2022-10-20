@@ -16,21 +16,21 @@ public interface JPAFriendRepo extends JpaRepository<Friend, Long>, FriendRepo{
     Friend save(Friend friendEdge);
 
     @Override
-    @Query("SELECT Friend FROM Friend f " +
+    @Query(value = "SELECT * FROM Friend f " +
             "WHERE f.accepted = true " +
-            "and (f.friendAEmail = :email or f.friendBEmail = :email)")
+            "and (f.friend_A_Email = :email or f.friend_B_Email = :email)", nativeQuery = true)
     List<Friend> getUserFriends(@Param("email") String user);
 
     @Override
-    @Query("SELECT Friend FROM Friend f " +
+    @Query(value = "SELECT * FROM Friend f " +
             "WHERE f.accepted = false " +
-            "and f.friendBEmail = :email")
+            "and f.friend_B_Email = :email", nativeQuery = true)
     List<Friend> getPendingList(@Param("email") String user);
 
     @Override
-    @Query("SELECT Friend FROM Friend f " +
-            "WHERE (f.friendAEmail = :user1 and f.friendBEmail = :user2)" +
-            "or (f.friendAEmail = :user2 and f.friendBEmail = :user1)")
+    @Query(value = "SELECT * FROM Friend f " +
+            "WHERE (f.friend_A_Email = :user1 and f.friend_B_Email = :user2)" +
+            "or (f.friend_A_Email = :user2 and f.friend_B_Email = :user1)", nativeQuery = true)
     Optional<Friend> checkRelationship(@Param("user1") String user1
             , @Param("user2") String user2);
 
@@ -41,7 +41,8 @@ public interface JPAFriendRepo extends JpaRepository<Friend, Long>, FriendRepo{
 
     @Override
     @Modifying
-    @Query("delete from Friend f where f.friendAEmail = :user1 and f.friendBEmail = :user2")
+    @Query("delete from Friend f where (f.friendAEmail = :user1 and f.friendBEmail = :user2) " +
+            "or (f.friendAEmail = :user2 and f.friendBEmail = :user1)")
     void removeFriend(@Param("user1") String user1, @Param("user2") String user2);
 
     @Override

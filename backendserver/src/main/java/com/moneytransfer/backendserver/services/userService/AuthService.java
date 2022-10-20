@@ -15,6 +15,10 @@ public class AuthService {
 
     private TokenRepo tokenRepo;
 
+    public AuthService(TokenRepo tokenRepo) {
+        this.tokenRepo = tokenRepo;
+    }
+
     public String getUserIdFromToken(String tokenStr) throws AuthException {
 
         Optional<Token> TokenRepoRes = tokenRepo.findByToken(tokenStr);

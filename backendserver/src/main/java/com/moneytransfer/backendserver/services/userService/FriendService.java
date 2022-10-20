@@ -86,7 +86,7 @@ public class FriendService {
         List<Friend> fList = friendRepo.getPendingList(userEmail);
         List<String> retList = new ArrayList<>();
         for (Friend friend : fList) {
-            retList.add(friend.getFriendBEmail());
+            retList.add(friend.getFriendAEmail());
         }
         return retList;
     }

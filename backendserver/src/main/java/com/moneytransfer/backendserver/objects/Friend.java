@@ -1,9 +1,6 @@
 package com.moneytransfer.backendserver.objects;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Friend {
@@ -12,7 +9,9 @@ public class Friend {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name="friend_a_email")
     private String friendAEmail; // A friend who want to be friend of B
+    @Column(name="friend_b_email")
     private String friendBEmail;
     private boolean accepted;
 

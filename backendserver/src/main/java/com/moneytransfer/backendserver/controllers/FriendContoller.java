@@ -76,8 +76,7 @@ public class FriendContoller {
     @PutMapping(value = "friends/requestAccept")
     @ResponseBody
     public String acceptRequestFriend(@RequestBody String data) throws UnsupportedEncodingException {
-
-        JSONObject req = new JSONObject(Util.errorDecoder(data));
+        JSONObject req = new JSONObject(data);
 
         String requesterToken = req.get("token").toString();
         String friendEmail = req.get("email").toString();
@@ -92,9 +91,9 @@ public class FriendContoller {
 
         try {
             if (acceptOrNot.equalsIgnoreCase("accept")) {
-                friendService.acceptFriend(requesterEmail, friendEmail);
+                friendService.acceptFriend(friendEmail, requesterEmail);
             } else {
-                friendService.declineFriend(requesterEmail, friendEmail);
+                friendService.declineFriend(friendEmail, requesterEmail);
             }
         } catch (FriendException e) {
             return makeStatusResponse(null, e).toString();
@@ -104,7 +103,7 @@ public class FriendContoller {
         return res.toString();
     }
 
-    @DeleteMapping(value = "friends/removeFriend")
+    @PostMapping(value = "friends/removeFriend")
     @ResponseBody
     public String removeFriends(@RequestBody String data) throws UnsupportedEncodingException {
 

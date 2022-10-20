@@ -8,14 +8,14 @@ import java.util.Scanner;
 
 public class Main {
 
-    static canner sc = new Scanner(System.in);
+    static Scanner sc = new Scanner(System.in);
     static ApiCallMaker apicall = new ApiCallMaker();
     static Map<String, String> headerMap = new HashMap<>();
     static Map<String, String> addrMap = new HashMap<>();
 
     public static void main(String[] args) {
         String token = "?";
-
+        setAddr();
         for (;;) {
             System.out.println("======= =========TOKEN========= =======");
             System.out.println("token: " + token);
@@ -25,11 +25,12 @@ public class Main {
             System.out.println("3. List Friends");
             System.out.println("4. Check Friend Request");
             System.out.println("5. Request Friend");
-            System.out.println("6. Remove Friend");
+            System.out.println("6. Accept/Decline Friend Request");
+            System.out.println("7. Remove Friends");
 
             String input = sc.nextLine();
             int menu = 0;
-            if (input.length() == 1 && input.charAt(0) >= '1' && input.charAt(0) <= '6') {
+            if (input.length() == 1 && input.charAt(0) >= '1' && input.charAt(0) <= '7') {
                 menu = Integer.parseInt(input);
             } else {
                 continue;
@@ -55,10 +56,10 @@ public class Main {
                 token = signIn(email, password);
             } else if (menu == 3) {
                 System.out.println("======= ==========List Friends========= =======");
-                System.out.print(getFriendList(token));
+                System.out.println("Friend: " + getFriendList(token));
             } else if (menu == 4) {
                 System.out.println("======= ==========Friend Request========= =======");
-                System.out.print(getRequestList(token));
+                System.out.println("Friend who requests: " + getRequestList(token));
             } else if (menu == 5) {
                 System.out.println("======= ==========Request Friend========= =======");
                 System.out.print("Friend Email: ");
@@ -74,7 +75,7 @@ public class Main {
                 String Yn = sc.nextLine();
                 System.out.print("\n");
                 boolean accept = Yn.equalsIgnoreCase("y");
-                acceptFriendReq(token, accept);
+                acceptFriendReq(token, email, accept);
             } else if (menu == 7) {
                 System.out.println("======= ==========Remove Friends========= =======");
                 System.out.print("Friend Email: ");
@@ -146,12 +147,12 @@ public class Main {
      * @param token
      * @param accept true accept, else decline
      */
-    private static void acceptFriendReq(String token, boolean accept) {
+    private static void acceptFriendReq(String token, String friendEmail, boolean accept) {
         JSONObject req = new JSONObject();
         JSONObject res = new JSONObject();
         req.put("token", token);
         req.put("email", friendEmail);
-        req.put(accept ? "accept" : "decline", acceptStr);
+        req.put("accept", accept ? "accept" : "decline");
 
         try {
             res = apicall.callPut(addrMap.get("endPoint") + addrMap.get("requestAccept"), headerMap, req);
@@ -171,7 +172,7 @@ public class Main {
         paramMap.put("token", token);
 
         try {
-            res = apicall.callGet(addrMap.get("endPoint") + addrMap.get("requestAccept"), headerMap, paramMap);
+            res = apicall.callGet(addrMap.get("endPoint") + addrMap.get("getRequestList"), headerMap, paramMap);
             System.out.println(res + "\n");
         }  catch (Exception e) {
             e.printStackTrace();
@@ -198,19 +199,17 @@ public class Main {
         return res.get("friendList").toString();
     }
 
-    private static String removeFriend(String token, String friendEmail) {
+    private static void removeFriend(String token, String friendEmail) {
         JSONObject req = new JSONObject();
         JSONObject res = new JSONObject();
         req.put("token", token);
         req.put("email", friendEmail);
 
         try {
-            res = apicall.callDel(addrMap.get("endPoint") + addrMap.get("removeFriend"), headerMap, req);
+            res = apicall.callPost(addrMap.get("endPoint") + addrMap.get("removeFriend"), headerMap, req);
             System.out.println(res + "\n");
         }  catch (Exception e) {
             e.printStackTrace();
         }
-        
-        return res.get("friendList").toString();
     }
 }

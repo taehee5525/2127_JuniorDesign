@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface FriendRepo {
 
-    Friend save(Friend friendEdge);
+    Friend save(Friend friend);
 
     List<Friend> getUserFriends(String user);
 
