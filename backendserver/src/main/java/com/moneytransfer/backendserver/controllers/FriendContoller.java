@@ -73,7 +73,7 @@ public class FriendContoller {
         return res.toString();
     }
 
-    @PostMapping(value = "friends/requestAccept")
+    @PutMapping(value = "friends/requestAccept")
     @ResponseBody
     public String acceptRequestFriend(@RequestBody String data) throws UnsupportedEncodingException {
 
