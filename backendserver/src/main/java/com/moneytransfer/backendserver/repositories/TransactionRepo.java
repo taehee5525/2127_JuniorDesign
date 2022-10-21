@@ -1,6 +1,9 @@
 package com.moneytransfer.backendserver.repositories;
 
 import com.moneytransfer.backendserver.objects.Friend;
+import com.moneytransfer.backendserver.objects.Transaction;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
@@ -8,18 +11,20 @@ import java.util.Optional;
 
 public interface TransactionRepo {
 
-    Friend save(Friend friendEdge);
+    Transaction save(Transaction transaction);
 
-    List<Friend> getUserFriends(String user);
+    List<Transaction> getTransactionList(String userEmail);
 
-    List<Friend> getPendingList(String user);
+    Optional<Transaction> getTransaction(String transactionId);
 
-    Optional<Friend> checkRelationship(String user1, String user2);
+    List<Transaction> getPendingList(String userEmail);
 
-    void updateAccepted(String user1, String user2);
+    void updatePayerAccepted(String transactionId, boolean confirmed);
 
-    void removeFriend(String user1, String user2);
+    void updatePayeeAccepted(String transactionId, boolean confirmed);
 
-    List<Friend> findAll();
+    void updateTimestamp(String transactionId, long timestamp);
+
+    List<Transaction> findAll();
 
 }

@@ -35,6 +35,14 @@ public interface JPAFriendRepo extends JpaRepository<Friend, Long>, FriendRepo{
             , @Param("user2") String user2);
 
     @Override
+    @Query(value = "SELECT * FROM Friend f " +
+            "where f.accepted = true and" +
+            "((f.friend_A_Email = :user1 and f.friend_B_Email = :user2)" +
+            "or (f.friend_A_Email = :user2 and f.friend_B_Email = :user1))", nativeQuery = true)
+    Optional<Friend> areTheyFriend(@Param("user1") String user1
+            , @Param("user2") String user2);
+
+    @Override
     @Modifying
     @Query("update Friend set accepted = true where friendAEmail = :user1 and friendBEmail = :user2")
     void updateAccepted(@Param("user1") String user1, @Param("user2") String user2);

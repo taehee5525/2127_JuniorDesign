@@ -2,6 +2,7 @@ package com.moneytransfer.backendserver;
 
 import com.moneytransfer.backendserver.repositories.FriendRepo;
 import com.moneytransfer.backendserver.repositories.TokenRepo;
+import com.moneytransfer.backendserver.repositories.TransactionRepo;
 import com.moneytransfer.backendserver.repositories.UserRepo;
 import com.moneytransfer.backendserver.services.userService.AuthService;
 import com.moneytransfer.backendserver.services.userService.CreateUserService;
@@ -17,14 +18,13 @@ public class SpringConfigs {
     private final UserRepo userRepo;
     private final TokenRepo tokenRepo;
     private final FriendRepo friendRepo;
+    private final TransactionRepo transactionRepo;
 
-    public SpringConfigs(UserRepo userRepo, TokenRepo tokenRepo, FriendRepo friendRepo) {
+    public SpringConfigs(UserRepo userRepo, TokenRepo tokenRepo
+            , FriendRepo friendRepo, TransactionRepo transactionRepo) {
         this.userRepo = userRepo;
         this.tokenRepo = tokenRepo;
         this.friendRepo = friendRepo;
+        this.transactionRepo = transactionRepo;
     }
-
-
-
-
 }

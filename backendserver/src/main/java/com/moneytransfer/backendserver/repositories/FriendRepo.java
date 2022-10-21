@@ -16,6 +16,8 @@ public interface FriendRepo {
 
     Optional<Friend> checkRelationship(String user1, String user2);
 
+    Optional<Friend> areTheyFriend(String user1, String user2);
+
     void updateAccepted(String user1, String user2);
 
     void removeFriend(String user1, String user2);
