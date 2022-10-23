@@ -126,6 +126,7 @@ public class TempFriendRepository implements FriendRepository {
         String email1 = temp.lookupUser(pnum1).getEmail();
         String email2 = temp.lookupUser(pnum2).getEmail();
         disconnect(email1, email2);
+        return false;
     }
 
     /**

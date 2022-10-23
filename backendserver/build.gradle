@@ -17,7 +17,10 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	// https://mvnrepository.com/artifact/org.json/json
 	implementation group: 'org.json', name: 'json', version: '20220924'
-
+	//JPA?
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	//h2
+	runtimeOnly 'com.h2database:h2'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 

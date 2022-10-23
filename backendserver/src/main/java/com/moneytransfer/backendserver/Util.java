@@ -2,9 +2,14 @@ package com.moneytransfer.backendserver;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Random;
 
 public class Util {
+
+    public final static long TOKEN_EXPIRE_LIMIT = 300000; // 300000ms == 300s = 5mins
+
     /**
      * Converts an array of bytes to a String.
      * @param temp byte array to be converted
@@ -46,5 +51,24 @@ public class Util {
                 .limit(len)
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
                 .toString();
+    }
+
+    /**
+     * Appends salt to password and hashes the modified password
+     * @param input user-input password
+     * @return hashed value of password + salt
+     */
+    public static String makeSaltedVal(String input, String salt) {
+        String temp = input + salt;
+        String ret = "0";
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            md.update(temp.getBytes());
+            byte[] hashedVal = md.digest();
+            ret = Util.byteArrToString(hashedVal);
+        } catch (NoSuchAlgorithmException e) {
+        } finally {
+            return ret;
+        }
     }
 }
