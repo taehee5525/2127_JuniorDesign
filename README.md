@@ -3,6 +3,30 @@
 ## Real-time person-to-person money transfer solution based on open source payment Platform on Azure.
 Creating a payment application like Venmo, Zelle on Mojaloop, an open source payment platform, using Microsoft Azure.
 
+# Release Notes
+
+## Version: 0.3.0 Released: 10/24/2022
+### Features
+
+- [x] The Back-End Spring Boot server is deployed and working.
+- [x] H2 database is constructed and ready to store the user-related information.
+- [x] Friend-related features are implemented. The user now can add/remove friends.
+- [x] The transactions can be made, however, "Real" transactions cannot be made due to an issue with Mojaloop.
+- [x] API Test tool kit is implemented to test the API calls and simulate transactions.
+- [x] Payee Information, transaction page are now implemented.
+
+
+### Known-Issues
+
+- [ ] Front-End failed to call the APIs from Back-End
+- [ ] Account Look-up Service of Mojaloop is not responding
+
+
+### Bug Fixes
+- [x] Central-Ledger Pod of Mojaloop was not deploying. =>
+    All pods of Mojaloop is working now.
+- [x] Some pages had an issue with layouts =>
+    Now the layouts are squared away and displaying correctly. They are in the right spot now!
 
 # Release Notes
 
