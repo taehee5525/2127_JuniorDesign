@@ -31,7 +31,7 @@ public class MojaUpdatePartyService {
         this.userRepo = userRepo;
     }
 
-    @PostConstruct
+    //@PostConstruct //<-- remove if you have mojaloop on local.
     private void init() {
         List<User2> user2List = userRepo.findAll();
         requestList = new HashSet<>();
