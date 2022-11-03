@@ -4,11 +4,22 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 public class Util {
 
     public final static long TOKEN_EXPIRE_LIMIT = 300000; // 300000ms == 300s = 5mins
+    public static final String FSP_NAME = "moneyTransfer";
+    public final static String CURRENCY = "USD";
+    public static final Map<String, String> urlMap = new HashMap<String, String>() {
+        {
+            put("Central_Ledger", "http://central-ledger.local");
+            put("Account_Lookup_Service", "http://account-lookup-service.local");
+            put("endPoint", "http://localhost:8080/");
+        }
+    };
 
     /**
      * Converts an array of bytes to a String.
