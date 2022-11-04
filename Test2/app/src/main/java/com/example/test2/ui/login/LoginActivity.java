@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat;
 import androidx.core.app.ActivityCompat;
 import android.content.pm.PackageManager;
 
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -18,30 +19,46 @@ import android.widget.EditText;
 import android.widget.Toast;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.os.AsyncTask;
 
 import com.example.test2.CreateAccActivity;
 import com.example.test2.InstructionsPage;
 import com.example.test2.LoginFail;
 import com.example.test2.LoginSuccess;
+import com.example.test2.ApiCallMaker;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class LoginActivity extends AppCompatActivity {
 
     private ImageButton imgButton;
     private Button signupBtn, loginBtn;
     private EditText username, password;
+    private String usernameState, passwordState;
+
+    static ApiCallMaker apicall = new ApiCallMaker();
+    static Map<String, String> headerMap = new HashMap<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        checkDangerousPermissions();
+      //  checkDangerousPermissions();
 
         imgButton = (ImageButton) findViewById(R.id.helpBtn);
         signupBtn = (Button) findViewById(R.id.btnSignUp);
         loginBtn = (Button) findViewById(R.id.login);
         username = (EditText) findViewById(R.id.username);
         password = (EditText) findViewById(R.id.password);
+
+        usernameState = "0";
+        passwordState = "0";
 
         // Help Page
         imgButton.setOnClickListener(new View.OnClickListener() {
@@ -85,6 +102,9 @@ public class LoginActivity extends AppCompatActivity {
                         password.getText().toString() == null) {
                     password.setError("password minimum contain 5 character");
 
+                } else {
+                    usernameState = "1";
+                    passwordState = "1";
                 }
             }
         };
@@ -96,14 +116,32 @@ public class LoginActivity extends AppCompatActivity {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (username.getText().toString().length() != 0 &&
-                    password.getText().toString().length() != 0) {
-                    String id = username.getText().toString();
-                    String pwd = password.getText().toString();
 
-                    openLoginSuccess();
-                }else {
-                    openLoginFail();
+                // if login & password are in correct form, login button is clickable
+                if (usernameState == "1" && passwordState == "1") {
+
+                    Log.w("login", "login...");
+
+                    try {
+                        String id = username.getText().toString();
+                        String pwd = password.getText().toString();
+
+                        Log.w("id and password", id + ", " + pwd);
+
+                        CustomTask task = new CustomTask();
+                        String result = task.execute(id,pwd).get();
+
+                        Log.w("login token", result);
+
+                        if (result.length() > 2) {
+                            openLoginSuccess();
+                        } else {
+                            openLoginFail();
+                        }
+
+                    } catch (Exception e) {
+                    }
+
                 }
             }
         });
@@ -154,6 +192,38 @@ public class LoginActivity extends AppCompatActivity {
                 ActivityCompat.requestPermissions(this, permissions, 1);
             }
         }
+    }
+
+    class CustomTask extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... strings) {
+            JSONObject req = new JSONObject();
+            JSONObject res = new JSONObject();
+            String str = new String();
+
+            try {
+                req.put("email", username.getText().toString());
+                req.put("password", password.getText().toString());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                res = apicall.callPost("http://10.0.2.2:8080/users/userlogin", headerMap, req);
+            }  catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
+                str = res.get("token").toString();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return str;
+        }
+
+
     }
 
 }
