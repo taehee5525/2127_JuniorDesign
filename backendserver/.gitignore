@@ -4,6 +4,8 @@
 **/.DS_Store
 **/._.DS_Store
 
+local.properties
+
 HELP.md
 .gradle
 build/
@@ -27,7 +29,6 @@ bin/
 .idea
 *.iws
 *.iml
-/local.properties
 *.ipr
 out/
 !**/src/main/**/out/
@@ -42,4 +43,3 @@ out/
 
 ### VS Code ###
 .vscode/
-local.properties
