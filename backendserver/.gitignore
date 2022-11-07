@@ -4,6 +4,8 @@
 **/.DS_Store
 **/._.DS_Store
 
+local.properties
+
 HELP.md
 .gradle
 build/

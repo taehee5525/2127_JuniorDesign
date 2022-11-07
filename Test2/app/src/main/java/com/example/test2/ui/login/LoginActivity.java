@@ -1,98 +1,82 @@
 package com.example.test2.ui.login;
 
-import android.app.Activity;
+import com.example.test2.R;
 
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.core.app.ActivityCompat;
 
+import android.content.pm.PackageManager;
+
+import android.util.Log;
+import android.util.Patterns;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.EditText;
+import android.widget.Toast;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
-import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.os.AsyncTask;
 
 import com.example.test2.CreateAccActivity;
 import com.example.test2.InstructionsPage;
 import com.example.test2.LoginFail;
 import com.example.test2.LoginSuccess;
-import com.example.test2.R;
-import com.example.test2.ui.login.LoginViewModel;
-import com.example.test2.ui.login.LoginViewModelFactory;
-import com.example.test2.databinding.ActivityLoginBinding;
+import com.example.test2.ApiCallMaker;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
 
 public class LoginActivity extends AppCompatActivity {
 
-    private LoginViewModel loginViewModel;
-    private ActivityLoginBinding binding;
-    private Button signupBtn;
     private ImageButton imgButton;
-    private Button loginBtn;
+    private Button signupBtn, loginBtn;
+    private EditText username, password;
+    private boolean usernameState, passwordState;
+
+    private ApiCallMaker apicall = new ApiCallMaker();
+    private Map<String, String> headerMap = new HashMap<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
 
-        binding = ActivityLoginBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        imgButton = (ImageButton) findViewById(R.id.helpBtn);
+        signupBtn = (Button) findViewById(R.id.btnSignUp);
+        loginBtn = (Button) findViewById(R.id.login);
+        username = (EditText) findViewById(R.id.username);
+        password = (EditText) findViewById(R.id.password);
 
-        loginViewModel = new ViewModelProvider(this, new LoginViewModelFactory())
-                .get(LoginViewModel.class);
+        usernameState = false;
+        passwordState = false;
 
-        final EditText usernameEditText = binding.username;
-        final EditText passwordEditText = binding.password;
-        final ProgressBar loadingProgressBar = binding.loading;
-
-        loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
+        // Help Page
+        imgButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onChanged(@Nullable LoginFormState loginFormState) {
-                if (loginFormState == null) {
-                    return;
-                }
-                if (loginFormState.getUsernameError() != null) {
-                    usernameEditText.setError(getString(loginFormState.getUsernameError()));
-                }
-                if (loginFormState.getPasswordError() != null) {
-                    passwordEditText.setError(getString(loginFormState.getPasswordError()));
-                }
+            public void onClick(View view) {
+                openHelpPage();
             }
         });
 
-        loginViewModel.getLoginResult().observe(this, new Observer<LoginResult>() {
+        // Sign Up Page
+        signupBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onChanged(@Nullable LoginResult loginResult) {
-                if (loginResult == null) {
-                    return;
-                }
-                loadingProgressBar.setVisibility(View.GONE);
-                if (loginResult.getError() != null) {
-                    showLoginFailed(loginResult.getError());
-                }
-                if (loginResult.getSuccess() != null) {
-                    updateUiWithUser(loginResult.getSuccess());
-                    //switch screen
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(intent);
-                }
-                setResult(Activity.RESULT_OK);
-
-                //Complete and destroy login activity once successful
-                finish();
+            public void onClick(View view) {
+                openSignup();
             }
         });
 
+        // watch inputs of Email and Password fields
         TextWatcher afterTextChangedListener = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -106,60 +90,91 @@ public class LoginActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                loginViewModel.loginDataChanged(usernameEditText.getText().toString(),
-                        passwordEditText.getText().toString());
+                if (Patterns.EMAIL_ADDRESS.matcher(username.getText().toString()).matches()) {
+                    usernameState = true;
+                }
+                if (password.getText().toString().length() > 5) {
+                    passwordState = true;
+                }
             }
         };
-        usernameEditText.addTextChangedListener(afterTextChangedListener);
-        passwordEditText.addTextChangedListener(afterTextChangedListener);
-        passwordEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        username.addTextChangedListener(afterTextChangedListener);
+        password.addTextChangedListener(afterTextChangedListener);
 
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    loginViewModel.login(usernameEditText.getText().toString(),
-                            passwordEditText.getText().toString());
-                }
-                return false;
-            }
-        });
 
-        signupBtn = (Button) findViewById(R.id.btnSignUp);
-        signupBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openSignup();
-            }
-        });
-
-        imgButton = (ImageButton) findViewById(R.id.helpBtn);
-        imgButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openHelpPage();
-            }
-        });
-
-        // Backend part: check database & proceed to either success page or failed page
-        loginBtn = (Button) findViewById(R.id.login);
+        // Login Page
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (true) {
-                    openLoginSuccess();
+                // to check if email and password are in correct format
+                if (usernameState && passwordState) {
+                    Log.w("login", "login...");
+                    try {
+                        String id = username.getText().toString();
+                        String pwd = password.getText().toString();
+
+                        Log.w("id and password", id + ", " + pwd);
+
+                        CustomTask task = new CustomTask();
+                        String result = task.execute(id, pwd).get();
+
+                        Log.w("login token", result);
+
+                        if (result.length() > 2) {
+                            openLoginSuccess();
+                        } else {
+                            openLoginFail();
+                        }
+
+                    } catch (Exception ignored) {
+                    }
+
                 } else {
-                    openLoginFail();
+                    if (!Patterns.EMAIL_ADDRESS.matcher(username.getText().toString()).matches()) {
+                        username.setError("Please enter a valid email address");
+                    }
+
+                    if (password.getText().toString().length() < 5) {
+                        password.setError("Please enter at least 6 characters");
+                    }
+
+                    // Error message set for email and password
+                    TextWatcher afterTextChangedListener = new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                            // ignore
+                        }
+
+                        @Override
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+                            // ignore
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable s) {
+                            if (!Patterns.EMAIL_ADDRESS.matcher(username.getText().toString()).matches()) {
+                                username.setError("Please enter a valid email address");
+                            } else if (password.getText().toString().length() < 5) {
+                                password.setError("Please enter at least 6 characters");
+                            } else {
+                                usernameState = true;
+                                passwordState = true;
+                            }
+                        }
+                    };
+                    username.addTextChangedListener(afterTextChangedListener);
+                    password.addTextChangedListener(afterTextChangedListener);
                 }
             }
         });
     }
-    private void openSignup() {
-        Intent intent = new Intent(this, CreateAccActivity.class);
+    private void openHelpPage() {
+        Intent intent = new Intent(this, InstructionsPage.class);
         startActivity(intent);
     }
 
-    private void openHelpPage() {
-        Intent intent = new Intent(this, InstructionsPage.class);
+    private void openSignup() {
+        Intent intent = new Intent(this, CreateAccActivity.class);
         startActivity(intent);
     }
 
@@ -173,14 +188,32 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void updateUiWithUser(LoggedInUserView model) {
-        String welcome = getString(R.string.welcome) + model.getDisplayName();
-        // TODO : initiate successful logged in experience
-        Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
-    }
+    class CustomTask extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... strings) {
+            JSONObject req = new JSONObject();
+            JSONObject res = new JSONObject();
+            String token = new String();
 
-    private void showLoginFailed(@StringRes Integer errorString) {
-        Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
+            try {
+                req.put("email", username.getText().toString());
+                req.put("password", password.getText().toString());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                res = apicall.callPost("http://10.0.2.2:8080/users/userlogin", headerMap, req);
+                token = res.get("token").toString();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return token;
+        }
+
+
     }
 
 }
