@@ -39,17 +39,15 @@ public class LoginActivity extends AppCompatActivity {
     private ImageButton imgButton;
     private Button signupBtn, loginBtn;
     private EditText username, password;
-    private String usernameState, passwordState;
+    private boolean usernameState, passwordState;
 
-    static ApiCallMaker apicall = new ApiCallMaker();
-    static Map<String, String> headerMap = new HashMap<>();
+    private ApiCallMaker apicall = new ApiCallMaker();
+    private Map<String, String> headerMap = new HashMap<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-      //  checkDangerousPermissions();
 
         imgButton = (ImageButton) findViewById(R.id.helpBtn);
         signupBtn = (Button) findViewById(R.id.btnSignUp);
@@ -57,8 +55,8 @@ public class LoginActivity extends AppCompatActivity {
         username = (EditText) findViewById(R.id.username);
         password = (EditText) findViewById(R.id.password);
 
-        usernameState = "0";
-        passwordState = "0";
+        usernameState = false;
+        passwordState = false;
 
         // Help Page
         imgButton.setOnClickListener(new View.OnClickListener() {
@@ -76,40 +74,13 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        TextWatcher afterTextChangedListener = new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                if (password.getText().toString().length() < 5 ||
-                        password.getText().toString() == null) {
-                    password.setError("password minimum contain 5 character");
-                }
-            }
+        if (Patterns.EMAIL_ADDRESS.matcher(username.getText().toString()).matches()) {
+            usernameState = true;
+        }
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                // ignore
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                //String email = username.getText().toString().trim();
-
-                if (username.getText().toString() == null ||
-                        !Patterns.EMAIL_ADDRESS.matcher(username.getText().toString()).matches()) {
-                    username.setError("email address form");
-
-                } else if (password.getText().toString().length() < 5 ||
-                        password.getText().toString() == null) {
-                    password.setError("password minimum contain 5 character");
-
-                } else {
-                    usernameState = "1";
-                    passwordState = "1";
-                }
-            }
-        };
-        username.addTextChangedListener(afterTextChangedListener);
-        password.addTextChangedListener(afterTextChangedListener);
+        if (password.getText().toString().length() > 5) {
+            passwordState = true;
+        }
 
 
         // Login Page
@@ -117,8 +88,8 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                // if login & password are in correct form, login button is clickable
-                if (usernameState == "1" && passwordState == "1") {
+                // to check if email and password are in correct format
+                if (usernameState && passwordState) {
 
                     Log.w("login", "login...");
 
@@ -139,9 +110,44 @@ public class LoginActivity extends AppCompatActivity {
                             openLoginFail();
                         }
 
-                    } catch (Exception e) {
+                    } catch (Exception ignored) {
                     }
 
+                } else {
+                    if (!Patterns.EMAIL_ADDRESS.matcher(username.getText().toString()).matches()) {
+                        username.setError("Please enter a valid email address");
+                    }
+
+                    if (password.getText().toString().length() < 5) {
+                        password.setError("Please enter at least 6 characters");
+                    }
+
+                    // Error message set for email and password
+                    TextWatcher afterTextChangedListener = new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                            // ignore
+                        }
+
+                        @Override
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+                            // ignore
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable s) {
+                            if (!Patterns.EMAIL_ADDRESS.matcher(username.getText().toString()).matches()) {
+                                username.setError("Please enter a valid email address");
+                            } else if (password.getText().toString().length() < 5) {
+                                password.setError("Please enter at least 6 characters");
+                            } else {
+                                usernameState = true;
+                                passwordState = true;
+                            }
+                        }
+                    };
+                    username.addTextChangedListener(afterTextChangedListener);
+                    password.addTextChangedListener(afterTextChangedListener);
                 }
             }
         });
@@ -166,40 +172,12 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void checkDangerousPermissions() {
-        String[] permissions = {
-                Manifest.permission.INTERNET,
-                Manifest.permission.ACCESS_NETWORK_STATE,
-                Manifest.permission.ACCESS_WIFI_STATE
-        };
-
-        int permissionCheck = PackageManager.PERMISSION_GRANTED;
-        for (int i = 0; i < permissions.length; i++) {
-            permissionCheck = ContextCompat.checkSelfPermission(this, permissions[i]);
-            if (permissionCheck == PackageManager.PERMISSION_DENIED) {
-                break;
-            }
-        }
-
-        if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
-            Toast.makeText(this, "authorized", Toast.LENGTH_LONG).show();
-        } else {
-            Toast.makeText(this, "no authorized", Toast.LENGTH_LONG).show();
-
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, permissions[0])) {
-                Toast.makeText(this, "need help with authorization.", Toast.LENGTH_LONG).show();
-            } else {
-                ActivityCompat.requestPermissions(this, permissions, 1);
-            }
-        }
-    }
-
     class CustomTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... strings) {
             JSONObject req = new JSONObject();
             JSONObject res = new JSONObject();
-            String str = new String();
+            String token = new String();
 
             try {
                 req.put("email", username.getText().toString());
@@ -210,17 +188,13 @@ public class LoginActivity extends AppCompatActivity {
 
             try {
                 res = apicall.callPost("http://10.0.2.2:8080/users/userlogin", headerMap, req);
+                token = res.get("token").toString();
+
             }  catch (Exception e) {
                 e.printStackTrace();
             }
 
-            try {
-                str = res.get("token").toString();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-            return str;
+            return token;
         }
 
 
