@@ -1,4 +1,5 @@
 package com.example.test2.ui.login;
+
 import com.example.test2.R;
 
 import android.Manifest;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.core.app.ActivityCompat;
+
 import android.content.pm.PackageManager;
 
 import android.util.Log;
@@ -74,25 +76,39 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        if (Patterns.EMAIL_ADDRESS.matcher(username.getText().toString()).matches()) {
-            usernameState = true;
-        }
+        // watch inputs of Email and Password fields
+        TextWatcher afterTextChangedListener = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // ignore
+            }
 
-        if (password.getText().toString().length() > 5) {
-            passwordState = true;
-        }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // ignore
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (Patterns.EMAIL_ADDRESS.matcher(username.getText().toString()).matches()) {
+                    usernameState = true;
+                }
+                if (password.getText().toString().length() > 5) {
+                    passwordState = true;
+                }
+            }
+        };
+        username.addTextChangedListener(afterTextChangedListener);
+        password.addTextChangedListener(afterTextChangedListener);
 
 
         // Login Page
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 // to check if email and password are in correct format
                 if (usernameState && passwordState) {
-
                     Log.w("login", "login...");
-
                     try {
                         String id = username.getText().toString();
                         String pwd = password.getText().toString();
@@ -100,7 +116,7 @@ public class LoginActivity extends AppCompatActivity {
                         Log.w("id and password", id + ", " + pwd);
 
                         CustomTask task = new CustomTask();
-                        String result = task.execute(id,pwd).get();
+                        String result = task.execute(id, pwd).get();
 
                         Log.w("login token", result);
 
@@ -190,7 +206,7 @@ public class LoginActivity extends AppCompatActivity {
                 res = apicall.callPost("http://10.0.2.2:8080/users/userlogin", headerMap, req);
                 token = res.get("token").toString();
 
-            }  catch (Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 

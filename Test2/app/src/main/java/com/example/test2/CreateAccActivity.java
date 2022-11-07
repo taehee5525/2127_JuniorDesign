@@ -10,6 +10,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.util.Patterns;
+import android.view.View;
 import android.widget.Button;
 import android.os.Bundle;
 import android.widget.CheckBox;
@@ -33,9 +34,11 @@ public class CreateAccActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Button button;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_acc);
+
+        Button loginBtn = (Button) findViewById(R.id.btnSignIn);
+        Button signupBtn = (Button) findViewById(R.id.createAccount);
 
         personName = (EditText) findViewById(R.id.personName);
         username = (EditText) findViewById(R.id.username);
@@ -43,94 +46,110 @@ public class CreateAccActivity extends AppCompatActivity {
         phoneNumber = (EditText) findViewById(R.id.phoneNumber);
         checkBox = (CheckBox) findViewById(R.id.checkBox);
 
-        nameState = false;
-        usernameState = false;
-        passwordState = false;
+        // openLogin() page
+        loginBtn.setOnClickListener(view -> openLogin());
 
-        //This is the sign in button at the bottom of the page
-        button = (Button) findViewById(R.id.btnSignIn);
-        button.setOnClickListener(view -> openLogin());
+        /* watch inputs of Name, Email and Password fields */
+        TextWatcher afterTextChangedListener = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
-        if (personName.getText().toString().length() > 2) {
-            nameState = true;
-        }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
 
-        if (Patterns.EMAIL_ADDRESS.matcher(username.getText().toString()).matches()) {
-            usernameState = true;
-        }
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (personName.getText().toString().length() > 2) {
+                    nameState = true;
+                }
 
-        if (password.getText().toString().length() > 5) {
-            passwordState = true;
-        }
+                if (Patterns.EMAIL_ADDRESS.matcher(username.getText().toString()).matches()) {
+                    usernameState = true;
+                }
+
+                if (password.getText().toString().length() > 5) {
+                    passwordState = true;
+                }
+            }
+        };
+
+        personName.addTextChangedListener(afterTextChangedListener);
+        username.addTextChangedListener(afterTextChangedListener);
+        password.addTextChangedListener(afterTextChangedListener);
 
         phoneNumber.addTextChangedListener(new PhoneNumberFormattingTextWatcher());
 
-        button = (Button) findViewById(R.id.createAccount);
-        button.setOnClickListener(view -> {
-            if (nameState & usernameState & passwordState & checkBox.isChecked()) {
-                try {
-                    String name = personName.getText().toString();
-                    String id = username.getText().toString();
-                    String pwd = password.getText().toString();
-                    String phoneN = phoneNumber.getText().toString();
 
-                    Log.w("name id pwd phoneNumber", name + ", " + id + ", " + pwd + ", " + phoneN);
+        /* Call API & Show error message for incorrect inputs */
+        signupBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // to check if email and password are in correct format
+                if (nameState & usernameState & passwordState & checkBox.isChecked()) {
+                    try {
+                        String name = personName.getText().toString();
+                        String id = username.getText().toString();
+                        String pwd = password.getText().toString();
+                        String phoneN = phoneNumber.getText().toString();
 
-                    CustomTask task = new CustomTask();
-                    String result = task.execute(name, id, pwd, phoneN).get();
+                        Log.w("name id pwd phoneNumber", name + ", " + id + ", " + pwd + ", " + phoneN);
 
-                    Log.w("Valid email check", result);
+                        CustomTask task = new CustomTask();
+                        String result = task.execute(name, id, pwd, phoneN).get();
 
-                    if (result.contains("true")) {
-                        openCreateAccSuccess();
-                    } else {
-                        openCreateAccFail();
-                    }
+                        Log.w("Valid email check", result);
 
-                } catch (Exception ignored) {
-                }
-            } else {
-                if (personName.getText().toString().length() < 3) {
-                    personName.setError("Full name is required");
-                }
-
-                if (!Patterns.EMAIL_ADDRESS.matcher(username.getText().toString()).matches()) {
-                    username.setError("Please enter a valid email address");
-                }
-
-                if (password.getText().toString().length() < 5) {
-                    password.setError("Please enter at least 6 characters");
-                }
-
-                TextWatcher afterTextChangedListener = new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                        // ignore
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        // ignore
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable s) {
-                        if (personName.getText().toString().length() < 3) {
-                            personName.setError("Full name is required");
-                        } else if (!Patterns.EMAIL_ADDRESS.matcher(username.getText().toString()).matches()) {
-                            username.setError("Please enter a valid email address");
-                        } else if (password.getText().toString().length() < 5) {
-                            password.setError("Please enter at least 6 characters");
+                        if (result.contains("true")) {
+                            openCreateAccSuccess();
                         } else {
-                            nameState = true;
-                            usernameState = true;
-                            passwordState = true;
+                            openCreateAccFail();
                         }
+
+                    } catch (Exception ignored) {
                     }
-                };
-                personName.addTextChangedListener(afterTextChangedListener);
-                username.addTextChangedListener(afterTextChangedListener);
-                password.addTextChangedListener(afterTextChangedListener);
+                } else {
+                    if (personName.getText().toString().length() < 3) {
+                        personName.setError("Full name is required");
+                    }
+
+                    if (!Patterns.EMAIL_ADDRESS.matcher(username.getText().toString()).matches()) {
+                        username.setError("Please enter a valid email address");
+                    }
+
+                    if (password.getText().toString().length() < 5) {
+                        password.setError("Please enter at least 6 characters");
+                    }
+
+                    TextWatcher afterTextChangedListener = new TextWatcher() {
+                        @Override
+                        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                        }
+
+                        @Override
+                        public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        }
+
+                        @Override
+                        public void afterTextChanged(Editable s) {
+                            if (personName.getText().toString().length() < 3) {
+                                personName.setError("Full name is required");
+                            } else if (!Patterns.EMAIL_ADDRESS.matcher(username.getText().toString()).matches()) {
+                                username.setError("Please enter a valid email address");
+                            } else if (password.getText().toString().length() < 5) {
+                                password.setError("Please enter at least 6 characters");
+                            } else {
+                                nameState = true;
+                                usernameState = true;
+                                passwordState = true;
+                            }
+                        }
+                    };
+                    personName.addTextChangedListener(afterTextChangedListener);
+                    username.addTextChangedListener(afterTextChangedListener);
+                    password.addTextChangedListener(afterTextChangedListener);
+                }
             }
         });
     }
@@ -150,8 +169,7 @@ public class CreateAccActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    @SuppressLint("StaticFieldLeak")
-    class CustomTask extends AsyncTask <String, Void, String> {
+    class CustomTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... strings) {
             JSONObject req = new JSONObject();
