@@ -2,15 +2,10 @@ package com.example.test2.ui.login;
 
 import com.example.test2.R;
 
-import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import androidx.core.app.ActivityCompat;
-
-import android.content.pm.PackageManager;
 
 import android.util.Log;
 import android.util.Patterns;
@@ -18,7 +13,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.EditText;
-import android.widget.Toast;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.os.AsyncTask;
@@ -28,6 +22,7 @@ import com.example.test2.InstructionsPage;
 import com.example.test2.LoginFail;
 import com.example.test2.LoginSuccess;
 import com.example.test2.ApiCallMaker;
+import com.example.test2.Utility;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -45,6 +40,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private ApiCallMaker apicall = new ApiCallMaker();
     private Map<String, String> headerMap = new HashMap<>();
+
+    private static Utility login_token = new Utility();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -118,7 +115,7 @@ public class LoginActivity extends AppCompatActivity {
                         CustomTask task = new CustomTask();
                         String result = task.execute(id, pwd).get();
 
-                        Log.w("login token", result);
+                        Log.w("login token generated", result);
 
                         if (result.length() > 2) {
                             openLoginSuccess();
@@ -193,7 +190,6 @@ public class LoginActivity extends AppCompatActivity {
         protected String doInBackground(String... strings) {
             JSONObject req = new JSONObject();
             JSONObject res = new JSONObject();
-            String token = new String();
 
             try {
                 req.put("email", username.getText().toString());
@@ -204,13 +200,13 @@ public class LoginActivity extends AppCompatActivity {
 
             try {
                 res = apicall.callPost("http://10.0.2.2:8080/users/userlogin", headerMap, req);
-                token = res.get("token").toString();
+                login_token.setToken(res.get("token").toString());
 
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
-            return token;
+            return login_token.getToken();
         }
 
 
