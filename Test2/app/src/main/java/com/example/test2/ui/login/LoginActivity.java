@@ -41,8 +41,6 @@ public class LoginActivity extends AppCompatActivity {
     private ApiCallMaker apicall = new ApiCallMaker();
     private Map<String, String> headerMap = new HashMap<>();
 
-    private static Utility login_token = new Utility();
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -200,13 +198,13 @@ public class LoginActivity extends AppCompatActivity {
 
             try {
                 res = apicall.callPost("http://10.0.2.2:8080/users/userlogin", headerMap, req);
-                login_token.setToken(res.get("token").toString());
+                Utility.token = res.get("token").toString();
 
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
-            return login_token.getToken();
+            return Utility.token;
         }
 
 
