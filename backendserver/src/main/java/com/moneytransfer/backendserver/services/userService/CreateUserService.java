@@ -15,7 +15,7 @@ public class CreateUserService {
         this.userRepo = userRepo;
     }
 
-    public boolean createUser(String email, String password, String phoneNumber) {
+    public boolean createUser(String email, String name, String password, String phoneNumber) {
         if (userRepo.findByUserEmail(email).isPresent()) {
             return false; // if email already exists, return null
         }
@@ -25,15 +25,18 @@ public class CreateUserService {
         String saltedPw = Util.makeSaltedVal(password, salt);
 
         user.setUserEmail(email);
+        user.setName(name);
         user.setSalt(salt);
         user.setPassword(saltedPw);
-        if (phoneNumber != null) {
-            user.setPhoneNumber(phoneNumber);
-        }
+        user.setPhoneNumber(phoneNumber);
+//        if (phoneNumber != null) {
+//            user.setPhoneNumber(phoneNumber);
+//        }
         userRepo.save(user);
 
         return true;
     }
+
 
 
 }
