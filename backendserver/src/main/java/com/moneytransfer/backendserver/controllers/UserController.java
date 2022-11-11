@@ -32,7 +32,7 @@ public class UserController {
         JSONObject req = new JSONObject(Util.errorDecoder(data));
         JSONObject ret = new JSONObject();
 
-        if (createUserService.createUser(req.get("email").toString(), req.get("password").toString()
+        if (createUserService.createUser(req.get("email").toString(), req.get("name").toString(), req.get("password").toString()
                 , req.opt("phone number") != null ? req.opt("phone number").toString() : null)) {
             ret.put("isSuccess", true);
         } else {
