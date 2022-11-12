@@ -18,6 +18,11 @@ public class User2 {
     private String phoneNumber;
     private double balance;
 
+    //for profile image
+    private String mimetype;
+    private String original_name;
+    private byte[] byteData;
+
     public Long getId() {
         return id;
     }
@@ -72,6 +77,30 @@ public class User2 {
 
     public void setBalance(double balance) {
         this.balance = balance;
+    }
+
+    public String getMimetype() {
+        return mimetype;
+    }
+
+    public void setMimetype(String mimetype) {
+        this.mimetype = mimetype;
+    }
+
+    public String getOriginal_name() {
+        return original_name;
+    }
+
+    public void setOriginal_name(String original_name) {
+        this.original_name = original_name;
+    }
+
+    public byte[] getByteData() {
+        return byteData;
+    }
+
+    public void setByteData(byte[] byteData) {
+        this.byteData = byteData;
     }
 
 }
