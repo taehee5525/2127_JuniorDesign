@@ -14,4 +14,6 @@ public interface UserRepo {
     Optional<User2> findByPhoneNumber(String phoneNumber);
 
     List<User2> findAll();
+
+    void updateProfilePhoto(String userEmail, String mimetype, String original_name, byte[] data);
 }
