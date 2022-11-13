@@ -55,10 +55,13 @@ public class Main {
                 System.out.print("User Email: ");
                 String email = sc.nextLine();
                 System.out.print("\n");
+                System.out.print("Name: ");
+                String name = sc.nextLine();
+                System.out.print("\n");
                 System.out.print("Password: ");
                 String password = sc.nextLine();
                 System.out.print("\n");
-                signUp(email, password);
+                signUp(email, name, password);
             } else if (menu == 1) {
                 System.out.println("======= ==========SIGN IN========= =======");
                 System.out.print("User Email: ");
@@ -155,11 +158,13 @@ public class Main {
         addrMap.put("confirmTransaction", "transactions/confirmTransaction");  //PUT
     }
 
-    private static void signUp(String userEmail,  String password) {
+    private static void signUp(String userEmail, String name, String password) {
         JSONObject req = new JSONObject();
         JSONObject res = new JSONObject();
         req.put("email", userEmail);
+        req.put("name", name);
         req.put("password", password);
+
         try {
             res = apicall.callPost(addrMap.get("endPoint") + addrMap.get("signUp"), headerMap, req);
             //System.out.println(res + "\n");
