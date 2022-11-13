@@ -107,6 +107,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // to check if email and password are in correct format
+
                 if (usernameState && passwordState) {
                     Log.w("login", "login...");
                     try {
@@ -164,6 +165,8 @@ public class LoginActivity extends AppCompatActivity {
                     };
                     username.addTextChangedListener(afterTextChangedListener);
                     password.addTextChangedListener(afterTextChangedListener);
+
+
                 }
             }
         });

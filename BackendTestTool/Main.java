@@ -168,6 +168,10 @@ public class Main {
         }
     }
 
+    private static void uploadProfileImage(MultipartFile file, String token) {
+
+    }
+
     private static String signIn(String userEmail, String password) {
         JSONObject req = new JSONObject();
         JSONObject res = new JSONObject();
@@ -393,7 +397,7 @@ public class Main {
             JSONObject explrObject = jsonArray.getJSONObject(i);
             if (i == 0) {
                 System.out.println("-----------------------------------------------------");
-                System.out.println("----------------------Comleted-----------------------");
+                System.out.println("----------------------Completed-----------------------");
                 System.out.println("-----------------------------------------------------");
             }
             System.out.println("Transaction ID: " + explrObject.getString("transactionId"));
