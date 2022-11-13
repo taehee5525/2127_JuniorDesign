@@ -13,6 +13,12 @@
         android:theme="@style/Theme.Test2"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".SendRequestFail"
+            android:exported="false" />
+        <activity
+            android:name=".SendRequestSucc"
+            android:exported="false" />
+        <activity
             android:name=".SendFriendRequestPage"
             android:exported="false" />
         <activity
