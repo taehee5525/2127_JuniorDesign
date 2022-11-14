@@ -1,119 +1,147 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.login.MainActivity">
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="111dp"
+        android:layout_height="129dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/t_pay_image" />
 
-    <Button
-        android:id="@+id/sendFriendReqBtn"
+    <TextView
+        android:id="@+id/username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add Friend"
-        android:translationX="250dp"
-        android:translationY="10dp" />
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="28dp"
+        android:text="Jane Doe"
+        android:textSize="30sp"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/userEmailAddr"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="janedoe@gmail.com"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@id/username" />
 
     <Button
-        android:id="@+id/second_activity_transaction_button"
-        android:layout_width="369dp"
-        android:layout_height="61dp"
-        android:layout_marginLeft="100dp"
-        android:layout_marginTop="890dp"
+        android:id="@+id/friendListBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="7dp"
         android:backgroundTint="#bf9b30"
-        android:text="Pay Money"
-        android:textColor="#ffffffff"
-        android:textSize="17sp"
-        android:textStyle="bold"
-        android:translationX="-40dp"
-        android:translationY="-350dp"
-        app:iconTint="#A4F4D218" />
+        android:text="Friends"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.883"
+        app:layout_constraintStart_toEndOf="@+id/username"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/second_activity_transaction_button2"
-        android:layout_width="369dp"
-        android:layout_height="61dp"
-        android:layout_marginLeft="100dp"
-        android:layout_marginTop="950dp"
+        android:id="@+id/chooseFriendBtn"
+        android:layout_width="286dp"
+        android:layout_height="58dp"
+        android:layout_gravity="start"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginEnd="12dp"
         android:backgroundTint="#bf9b30"
-        android:text="Request Money"
-        android:textColor="#ffffffff"
-        android:textSize="17sp"
-        android:textStyle="bold"
-        android:translationX="-40dp"
-        android:translationY="-350dp"
-        app:iconTint="#A4F4D218" />
-
-    <Button
-        android:id="@+id/second_activity_find_friend_button"
-        android:layout_width="369dp"
-        android:layout_height="61dp"
-        android:layout_marginLeft="100dp"
-        android:layout_marginTop="200dp"
-        android:backgroundTint="#bf9b30"
+        android:enabled="true"
         android:text="Choose Friend"
         android:textColor="#ffffffff"
         android:textSize="17sp"
         android:textStyle="bold"
-        android:translationX="-40dp"
-        android:translationY="0dp"
-        app:iconTint="#A4F4D218" />
-
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="139dp"
-        android:layout_height="124dp"
-        app:srcCompat="@drawable/t_pay_image" />
+        app:iconTint="#A4F4D218"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <EditText
-        android:id="@+id/editTextNumber"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
+        android:id="@+id/moneyAmt"
+        android:layout_width="330dp"
+        android:layout_height="154dp"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="-80dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="46dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="46dp"
         android:ems="10"
         android:hint="$"
         android:inputType="number"
         android:selectAllOnFocus="true"
         android:textSize="100sp"
-        android:translationX="-130dp"
-        android:translationY="300dp" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Jane Doe"
-        android:textSize="40sp"
-        android:translationX="150dp"
-        android:translationY="10dp" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="janedoe@gmail.com"
-        android:textSize="25sp"
-        android:translationX="150dp"
-        android:translationY="70dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.517"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chooseFriendBtn" />
 
     <EditText
         android:id="@+id/note"
-        android:layout_width="300dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="350dp"
+        android:layout_width="330dp"
+        android:layout_height="61dp"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="45dp"
         android:autofillHints="Note"
         android:hint="Note:"
         android:inputType="text"
         android:minHeight="48dp"
         android:selectAllOnFocus="true"
-        android:translationX="65dp"
-        android:translationY="100dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/moneyAmt" />
+
+    <Button
+        android:id="@+id/payMoneyBtn"
+        android:layout_width="280dp"
+        android:layout_height="68dp"
+        android:layout_gravity="start"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="12dp"
+        android:backgroundTint="#bf9b30"
+        android:enabled="true"
+        android:text="Pay Money"
+        android:textColor="#ffffffff"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        app:iconTint="#A4F4D218"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/note" />
+
+    <Button
+        android:id="@+id/requestMoneyBtn"
+        android:layout_width="283dp"
+        android:layout_height="73dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="150dp"
+        android:backgroundTint="#bf9b30"
+        android:text="Request Money"
+        android:textColor="#ffffffff"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        app:iconTint="#A4F4D218"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/payMoneyBtn"
+        app:layout_constraintVertical_bias="1.0" />
 
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

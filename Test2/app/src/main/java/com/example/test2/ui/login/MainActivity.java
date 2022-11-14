@@ -6,21 +6,29 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
+import com.example.test2.FriendListPage;
 import com.example.test2.PayeeInfoActivity;
 import com.example.test2.R;
-import com.example.test2.SendFriendRequestPage;
+import com.example.test2.Utility;
 
 public class MainActivity extends AppCompatActivity {
-    private Button transferBtn, sendFriendReq;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        transferBtn = (Button) findViewById(R.id.second_activity_transaction_button);
+        Button transferBtn, friendBtn;
+        TextView userName, userEmailAddress;
+
+        userName = (TextView) findViewById(R.id.username);
+        userEmailAddress = (TextView) findViewById(R.id.userEmailAddr);
+        userEmailAddress.setText(Utility.userEmailAddr);
+
+
+        transferBtn = (Button) findViewById(R.id.payMoneyBtn);
         transferBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -28,22 +36,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        sendFriendReq = (Button) findViewById(R.id.sendFriendReqBtn);
-        sendFriendReq.setOnClickListener(new View.OnClickListener() {
+        friendBtn = (Button) findViewById(R.id.friendListBtn);
+        friendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openSendFriendReqPage();
+                openFriendListPage();
             }
         });
     }
 
-    private void openPayeeInfo() {
+    public void openPayeeInfo() {
         Intent intent = new Intent(this, PayeeInfoActivity.class);
         startActivity(intent);
     }
 
-    private void openSendFriendReqPage() {
-        Intent intent = new Intent(this, SendFriendRequestPage.class);
+    public void openFriendListPage() {
+        Intent intent = new Intent(this, FriendListPage.class);
         startActivity(intent);
     }
 
