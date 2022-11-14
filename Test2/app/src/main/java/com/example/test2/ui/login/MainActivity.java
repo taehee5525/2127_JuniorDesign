@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
         TextView userName, userEmailAddress;
 
         userName = (TextView) findViewById(R.id.username);
+        userName.setText(Utility.userName);
         userEmailAddress = (TextView) findViewById(R.id.userEmailAddr);
         userEmailAddress.setText(Utility.userEmailAddr);
 

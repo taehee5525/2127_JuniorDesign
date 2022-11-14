@@ -200,6 +200,7 @@ public class LoginActivity extends AppCompatActivity {
             try {
                 res = apicall.callPost("http://10.0.2.2:8080/users/userlogin", headerMap, req);
                 Utility.token = res.get("token").toString();
+                Utility.userName = res.get("name").toString();
 
             } catch (Exception e) {
                 e.printStackTrace();

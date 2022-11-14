@@ -64,9 +64,12 @@ public class UserController {
         String password = req.get("password").toString();
 
         String token = new String();
+        String name = new String();
 
         try {
-            token = loginService.login(email, password);
+            String[] userInfo = loginService.login(email, password);
+            name = userInfo[0];
+            token = userInfo[1];
         } catch (LoginException e) {
             if (e.getERROR_CODE() == 0) {
                 res.put("isSuccess", false);
@@ -83,6 +86,7 @@ public class UserController {
 
         res.put("isSuccess", true);
         res.put("token", token);
+        res.put("name", name);
         return res.toString();
     }
 
