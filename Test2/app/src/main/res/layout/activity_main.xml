@@ -8,19 +8,58 @@
 
 
     <Button
+        android:id="@+id/sendFriendReqBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Friend"
+        android:translationX="250dp"
+        android:translationY="10dp" />
+
+    <Button
         android:id="@+id/second_activity_transaction_button"
         android:layout_width="369dp"
         android:layout_height="61dp"
         android:layout_marginLeft="100dp"
-        android:layout_marginTop="850dp"
+        android:layout_marginTop="890dp"
         android:backgroundTint="#bf9b30"
-        android:text="Transfer Money"
+        android:text="Pay Money"
         android:textColor="#ffffffff"
         android:textSize="17sp"
         android:textStyle="bold"
         android:translationX="-40dp"
         android:translationY="-350dp"
         app:iconTint="#A4F4D218" />
+
+    <Button
+        android:id="@+id/second_activity_transaction_button2"
+        android:layout_width="369dp"
+        android:layout_height="61dp"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="950dp"
+        android:backgroundTint="#bf9b30"
+        android:text="Request Money"
+        android:textColor="#ffffffff"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:translationX="-40dp"
+        android:translationY="-350dp"
+        app:iconTint="#A4F4D218" />
+
+    <Button
+        android:id="@+id/second_activity_find_friend_button"
+        android:layout_width="369dp"
+        android:layout_height="61dp"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="200dp"
+        android:backgroundTint="#bf9b30"
+        android:text="Choose Friend"
+        android:textColor="#ffffffff"
+        android:textSize="17sp"
+        android:textStyle="bold"
+        android:translationX="-40dp"
+        android:translationY="0dp"
+        app:iconTint="#A4F4D218" />
+
 
     <ImageView
         android:id="@+id/imageView"
@@ -40,7 +79,7 @@
         android:selectAllOnFocus="true"
         android:textSize="100sp"
         android:translationX="-130dp"
-        android:translationY="200dp" />
+        android:translationY="300dp" />
 
     <TextView
         android:id="@+id/textView"
@@ -71,6 +110,7 @@
         android:minHeight="48dp"
         android:selectAllOnFocus="true"
         android:translationX="65dp"
+        android:translationY="100dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
