@@ -106,7 +106,8 @@ public class ApiCallMaker {
             connection.setDoInput(true); //input required
         }
         if (method.equalsIgnoreCase("GET") || method.equalsIgnoreCase("POST") || method.equalsIgnoreCase("PUT")) {
-            connection.setDoOutput(true); //output required
+            // For some reason, below line seems to set the method to "POST".
+            // connection.setDoOutput(true); //output required
         }
 
         if ((method.equalsIgnoreCase("POST") || method.equalsIgnoreCase("PUT"))) {
@@ -116,6 +117,7 @@ public class ApiCallMaker {
             bw.close();
         }
 
+//        System.out.println(connection.getResponseCode());
         BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
         StringBuilder res = new StringBuilder();
         String line = null;
