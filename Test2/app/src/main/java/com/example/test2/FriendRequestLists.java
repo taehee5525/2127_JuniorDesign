@@ -5,13 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class FriendRequestLists extends AppCompatActivity {
@@ -23,14 +24,31 @@ public class FriendRequestLists extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_request);
 
-        TextView tv = (TextView) findViewById(R.id.textView15);
+        LinearLayout currLayout = findViewById(R.id.requestListLayout);
 
         CustomTask task = new CustomTask();
         try {
-            String result = task.execute().get();
-            tv.setText(result);
+            String friendRequestList = task.execute().get();
+            String[] eachEmail = friendRequestList.split(",");
 
-            Log.w("result", result);
+            for (int i = 0; i < eachEmail.length; i++) {
+                TextView emailAddr = new TextView(this);
+
+                if (i == 0) {
+                    eachEmail[i] = eachEmail[i].replace("[", "");
+                }
+
+                if (i == eachEmail.length - 1) {
+                    eachEmail[i] = eachEmail[i].replace("]", "");
+                }
+
+                eachEmail[i] = eachEmail[i].replaceAll("^\"|\"$", "");
+                emailAddr.setText(eachEmail[i]);
+                emailAddr.setTextSize(18);
+                emailAddr.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
+                currLayout.addView(emailAddr);
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -56,15 +74,11 @@ public class FriendRequestLists extends AppCompatActivity {
             try {
                 res = apicall.callGet("http://10.0.2.2:8080/friends/getRequestList", headerMap, paramMap);
                 friendRequestList = res.get("requestList").toString();
-
-                Log.w("requestList", friendRequestList);
             }  catch (Exception e) {
                 e.printStackTrace();
             }
 
             return friendRequestList;
         }
-
-
     }
 }
