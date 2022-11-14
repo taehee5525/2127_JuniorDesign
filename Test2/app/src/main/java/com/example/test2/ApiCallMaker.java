@@ -22,8 +22,8 @@ public class ApiCallMaker {
      * @return return as JSONobject.
      * @throws Exception if some parameter are missed.
      */
-    public JSONObject callGet(String Url, Map<String, String> headerMap) throws Exception{
-        return callAPI("GET", Url, headerMap, null);
+    public JSONObject callGet(String Url, Map<String, String> headerMap, Map<String, String> paramMap) throws Exception{
+        return callAPI("GET", Url, headerMap, null, paramMap);
     }
 
     /**
@@ -35,7 +35,7 @@ public class ApiCallMaker {
      * @throws Exception if some parameter are missed.
      */
     public JSONObject callPost(String Url, Map<String, String> headerMap, JSONObject obj) throws Exception{
-        return callAPI("POST", Url, headerMap, obj);
+        return callAPI("POST", Url, headerMap, obj, null);
     }
 
     /**
@@ -47,7 +47,7 @@ public class ApiCallMaker {
      * @throws Exception if some parameter are missed.
      */
     public JSONObject callPut(String Url, Map<String, String> headerMap, JSONObject obj) throws Exception{
-        return callAPI("PUT", Url, headerMap, obj);
+        return callAPI("PUT", Url, headerMap, obj, null);
     }
 
     /**
@@ -58,7 +58,7 @@ public class ApiCallMaker {
      * @throws Exception if some parameter are missed.
      */
     public JSONObject callDelete(String Url, Map<String, String> headerMap) throws Exception{
-        return callAPI("DELETE", Url, headerMap, null);
+        return callAPI("DELETE", Url, headerMap, null, null);
     }
 
     /**
@@ -70,7 +70,24 @@ public class ApiCallMaker {
      * @return return as JSONobject.
      * @throws Exception if some parameter are missed.
      */
-    private JSONObject callAPI(String method, String Url, Map<String, String> headerMap, JSONObject obj) throws Exception {
+    private JSONObject callAPI(String method, String Url
+            , Map<String, String> headerMap, JSONObject obj, Map<String, String> paramMap) throws Exception {
+
+        if (method.equalsIgnoreCase("GET") && paramMap != null) {
+            String paramStr = "?";
+            boolean isFirst = true;
+            for (String paramName : paramMap.keySet()) {
+                if (isFirst) {
+                    isFirst = false;
+                } else {
+                    paramStr += "&";
+                }
+                paramStr += paramName;
+                paramStr += "=";
+                paramStr += paramMap.get(paramName);
+            }
+            Url += paramStr;
+        }
 
         if (!method.equalsIgnoreCase("GET") && !method.equalsIgnoreCase("POST") && !method.equalsIgnoreCase("PUT") && !method.equalsIgnoreCase("DELETE")){
             throw new Exception("Method of API must be specified. Please check again.");

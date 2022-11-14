@@ -105,13 +105,13 @@ public class LoginActivity extends AppCompatActivity {
                 if (usernameState && passwordState) {
                     Log.w("login", "login...");
                     try {
-                        String id = username.getText().toString();
+                        Utility.userEmailAddr = username.getText().toString();
                         String pwd = password.getText().toString();
 
-                        Log.w("id and password", id + ", " + pwd);
+                        Log.w("id and password", Utility.userEmailAddr + ", " + pwd);
 
                         CustomTask task = new CustomTask();
-                        String result = task.execute(id, pwd).get();
+                        String result = task.execute(Utility.userEmailAddr, pwd).get();
 
                         Log.w("login token generated", result);
 
@@ -163,6 +163,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
     private void openHelpPage() {
         Intent intent = new Intent(this, InstructionsPage.class);
         startActivity(intent);
