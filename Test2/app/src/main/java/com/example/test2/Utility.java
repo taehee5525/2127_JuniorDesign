@@ -4,4 +4,6 @@ public class Utility {
     public static String token;
 
     public static String userEmailAddr;
+
+    public static String userName;
 }

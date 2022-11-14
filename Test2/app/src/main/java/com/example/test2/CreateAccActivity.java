@@ -177,10 +177,10 @@ public class CreateAccActivity extends AppCompatActivity {
             boolean str = false;
 
             try {
-                req.put("email", username.getText().toString());
-                req.put("name", personName.getText().toString());
+                req.put("email", username.getText().toString().trim());
+                req.put("name", personName.getText().toString().trim());
                 req.put("password", password.getText().toString());
-                req.put("phone number", phoneNumber.getText().toString());
+                req.put("phone number", phoneNumber.getText().toString().trim());
 
             } catch (JSONException e) {
                 e.printStackTrace();

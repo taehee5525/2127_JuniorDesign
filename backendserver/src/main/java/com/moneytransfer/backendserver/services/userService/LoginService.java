@@ -26,14 +26,15 @@ public class LoginService {
         this.tokenRepo = tokenRepo;
     }
 
-    public String login(String userEmail, String password) throws LoginException {
-
+    public String[] login(String userEmail, String password) throws LoginException {
+        String[] userInfo = new String[2];
         Optional<User2> queryRet = userRepo.findByUserEmail(userEmail);
         if (queryRet.isEmpty()) {
             throw new LoginException(0);
         }
         User2 user = queryRet.get();
         String salt =  user.getSalt();
+        String name = user.getName();
         String saltedInput = Util.makeSaltedVal(password, salt);
 
         if (user.getPassword().equals(saltedInput)) {
@@ -59,7 +60,9 @@ public class LoginService {
             }
 
             tokenRepo.save(token);
-            return tokenStr;
+            userInfo[0] = name;
+            userInfo[1] = tokenStr;
+            return userInfo;
 
         } else {
             throw new LoginException(1);
