@@ -5,6 +5,33 @@ Creating a payment application like Venmo, Zelle on Mojaloop, an open source pay
 
 # Release Notes
 
+## Version: 0.4.0 Released: 11/14/2022
+### Features
+
+- [x] The Front-End and the Back-End are now connected.
+- [x] The user can register an account through the actual application.
+- [x] The user can log in through the actual application.
+- [x] The user's name displays on the Main Page. No more Jane Doe
+- [x] Friend page is implemented.
+
+
+### Known-Issues
+
+- [ ] Mojaloop is still not working. (Cannot find a way to receive a response from the central-ledger service)
+- [ ] Accepting/Declining a friend request is not implemented properly.
+- [ ] The friend should be added through the postman to display
+
+
+
+### Bug Fixes
+- [x] The friend button overlapping problem is fixed.
+- [x] Hajin Having a branch issue is fixed
+- [x] The database conflict is fixed. Now using the updated database won't hurt us
+- [x] Fixed the not-responding back-end issue.
+- [x] Mojaloop's pods being broken fixed.
+- [x] No Mojaloop endpoint issues are resolved
+
+    
 ## Version: 0.3.0 Released: 10/24/2022
 ### Features
 
