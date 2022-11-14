@@ -105,9 +105,8 @@ public class ApiCallMaker {
         if (method.equalsIgnoreCase("POST") || method.equalsIgnoreCase("PUT") || method.equalsIgnoreCase("DELETE")) {
             connection.setDoInput(true); //input required
         }
-        if (method.equalsIgnoreCase("GET") || method.equalsIgnoreCase("POST") || method.equalsIgnoreCase("PUT")) {
-            // For some reason, below line seems to set the method to "POST".
-            // connection.setDoOutput(true); //output required
+        if (method.equalsIgnoreCase("POST") || method.equalsIgnoreCase("PUT")) {
+             connection.setDoOutput(true); //output required
         }
 
         if ((method.equalsIgnoreCase("POST") || method.equalsIgnoreCase("PUT"))) {
