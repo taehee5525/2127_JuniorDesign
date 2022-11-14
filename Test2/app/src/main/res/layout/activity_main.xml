@@ -126,11 +126,11 @@
 
     <Button
         android:id="@+id/requestMoneyBtn"
-        android:layout_width="283dp"
-        android:layout_height="73dp"
+        android:layout_width="280dp"
+        android:layout_height="68dp"
         android:layout_marginStart="12dp"
         android:layout_marginEnd="12dp"
-        android:layout_marginBottom="150dp"
+        android:layout_marginBottom="36dp"
         android:backgroundTint="#bf9b30"
         android:text="Request Money"
         android:textColor="#ffffffff"
@@ -139,9 +139,9 @@
         app:iconTint="#A4F4D218"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.509"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/payMoneyBtn"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/payMoneyBtn"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

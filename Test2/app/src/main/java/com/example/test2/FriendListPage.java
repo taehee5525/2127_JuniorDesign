@@ -29,10 +29,10 @@ public class FriendListPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_list);
 
-        Button sendFriendReq;
+        Button sendFriendReq, friendReqListBtn;
         TextView friendList;
 
-        friendList = (TextView) findViewById(R.id.textView12);
+        friendList = findViewById(R.id.textView12);
 
         CustomTask task = new CustomTask();
         try {
@@ -45,11 +45,19 @@ public class FriendListPage extends AppCompatActivity {
         }
 
 
-        sendFriendReq = (Button) findViewById(R.id.addFriendBtn);
+        sendFriendReq = findViewById(R.id.addFriendBtn);
         sendFriendReq.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openSendReqPage();
+            }
+        });
+
+        friendReqListBtn = findViewById(R.id.friendReqListBtn);
+        friendReqListBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openFriendReqListPage();
             }
         });
 
@@ -60,14 +68,18 @@ public class FriendListPage extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void openFriendReqListPage() {
+        Intent intent = new Intent(this, FriendRequestLists.class);
+        startActivity(intent);
+    }
+
     class CustomTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... strings) {
             JSONObject res = new JSONObject();
             JSONObject req = new JSONObject();
-            List<String> friendList;
 
-            String friend = new String();
+            String friendList = "";
 
             try {
                 req.put("token", Utility.token);
@@ -80,14 +92,14 @@ public class FriendListPage extends AppCompatActivity {
 
             try {
                 res = apicall.callGet("http://10.0.2.2:8080/friends/getFriendList", headerMap, paramMap);
-                friend = res.get("friendList").toString();
+                friendList = res.get("friendList").toString();
 
-                Log.w("friend", friend);
+                Log.w("friendList", friendList);
             }  catch (Exception e) {
                 e.printStackTrace();
             }
 
-            return friend;
+            return friendList;
         }
 
 
