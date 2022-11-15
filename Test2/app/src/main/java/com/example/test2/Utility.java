@@ -6,4 +6,6 @@ public class Utility {
     public static String userEmailAddr;
 
     public static String userName;
+
+    public String friendEmail;
 }

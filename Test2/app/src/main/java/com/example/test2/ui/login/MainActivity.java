@@ -23,13 +23,13 @@ public class MainActivity extends AppCompatActivity {
         Button transferBtn, friendBtn;
         TextView userName, userEmailAddress;
 
-        userName = (TextView) findViewById(R.id.username);
+        userName = findViewById(R.id.username);
         userName.setText(Utility.userName);
-        userEmailAddress = (TextView) findViewById(R.id.userEmailAddr);
+        userEmailAddress = findViewById(R.id.userEmailAddr);
         userEmailAddress.setText(Utility.userEmailAddr);
 
 
-        transferBtn = (Button) findViewById(R.id.payMoneyBtn);
+        transferBtn = findViewById(R.id.payMoneyBtn);
         transferBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        friendBtn = (Button) findViewById(R.id.friendListBtn);
+        friendBtn = findViewById(R.id.friendListBtn);
         friendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

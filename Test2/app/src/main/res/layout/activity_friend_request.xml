@@ -6,4 +6,71 @@
     android:layout_height="match_parent"
     tools:context=".FriendRequestLists">
 
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:layout_marginBottom="82dp"
+        android:text="Friend Requests"
+        android:textColor="@color/black"
+        android:textSize="30sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintBottom_toTopOf="@+id/requestListLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/declineBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginTop="28dp"
+        android:backgroundTint="#DE0000"
+        android:enabled="true"
+        android:text="Decline"
+        android:textColor="#ffffffff"
+        android:textSize="11sp"
+        android:textStyle="bold"
+        app:iconTint="#A4F4D218"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.522"
+        app:layout_constraintStart_toEndOf="@id/approveFriendBtn"
+        app:layout_constraintTop_toBottomOf="@id/textView15" />
+
+    <Button
+        android:id="@+id/approveFriendBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:layout_marginStart="76dp"
+        android:layout_marginTop="28dp"
+        android:backgroundTint="#0BAB44"
+        android:enabled="true"
+        android:text="ACCEPT"
+        android:textColor="#ffffffff"
+        android:textSize="11sp"
+        android:textStyle="bold"
+        app:iconTint="#A4F4D218"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView15" />
+
+    <LinearLayout
+        android:id="@+id/requestListLayout"
+        android:layout_width="325dp"
+        android:layout_height="414dp"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="45dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/declineBtn">
+
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

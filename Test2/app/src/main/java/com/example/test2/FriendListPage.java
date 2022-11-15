@@ -3,22 +3,21 @@ package com.example.test2;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.example.test2.ui.login.LoginActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
 
 public class FriendListPage extends AppCompatActivity {
     private ApiCallMaker apicall = new ApiCallMaker();
@@ -29,27 +28,52 @@ public class FriendListPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_list);
 
-        Button sendFriendReq;
-        TextView friendList;
+        LinearLayout currLayout = findViewById(R.id.requestListLayout);
 
-        friendList = (TextView) findViewById(R.id.textView12);
-
+        Button sendFriendReq, friendReqListBtn;
         CustomTask task = new CustomTask();
         try {
-            String result = task.execute().get();
-            friendList.setText(result);
+            String friendList = task.execute().get();
+            String[] eachEmail = friendList.split(",");
 
-            Log.w("result", result);
+            for (int i = 0; i < eachEmail.length; i++) {
+                TextView emailAddr = new TextView(this);
+
+                if (i == 0) {
+                    eachEmail[i] = eachEmail[i].replace("[", "");
+                }
+
+                if (i == eachEmail.length - 1) {
+                    eachEmail[i] = eachEmail[i].replace("]", "");
+                }
+
+                eachEmail[i] = eachEmail[i].replaceAll("^\"|\"$", "");
+
+                emailAddr.setText(eachEmail[i]);
+                emailAddr.setTextSize(18);
+                emailAddr.setTextColor(Color.BLACK);
+                emailAddr.setPadding(35, 10, 0, 20);
+                currLayout.addView(emailAddr);
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
 
 
-        sendFriendReq = (Button) findViewById(R.id.addFriendBtn);
+        sendFriendReq = findViewById(R.id.addFriendBtn);
         sendFriendReq.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openSendReqPage();
+            }
+        });
+
+        friendReqListBtn = findViewById(R.id.friendReqListBtn);
+        friendReqListBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openFriendReqListPage();
             }
         });
 
@@ -60,14 +84,18 @@ public class FriendListPage extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void openFriendReqListPage() {
+        Intent intent = new Intent(this, FriendRequestLists.class);
+        startActivity(intent);
+    }
+
     class CustomTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... strings) {
             JSONObject res = new JSONObject();
             JSONObject req = new JSONObject();
-            List<String> friendList;
 
-            String friend = new String();
+            String friendList = "";
 
             try {
                 req.put("token", Utility.token);
@@ -80,14 +108,14 @@ public class FriendListPage extends AppCompatActivity {
 
             try {
                 res = apicall.callGet("http://10.0.2.2:8080/friends/getFriendList", headerMap, paramMap);
-                friend = res.get("friendList").toString();
+                friendList = res.get("friendList").toString();
 
-                Log.w("friend", friend);
+                Log.w("friendList", friendList);
             }  catch (Exception e) {
                 e.printStackTrace();
             }
 
-            return friend;
+            return friendList;
         }
 
 
