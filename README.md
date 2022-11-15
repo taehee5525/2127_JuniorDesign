@@ -13,13 +13,16 @@ Creating a payment application like Venmo, Zelle on Mojaloop, an open source pay
 - [x] The user can log in through the actual application.
 - [x] The user's name displays on the Main Page. No more Jane Doe
 - [x] Friend page is implemented.
+- [x] The users now can send friend requests to other users.
+- [x] Once accepted, the friend list displays the friends who accepted the friend request.
 
 
 ### Known-Issues
 
 - [ ] Mojaloop is still not working. (Cannot find a way to receive a response from the central-ledger service)
 - [ ] Accepting/Declining a friend request is not implemented properly.
-- [ ] The friend should be added through the postman to display
+- [ ] The friend request should be accepted/declined through the database or postman.
+- [ ] The friend list somtimes doesn't show up
 
 
 
