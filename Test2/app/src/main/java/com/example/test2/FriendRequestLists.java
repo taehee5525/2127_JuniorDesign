@@ -31,16 +31,24 @@ public class FriendRequestLists extends AppCompatActivity {
 
         LinearLayout currLayout = findViewById(R.id.requestListLayout);
 
-        Button approveFriendBtn;
         CustomTask task = new CustomTask();
         try {
             String friendRequestStr = task.execute().get();
-            friendRequestStr = friendRequestStr.replace("[", "");
-            friendRequestStr = friendRequestStr.replace("]", "");
             String[] eachEmail = friendRequestStr.split(",");
 
             for (int i = 0; i < eachEmail.length; i++) {
                 TextView emailAddr = new TextView(this);
+
+                if (i == 0) {
+                    eachEmail[i] = eachEmail[i].replace("[", "");
+                }
+
+                if (i == eachEmail.length - 1) {
+                    eachEmail[i] = eachEmail[i].replace("]", "");
+                }
+
+                eachEmail[i] = eachEmail[i].replaceAll("^\"|\"$", "");
+
                 friendRequestsList.add(eachEmail[i]);
 
                 emailAddr.setText(eachEmail[i]);
@@ -53,6 +61,8 @@ public class FriendRequestLists extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        Button approveFriendBtn, declineBtn ;
+
         approveFriendBtn = findViewById(R.id.approveFriendBtn);
         approveFriendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,7 +72,23 @@ public class FriendRequestLists extends AppCompatActivity {
                 CustomTask2accept task2 = new CustomTask2accept();
 
                 try {
-                    String friendRequestResult = task2.execute().get();
+                    String friendRequestResult = task2.execute(Utility.token, friendRequestsList.get(0), "decline").get();
+                    //need to also add refreshing the page here
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        declineBtn = findViewById(R.id.declineBtn);
+        declineBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                //api call while passing true as boolean parameter
+                CustomTask3decline task3 = new CustomTask3decline();
+                try {
+                    String friendRequestResult = task3.execute(Utility.token, friendRequestsList.get(0), "decline").get();
                     //need to also add refreshing the page here
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -110,6 +136,31 @@ public class FriendRequestLists extends AppCompatActivity {
                 req.put("token", Utility.token);
                 req.put("email", friendRequestsList.get(0));
                 req.put("accept", "accept");
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                res = apicall.callPut("http://10.0.2.2:8080/friends/requestAccept", headerMap, req);
+                //System.out.println(res + "\n");
+            }  catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return "accepted"; //acceptFriendReq() in Main.java is a void method and doesn't return anything
+        }
+    }
+
+    class CustomTask3decline extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... strings) {
+            JSONObject res = new JSONObject();
+            JSONObject req = new JSONObject();
+            try {
+                req.put("token", Utility.token);
+                req.put("email", friendRequestsList.get(0));
+                req.put("accept", "decline");
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -122,7 +173,7 @@ public class FriendRequestLists extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            return "accepted"; //acceptFriendReq() in Main.java is a void method and doesn't return anything
+            return "declined"; //acceptFriendReq() in Main.java is a void method and doesn't return anything
         }
     }
 
