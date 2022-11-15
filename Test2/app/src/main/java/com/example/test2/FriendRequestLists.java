@@ -6,6 +6,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -13,12 +15,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 public class FriendRequestLists extends AppCompatActivity {
     private ApiCallMaker apicall = new ApiCallMaker();
     private Map<String, String> headerMap = new HashMap<>();
-
+    public List<String> friendRequestsList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,32 +31,45 @@ public class FriendRequestLists extends AppCompatActivity {
 
         LinearLayout currLayout = findViewById(R.id.requestListLayout);
 
+        Button approveFriendBtn;
         CustomTask task = new CustomTask();
         try {
-            String friendRequestList = task.execute().get();
-            String[] eachEmail = friendRequestList.split(",");
+            String friendRequestStr = task.execute().get();
+            friendRequestStr = friendRequestStr.replace("[", "");
+            friendRequestStr = friendRequestStr.replace("]", "");
+            String[] eachEmail = friendRequestStr.split(",");
 
             for (int i = 0; i < eachEmail.length; i++) {
                 TextView emailAddr = new TextView(this);
+                friendRequestsList.add(eachEmail[i]);
 
-                if (i == 0) {
-                    eachEmail[i] = eachEmail[i].replace("[", "");
-                }
-
-                if (i == eachEmail.length - 1) {
-                    eachEmail[i] = eachEmail[i].replace("]", "");
-                }
-
-                eachEmail[i] = eachEmail[i].replaceAll("^\"|\"$", "");
                 emailAddr.setText(eachEmail[i]);
                 emailAddr.setTextSize(18);
-                emailAddr.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
+                emailAddr.setPadding(35, 10, 0, 20);
                 currLayout.addView(emailAddr);
             }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        approveFriendBtn = findViewById(R.id.approveFriendBtn);
+        approveFriendBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                //api call while passing true as boolean parameter
+                CustomTask2accept task2 = new CustomTask2accept();
+
+                try {
+                    String friendRequestResult = task2.execute().get();
+                    //need to also add refreshing the page here
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
 
     }
     class CustomTask extends AsyncTask<String, Void, String> {
@@ -81,4 +99,31 @@ public class FriendRequestLists extends AppCompatActivity {
             return friendRequestList;
         }
     }
+
+    class CustomTask2accept extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... strings) {
+            JSONObject res = new JSONObject();
+            JSONObject req = new JSONObject();
+
+            try {
+                req.put("token", Utility.token);
+                req.put("email", friendRequestsList.get(0));
+                req.put("accept", "accept");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                res = apicall.callPut("http://10.0.2.2:8080/friends/requestAccept", headerMap, req);
+                friendRequestsList.remove(0);
+                //System.out.println(res + "\n");
+            }  catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return "accepted"; //acceptFriendReq() in Main.java is a void method and doesn't return anything
+        }
+    }
+
 }

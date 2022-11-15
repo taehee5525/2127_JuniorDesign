@@ -3,22 +3,21 @@ package com.example.test2;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.example.test2.ui.login.LoginActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
 
 public class FriendListPage extends AppCompatActivity {
     private ApiCallMaker apicall = new ApiCallMaker();
@@ -29,17 +28,34 @@ public class FriendListPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_list);
 
+        LinearLayout currLayout = findViewById(R.id.requestListLayout);
+
         Button sendFriendReq, friendReqListBtn;
-        TextView friendList;
-
-        friendList = findViewById(R.id.textView12);
-
         CustomTask task = new CustomTask();
         try {
-            String result = task.execute().get();
-            friendList.setText(result);
+            String friendList = task.execute().get();
+            String[] eachEmail = friendList.split(",");
 
-            Log.w("result", result);
+            for (int i = 0; i < eachEmail.length; i++) {
+                TextView emailAddr = new TextView(this);
+
+                if (i == 0) {
+                    eachEmail[i] = eachEmail[i].replace("[", "");
+                }
+
+                if (i == eachEmail.length - 1) {
+                    eachEmail[i] = eachEmail[i].replace("]", "");
+                }
+
+                eachEmail[i] = eachEmail[i].replaceAll("^\"|\"$", "");
+
+                emailAddr.setText(eachEmail[i]);
+                emailAddr.setTextSize(18);
+                emailAddr.setTextColor(Color.BLACK);
+                emailAddr.setPadding(35, 10, 0, 20);
+                currLayout.addView(emailAddr);
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }

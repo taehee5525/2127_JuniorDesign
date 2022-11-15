@@ -91,34 +91,31 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/username" />
 
-    <Button
-        android:id="@+id/forgotPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="4dp"
-        android:background="@android:color/transparent"
-        android:text="@string/forgot_password"
-        android:textColor="#2962FF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password" />
+<!--    <Button-->
+<!--        android:id="@+id/forgotPassword"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="12dp"-->
+<!--        android:layout_marginEnd="4dp"-->
+<!--        android:background="@android:color/transparent"-->
+<!--        android:text="@string/forgot_password"-->
+<!--        android:textColor="#2962FF"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/password" />-->
 
     <Button
         android:id="@+id/login"
         android:layout_width="369dp"
         android:layout_height="61dp"
         android:layout_gravity="start"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="64dp"
+        android:layout_marginTop="48dp"
         android:backgroundTint="#bf9b30"
         android:enabled="true"
         android:text="@string/sign_in"
         android:textColor="#ffffffff"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/forgotPassword"
-        app:layout_constraintVertical_bias="0.022" />
+        app:layout_constraintTop_toBottomOf="@+id/password" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
