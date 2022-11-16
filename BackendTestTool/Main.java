@@ -31,20 +31,23 @@ public class Main {
                 update(token);
             }
             System.out.println("======= ==========MAIN========= =======");
-            System.out.println("0. Sign up");
-            System.out.println("1. Sign in");
-            System.out.println("2. Check Friend Request");
-            System.out.println("3. Request Friend");
-            System.out.println("4. Accept/Decline Friend Request");
-            System.out.println("5. Remove Friends");
-            System.out.println("6. Check Transactions");
-            System.out.println("7. Send Money");
-            System.out.println("8. Request Money");
-            System.out.println("9. Accept Transaction");
+            System.out.println(" 0. Sign up");
+            System.out.println(" 1. Sign in");
+            System.out.println(" 2. Check Friend Request");
+            System.out.println(" 3. Request Friend");
+            System.out.println(" 4. Accept/Decline Friend Request");
+            System.out.println(" 5. Remove Friends");
+            System.out.println(" 6. Check Transactions");
+            System.out.println(" 7. Send Money");
+            System.out.println(" 8. Request Money");
+            System.out.println(" 9. Accept Transaction");
+            System.out.println("10. Exit");
+            System.out.print("\n>> ");
 
             String input = sc.nextLine();
+            input = input.trim();
             int menu = 0;
-            if (input.length() == 1 && input.charAt(0) >= '0' && input.charAt(0) <= '9') {
+            if (input.charAt(0) >= '0' && input.charAt(0) <= '9') {
                 menu = Integer.parseInt(input);
             } else {
                 continue;
@@ -135,6 +138,8 @@ public class Main {
                 System.out.print("\n");
                 boolean accept = Yn.equalsIgnoreCase("y");
                 confirmTransaction(token, tid, accept);
+            } else if (menu == 10) {
+                break;
             }
         }
     }
@@ -257,7 +262,6 @@ public class Main {
         }  catch (Exception e) {
             e.printStackTrace();
         }
-        
         return res.get("friendEmails").toString();
     }
 

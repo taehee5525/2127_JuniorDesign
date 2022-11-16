@@ -142,7 +142,7 @@ public class FriendContoller {
         List<String> friendNames = friendService.getFriendNames(requesterEmail);
         JSONObject res = makeStatusResponse(null, null);
         res.put("friendEmails", friendEmails);
-        res.put("friendNNames", friendNames);
+        res.put("friendNames", friendNames);
 
         return res.toString();
     }
