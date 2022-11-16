@@ -262,7 +262,7 @@ public class Main {
         }  catch (Exception e) {
             e.printStackTrace();
         }
-        return res.get("friendEmails").toString();
+        return res.get("friendList").toString();
     }
 
     private static void removeFriend(String token, String friendEmail) {

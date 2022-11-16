@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @Transactional(readOnly = true)
@@ -90,6 +92,20 @@ public class FriendService {
             fListName.add(fName);
         }
         return fListName;
+    }
+
+    public Map<String, String> getFriendList(String userEmail) {
+        Map<String, String> friendList = new HashMap<>();
+        List<Friend> fList = friendRepo.getUserFriends(userEmail);
+
+        for (Friend friend : fList) {
+            String fEmail = friend.getFriendAEmail().equals(userEmail)
+                    ? friend.getFriendBEmail() : friend.getFriendAEmail();
+            String fName = userRepo.findByUserEmail(fEmail).get().getName();
+
+            friendList.put(fEmail, fName);
+        }
+        return friendList;
     }
 
     public List<String> getRequest(String userEmail) {
