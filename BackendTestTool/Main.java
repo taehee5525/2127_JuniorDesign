@@ -258,7 +258,7 @@ public class Main {
             e.printStackTrace();
         }
         
-        return res.get("friendList").toString();
+        return res.get("friendEmails").toString();
     }
 
     private static void removeFriend(String token, String friendEmail) {

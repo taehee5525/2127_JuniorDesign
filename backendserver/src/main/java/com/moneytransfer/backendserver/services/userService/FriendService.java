@@ -72,7 +72,7 @@ public class FriendService {
         return true;
     }
 
-    public List<String> getFriendList(String userEmail) {
+    public List<String> getFriendEmails(String userEmail) {
         List<Friend> fList = friendRepo.getUserFriends(userEmail);
         List<String> retList = new ArrayList<>();
         for (Friend friend : fList) {
@@ -80,6 +80,16 @@ public class FriendService {
                     ? friend.getFriendBEmail() : friend.getFriendAEmail());
         }
         return retList;
+    }
+
+    public List<String> getFriendNames(String userEmail) {
+        List<String> fListEmail = getFriendEmails(userEmail);
+        List<String> fListName = new ArrayList<>();
+        for (String fEmail : fListEmail) {
+            String fName = userRepo.findByUserEmail(fEmail).get().getName();
+            fListName.add(fName);
+        }
+        return fListName;
     }
 
     public List<String> getRequest(String userEmail) {

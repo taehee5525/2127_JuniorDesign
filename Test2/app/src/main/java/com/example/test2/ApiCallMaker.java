@@ -116,7 +116,7 @@ public class ApiCallMaker {
             bw.close();
         }
 
-//        System.out.println(connection.getResponseCode());
+        System.out.println(connection.getResponseCode());
         BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
         StringBuilder res = new StringBuilder();
         String line = null;
