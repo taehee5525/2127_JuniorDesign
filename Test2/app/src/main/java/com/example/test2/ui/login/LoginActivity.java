@@ -129,7 +129,7 @@ public class LoginActivity extends AppCompatActivity {
                         username.setError("Please enter a valid email address");
                     }
 
-                    if (password.getText().toString().length() < 5) {
+                    if (password.getText().toString().length() <= 5) {
                         password.setError("Please enter at least 6 characters");
                     }
 
@@ -149,7 +149,7 @@ public class LoginActivity extends AppCompatActivity {
                         public void afterTextChanged(Editable s) {
                             if (!Patterns.EMAIL_ADDRESS.matcher(username.getText().toString()).matches()) {
                                 username.setError("Please enter a valid email address");
-                            } else if (password.getText().toString().length() < 5) {
+                            } else if (password.getText().toString().length() <= 5) {
                                 password.setError("Please enter at least 6 characters");
                             } else {
                                 usernameState = true;
