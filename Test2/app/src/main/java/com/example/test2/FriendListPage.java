@@ -95,6 +95,8 @@ public class FriendListPage extends AppCompatActivity {
             JSONObject res = new JSONObject();
             JSONObject req = new JSONObject();
 
+            String friendEmails = "";
+            String friendNames = "";
             String friendList = "";
 
             try {
@@ -108,14 +110,18 @@ public class FriendListPage extends AppCompatActivity {
 
             try {
                 res = apicall.callGet("http://10.0.2.2:8080/friends/getFriendList", headerMap, paramMap);
+                friendEmails = res.get("friendEmails").toString();
+                friendNames = res.get("friendNames").toString();
                 friendList = res.get("friendList").toString();
 
+                Log.w("friendEmails", friendEmails);
+                Log.w("friendNames", friendNames);
                 Log.w("friendList", friendList);
             }  catch (Exception e) {
                 e.printStackTrace();
             }
 
-            return friendList;
+            return friendEmails;
         }
 
 

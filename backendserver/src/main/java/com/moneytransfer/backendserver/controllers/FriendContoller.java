@@ -15,7 +15,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class FriendContoller {
@@ -138,8 +140,14 @@ public class FriendContoller {
             return makeStatusResponse(e, null).toString();
         }
 
-        List<String> friendList = friendService.getFriendList(requesterEmail);
+        List<String> friendEmails = friendService.getFriendEmails(requesterEmail);
+        List<String> friendNames = friendService.getFriendNames(requesterEmail);
+
+        Map<String, String> friendList = friendService.getFriendList(requesterEmail);
+
         JSONObject res = makeStatusResponse(null, null);
+        res.put("friendEmails", friendEmails);
+        res.put("friendNames", friendNames);
         res.put("friendList", friendList);
 
         return res.toString();
