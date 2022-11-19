@@ -33,7 +33,10 @@ public class MojaParticipantsController implements ApplicationListener<EventPack
         // event code 0 -> @see EventPacket class.
         if(event.getEventCode() == 0) {
             String email = event.getData().get("email").toString();
-            waitings.put(email, "SYNC_Check");
+            waitings.put(email, "InitSyncCheck");
+        } else if(event.getEventCode() == 2) {
+            String email = event.getData().get("email").toString();
+            waitings.put(email, "ALS Add waiting");
         }
     }
 
@@ -41,10 +44,11 @@ public class MojaParticipantsController implements ApplicationListener<EventPack
     public void errResponse(@RequestBody String data, @PathVariable String email) {
         //JSONObject req = new JSONObject(data);
         String purpose = waitings.getOrDefault(email, "");
-        if (purpose.equalsIgnoreCase("SYNC_Check")) {
+        if (purpose.equalsIgnoreCase("InitSyncCheck")) {
+            logger.info("SYNC API RES: ALS -> Spring (\"" + email + "\") <Result: Moja does not have email info>");
             waitings.remove(email);
             JSONObject obj = new JSONObject();
-            obj.put("result", "error");
+            obj.put("result", "doesNotHave");
             obj.put("email", email);
             eventPublisher.publishEvent(new EventPacket(1, obj, this));
         }
@@ -52,14 +56,24 @@ public class MojaParticipantsController implements ApplicationListener<EventPack
 
     @PutMapping(value = "participants/ACCOUNT_ID/{email}")
     public void response(@RequestBody String data, @PathVariable String email) {
-
-        JSONObject req = new JSONObject(data);
-        String partyName = req.get("party").toString();
-
-        if (!partyName.equalsIgnoreCase(Util.FSP_NAME)) {
-
-        } else {
-
+        String purpose = waitings.getOrDefault(email, "");
+        if (purpose.equalsIgnoreCase("InitSyncCheck")) {
+            waitings.remove(email);
+            JSONObject req = new JSONObject(data);
+            String partyName = req.get("fspId").toString();
+            if (!partyName.equalsIgnoreCase(Util.FSP_NAME)) {
+                logger.info("SYNC API RES: ALS -> Spring (\"" + email + "\") <Result: Moja has email info, but diff FSPname>");
+                JSONObject obj = new JSONObject();
+                obj.put("result", "hasDiffFspId");
+                obj.put("email", email);
+                eventPublisher.publishEvent(new EventPacket(1, obj, this));
+            } else {
+                logger.info("SYNC API RES: ALS -> Spring (\"" + email + "\") <Result: Moja has email info>");
+                JSONObject obj = new JSONObject();
+                obj.put("result", "checked");
+                obj.put("email", email);
+                eventPublisher.publishEvent(new EventPacket(1, obj, this));
+            }
         }
     }
 }

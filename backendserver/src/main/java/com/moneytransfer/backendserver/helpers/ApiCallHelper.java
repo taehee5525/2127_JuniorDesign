@@ -58,8 +58,8 @@ public class ApiCallHelper {
      * @return return as JSONobject.
      * @throws Exception if some parameter are missed.
      */
-    public JSONObject callDelete(String Url, Map<String, String> headerMap) throws Exception{
-        return callAPI("DELETE", Url, headerMap, null, null, true);
+    public JSONObject callDelete(String Url, Map<String, String> headerMap, boolean ret) throws Exception{
+        return callAPI("DELETE", Url, headerMap, null, null, ret);
     }
 
     /**

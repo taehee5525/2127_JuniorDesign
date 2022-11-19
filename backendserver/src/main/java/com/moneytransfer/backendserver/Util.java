@@ -12,7 +12,7 @@ public class Util {
 
     public final static long TOKEN_EXPIRE_LIMIT = 300000; // 300000ms == 300s = 5mins
     public static final String FSP_NAME = "moneyTransfer";
-    public static final Long RESPONSE_WAIT_LIMIT = 5000L;
+    public static final Long RESPONSE_WAIT_LIMIT = 10000L;
     public final static String CURRENCY = "USD";
     public static final Map<String, String> urlMap = new HashMap<String, String>() {
         {
