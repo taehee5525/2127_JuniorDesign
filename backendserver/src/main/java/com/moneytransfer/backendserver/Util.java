@@ -12,12 +12,24 @@ public class Util {
 
     public final static long TOKEN_EXPIRE_LIMIT = 300000; // 300000ms == 300s = 5mins
     public static final String FSP_NAME = "moneyTransfer";
+    public static final Long RESPONSE_WAIT_LIMIT = 5000L;
     public final static String CURRENCY = "USD";
     public static final Map<String, String> urlMap = new HashMap<String, String>() {
         {
             put("Central_Ledger", "http://central-ledger.local");
             put("Account_Lookup_Service", "http://account-lookup-service.local");
             put("endPoint", "http://localhost:8080/");
+        }
+    };
+
+    /**
+     * For temp usage only, this will be updated after tested.
+     */
+    public static final Map<String, String> headerMap = new HashMap<String, String>() {
+        {
+            put("participantsAccept", "application/vnd.interoperability.participants+json;version=1");
+            put("participantsContentType", "application/vnd.interoperability.participants+json;version=1.0");
+            put("tempHeaderDate", "Thu, 24 Jan 2019 10:22:12 GMT");
         }
     };
 

@@ -23,8 +23,8 @@ public class ApiCallHelper {
      * @return return as JSONobject.
      * @throws Exception if some parameter are missed.
      */
-    public JSONObject callGet(String Url, Map<String, String> headerMap, Map<String, String> paramMap) throws Exception{
-        return callAPI("GET", Url, headerMap, null, paramMap);
+    public JSONObject callGet(String Url, Map<String, String> headerMap, Map<String, String> paramMap, boolean ret) throws Exception{
+        return callAPI("GET", Url, headerMap, null, paramMap, ret);
     }
 
     /**
@@ -35,8 +35,8 @@ public class ApiCallHelper {
      * @return return as JSONobject.
      * @throws Exception if some parameter are missed.
      */
-    public JSONObject callPost(String Url, Map<String, String> headerMap, JSONObject obj) throws Exception{
-        return callAPI("POST", Url, headerMap, obj, null);
+    public JSONObject callPost(String Url, Map<String, String> headerMap, JSONObject obj, boolean ret) throws Exception{
+        return callAPI("POST", Url, headerMap, obj, null, ret);
     }
 
     /**
@@ -48,7 +48,7 @@ public class ApiCallHelper {
      * @throws Exception if some parameter are missed.
      */
     public JSONObject callPut(String Url, Map<String, String> headerMap, JSONObject obj) throws Exception{
-        return callAPI("PUT", Url, headerMap, obj, null);
+        return callAPI("PUT", Url, headerMap, obj, null, true);
     }
 
     /**
@@ -59,7 +59,7 @@ public class ApiCallHelper {
      * @throws Exception if some parameter are missed.
      */
     public JSONObject callDelete(String Url, Map<String, String> headerMap) throws Exception{
-        return callAPI("DELETE", Url, headerMap, null, null);
+        return callAPI("DELETE", Url, headerMap, null, null, true);
     }
 
     /**
@@ -72,7 +72,7 @@ public class ApiCallHelper {
      * @throws Exception if some parameter are missed.
      */
     private JSONObject callAPI(String method, String Url
-            , Map<String, String> headerMap, JSONObject obj, Map<String, String> paramMap) throws Exception {
+            , Map<String, String> headerMap, JSONObject obj, Map<String, String> paramMap, boolean ret) throws Exception {
 
         if (method.equalsIgnoreCase("GET") && paramMap != null) {
             String paramStr = "?";
@@ -124,7 +124,11 @@ public class ApiCallHelper {
             res.append(line);
         }
 
-        JSONObject ret = new JSONObject(res.toString());
-        return ret;
+        if (!ret) {
+            return null;
+        }
+        JSONObject retObj = new JSONObject(res.toString());
+        return retObj;
     }
 }
+
