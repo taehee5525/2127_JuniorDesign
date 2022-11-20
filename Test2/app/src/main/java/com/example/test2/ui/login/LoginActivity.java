@@ -103,34 +103,35 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 // to check if email and password are in correct format
                 if (usernameState && passwordState) {
-                    Log.w("login", "login...");
+                    Log.w("login", "login started...");
+
                     try {
                         Utility.userEmailAddr = username.getText().toString();
                         String pwd = password.getText().toString();
 
-                        Log.w("id and password", Utility.userEmailAddr + ", " + pwd);
+                        Log.w("user email and password", Utility.userEmailAddr + ", " + pwd);
 
                         CustomTask task = new CustomTask();
                         String result = task.execute(Utility.userEmailAddr, pwd).get();
 
-                        CustomTask_getBalance task2 = new CustomTask_getBalance();
-                        String balance = task2.execute().get();
-                        Utility.userBalance = Double.parseDouble(balance);
-
-                        Log.w("balance", Utility.userBalance + "");
-
-                        Log.w("login token generated", result);
+                        Log.w("login token", result);
 
                         if (result.length() > 2) {
-                            Snackbar mySnackbar = Snackbar.make(findViewById(R.id.container), "Login Successful", Snackbar.LENGTH_SHORT);
-                            mySnackbar.show();
+                            CustomTask_getBalance task2 = new CustomTask_getBalance();
+                            String balance = task2.execute().get();
+                            Utility.userBalance = Double.parseDouble(balance);
+
+                            Log.w("user balance", Utility.userBalance + "");
+
                             openMain();
                         } else {
                             openLoginFail();
                         }
 
                     } catch (Exception ignored) {
+
                     }
+
 
                 } else {
                     if (!Patterns.EMAIL_ADDRESS.matcher(username.getText().toString()).matches()) {
@@ -238,7 +239,7 @@ public class LoginActivity extends AppCompatActivity {
             try {
                 res = apicall.callGet("http://10.0.2.2:8080/transactions/getUserBalance", headerMap, paramMap);
                 result = res.get("userBalance").toString();
-            }  catch (Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
