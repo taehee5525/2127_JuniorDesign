@@ -1,12 +1,10 @@
 package com.moneytransfer.backendserver.services.userService;
 
-
 import com.moneytransfer.backendserver.BackendserverApplication;
 import com.moneytransfer.backendserver.Util;
 import com.moneytransfer.backendserver.helpers.ApiCallHelper;
 import com.moneytransfer.backendserver.objects.EventPacket;
 import com.moneytransfer.backendserver.objects.User2;
-import com.moneytransfer.backendserver.repositories.TokenRepo;
 import com.moneytransfer.backendserver.repositories.UserRepo;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -15,17 +13,8 @@ import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ApplicationListener;
-import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-
 import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
 @Service
@@ -184,6 +173,4 @@ public class MojaSyncHelpService  implements ApplicationListener<EventPacket>, D
             }
         }
     }
-
-
 }

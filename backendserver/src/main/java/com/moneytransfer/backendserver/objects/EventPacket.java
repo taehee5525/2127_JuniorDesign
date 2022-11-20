@@ -9,7 +9,8 @@ public class EventPacket extends ApplicationEvent {
      * reserved code.
      * 0: mojaSyncService -> MojaParticipantsController (init lookup check)
      * 1: MojaParticipantsController -> mojaSyncService (result)
-     * 2: mojaSyncService -> MojaParticipantsController (als add)
+     * 2: accountLookupService -> MojaParticipantsController (als add checkup)
+     * 3: MojaParticipantsController -> accountLookupService (als add checkup)
      */
 
     private JSONObject data;
