@@ -34,32 +34,41 @@ public class FriendListPage extends AppCompatActivity {
 
         Button sendFriendReq, friendReqListBtn, backToMain;
         CustomTask task = new CustomTask();
+
+        int totalFriends = 0;
+
         try {
             String friendList = task.execute().get();
             String[] eachEmail = friendList.split(",");
 
-            for (int i = 0; i < eachEmail.length; i++) {
-                TextView emailAddr = new TextView(this);
+            if (friendList.contains("\"")) {
+                for (int i = 0; i < eachEmail.length; i++) {
+                    TextView emailAddr = new TextView(this);
 
-                eachEmail[i] = eachEmail[i].replace("}", "");
-                eachEmail[i] = eachEmail[i].replaceAll("\"", "");
-                eachEmail[i] = eachEmail[i].replace(":", " \nName: ");
-                eachEmail[i] = eachEmail[i].replace("{", "Email: ");
+                    eachEmail[i] = eachEmail[i].replace("}", "");
+                    eachEmail[i] = eachEmail[i].replaceAll("\"", "");
+                    eachEmail[i] = eachEmail[i].replace(":", " \nName: ");
+                    eachEmail[i] = eachEmail[i].replace("{", "Email: ");
 
-                if (i == 0) {
-                    eachEmail[i] = eachEmail[i].replace("[", "");
+                    if (i == 0) {
+                        eachEmail[i] = eachEmail[i].replace("[", "");
+                    }
+
+                    if (i == eachEmail.length - 1) {
+                        eachEmail[i] = eachEmail[i].replace("]", "");
+                    }
+
+                    emailAddr.setText(eachEmail[i]);
+                    emailAddr.setTextSize(18);
+                    emailAddr.setTextColor(Color.BLACK);
+                    emailAddr.setPadding(35, 0, 0, 30);
+                    currLayout.addView(emailAddr);
+
+                    totalFriends = i + 1;
                 }
-
-                if (i == eachEmail.length - 1) {
-                    eachEmail[i] = eachEmail[i].replace("]", "");
-                }
-
-                emailAddr.setText(eachEmail[i]);
-                emailAddr.setTextSize(18);
-                emailAddr.setTextColor(Color.BLACK);
-                emailAddr.setPadding(35, 0, 0, 30);
-                currLayout.addView(emailAddr);
             }
+
+            Utility.numOfFriends = totalFriends;
 
         } catch (Exception e) {
             e.printStackTrace();

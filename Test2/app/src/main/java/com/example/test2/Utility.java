@@ -8,4 +8,8 @@ public class Utility {
     public static String userName;
 
     public static String friendEmail;
+
+    public static int numOfFriends;
+
+    public static String transactionID;
 }

@@ -21,14 +21,14 @@
 
     <TextView
         android:id="@+id/textView6"
-        android:layout_width="wrap_content"
+        android:layout_width="343dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="40dp"
         android:gravity="center"
         android:text="Friend Request Sent Failed"
         android:textColor="#8B0000"
-        android:textSize="32sp"
+        android:textSize="29sp"
         android:textStyle="bold|italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
@@ -53,7 +53,7 @@
         android:layout_marginStart="21dp"
         android:layout_marginEnd="21dp"
         android:layout_marginBottom="181dp"
-        android:backgroundTint="#bf9b30"
+        android:backgroundTint="#B3A369"
         android:text="Return to Add Friend Page"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

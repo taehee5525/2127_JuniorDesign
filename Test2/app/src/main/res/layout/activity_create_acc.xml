@@ -17,19 +17,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="1.0"
         app:srcCompat="@drawable/t_pay_image"
         tools:ignore="ImageContrastCheck" />
+
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="136dp"
+        android:layout_marginTop="128dp"
         android:text="@string/create_account"
         android:textColor="#000000"
         android:textSize="32sp"
-        android:textStyle="bold|italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,65 +37,69 @@
 
     <EditText
         android:id="@+id/personName"
-        android:layout_width="380dp"
-        android:layout_height="55dp"
+        android:layout_width="325dp"
+        android:layout_height="60dp"
         android:layout_marginStart="6dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="36dp"
         android:layout_marginEnd="6dp"
+        android:background="@drawable/edit_text_border"
         android:ems="10"
         android:hint="Name"
         android:inputType="textPersonName"
+        android:paddingLeft="18dp"
         android:selectAllOnFocus="true"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <EditText
         android:id="@+id/username"
-        android:layout_width="380dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="325dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="16dp"
         android:autofillHints=""
+        android:background="@drawable/edit_text_border"
         android:hint="@string/prompt_email"
         android:inputType="textEmailAddress"
         android:minHeight="48dp"
+        android:paddingLeft="18dp"
         android:selectAllOnFocus="true"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.538"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/personName" />
 
     <EditText
         android:id="@+id/password"
-        android:layout_width="380dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="325dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="16dp"
         android:autofillHints=""
+        android:background="@drawable/edit_text_border"
         android:hint="@string/prompt_password"
         android:imeActionLabel="@string/action_sign_in_short"
         android:imeOptions="actionDone"
         android:inputType="textPassword"
         android:minHeight="48dp"
+        android:paddingLeft="18dp"
         android:selectAllOnFocus="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/username"
         tools:ignore="TextContrastCheck" />
 
-
     <EditText
         android:id="@+id/phoneNumber"
-        android:layout_width="380dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="325dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/edit_text_border"
         android:ems="10"
         android:hint="Phone Number"
         android:inputType="phone"
         android:minHeight="48dp"
+        android:paddingLeft="18dp"
         android:selectAllOnFocus="true"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.538"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password" />
 
@@ -109,6 +113,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/phoneNumber" />
 
+
     <CheckBox
         android:id="@+id/checkBox"
         android:layout_width="wrap_content"
@@ -116,23 +121,22 @@
         android:text="@string/i_agree_with_our_terms_and_conditions"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:layout_constraintVertical_bias="0.0" />
-
+        app:layout_constraintVertical_bias="0.039" />
 
     <Button
         android:id="@+id/createAccount"
-        android:layout_width="369dp"
-        android:layout_height="61dp"
+        android:layout_width="314dp"
+        android:layout_height="66dp"
         android:layout_gravity="start"
-        android:layout_marginTop="8dp"
-        android:backgroundTint="#bf9b30"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/rounded_button"
         android:text="@string/sign_up"
         android:textColor="#ffffffff"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.666"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/checkBox"
         tools:ignore="DuplicateSpeakableTextCheck,TextContrastCheck" />
@@ -142,11 +146,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="16dp"
         android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.68"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/createAccount">
 

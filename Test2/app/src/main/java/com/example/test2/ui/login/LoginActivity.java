@@ -20,9 +20,9 @@ import android.os.AsyncTask;
 import com.example.test2.CreateAccActivity;
 import com.example.test2.InstructionsPage;
 import com.example.test2.LoginFail;
-import com.example.test2.LoginSuccess;
 import com.example.test2.ApiCallMaker;
 import com.example.test2.Utility;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -48,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
 
         imgButton = (ImageButton) findViewById(R.id.helpBtn);
         signupBtn = (Button) findViewById(R.id.btnSignUp);
-        loginBtn = (Button) findViewById(R.id.login);
+        loginBtn = (Button) findViewById(R.id.loginBtn);
         username = (EditText) findViewById(R.id.username);
         password = (EditText) findViewById(R.id.password);
 
@@ -116,7 +116,9 @@ public class LoginActivity extends AppCompatActivity {
                         Log.w("login token generated", result);
 
                         if (result.length() > 2) {
-                            openLoginSuccess();
+                            Snackbar mySnackbar = Snackbar.make(findViewById(R.id.container), "Login Successful", Snackbar.LENGTH_SHORT);
+                            mySnackbar.show();
+                            openMain();
                         } else {
                             openLoginFail();
                         }
@@ -174,8 +176,8 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void openLoginSuccess() {
-        Intent intent = new Intent(this, LoginSuccess.class);
+    private void openMain() {
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 

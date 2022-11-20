@@ -1,13 +1,18 @@
 package com.example.test2;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ResourcesCompat;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -32,6 +37,7 @@ public class ChooseFriendPage extends AppCompatActivity {
         setContentView(R.layout.activity_choose_friend_page);
 
         LinearLayout currLayout = findViewById(R.id.chooseFriendListLayout);
+        int drawableRoundBtn = R.drawable.rounded_button;
 
         Button main = findViewById(R.id.backToMain);
         main.setOnClickListener(new View.OnClickListener() {
@@ -67,8 +73,11 @@ public class ChooseFriendPage extends AppCompatActivity {
 
                 emailAddr.setText(eachEmail[i]);
                 emailAddr.setTextSize(18);
-                emailAddr.setTextColor(Color.BLACK);
+                emailAddr.setTextColor(Color.DKGRAY);
+                emailAddr.setGravity(Gravity.CENTER);
                 emailAddr.setAllCaps(false);
+                emailAddr.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.rounded_button, getTheme()));
+                emailAddr.setBackgroundColor(Color.parseColor("#f6f6f6"));
                 emailAddr.setPadding(35, 10, 0, 20);
                 currLayout.addView(emailAddr);
 
