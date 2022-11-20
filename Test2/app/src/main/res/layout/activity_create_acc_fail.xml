@@ -10,7 +10,7 @@
         android:id="@+id/imageView4"
         android:layout_width="180dp"
         android:layout_height="154dp"
-        android:layout_marginTop="172dp"
+        android:layout_marginTop="164dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,15 +19,14 @@
 
     <TextView
         android:id="@+id/textView9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="36dp"
+        android:layout_width="301dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="20dp"
         android:text="Create Account Failed"
         android:textColor="#8B0000"
         android:textSize="32sp"
-        android:textStyle="bold"
+        android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView4" />
 
@@ -46,18 +45,18 @@
 
     <Button
         android:id="@+id/backToCreateAccBtn"
-        android:layout_width="369dp"
-        android:layout_height="61dp"
+        android:layout_width="249dp"
+        android:layout_height="56dp"
         android:layout_gravity="start"
         android:layout_marginStart="21dp"
         android:layout_marginEnd="21dp"
         android:layout_marginBottom="181dp"
-        android:backgroundTint="#bf9b30"
+        android:backgroundTint="#B3A369"
         android:text="Return to Create Account"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.277"
+        app:layout_constraintHorizontal_bias="0.525"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView10"
-        app:layout_constraintVertical_bias="0.441" />
+        app:layout_constraintVertical_bias="0.691" />
 </androidx.constraintlayout.widget.ConstraintLayout>

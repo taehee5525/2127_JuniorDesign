@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.test2.ui.login.MainActivity;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -28,33 +30,45 @@ public class FriendListPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_list);
 
-        LinearLayout currLayout = findViewById(R.id.requestListLayout);
+        LinearLayout currLayout = findViewById(R.id.friendListLayout);
 
-        Button sendFriendReq, friendReqListBtn;
+        Button sendFriendReq, friendReqListBtn, backToMain;
         CustomTask task = new CustomTask();
+
+        int totalFriends = 0;
+
         try {
             String friendList = task.execute().get();
             String[] eachEmail = friendList.split(",");
 
-            for (int i = 0; i < eachEmail.length; i++) {
-                TextView emailAddr = new TextView(this);
+            if (friendList.contains("\"")) {
+                for (int i = 0; i < eachEmail.length; i++) {
+                    TextView emailAddr = new TextView(this);
 
-                if (i == 0) {
-                    eachEmail[i] = eachEmail[i].replace("[", "");
+                    eachEmail[i] = eachEmail[i].replace("}", "");
+                    eachEmail[i] = eachEmail[i].replaceAll("\"", "");
+                    eachEmail[i] = eachEmail[i].replace(":", " \nName: ");
+                    eachEmail[i] = eachEmail[i].replace("{", "Email: ");
+
+                    if (i == 0) {
+                        eachEmail[i] = eachEmail[i].replace("[", "");
+                    }
+
+                    if (i == eachEmail.length - 1) {
+                        eachEmail[i] = eachEmail[i].replace("]", "");
+                    }
+
+                    emailAddr.setText(eachEmail[i]);
+                    emailAddr.setTextSize(18);
+                    emailAddr.setTextColor(Color.BLACK);
+                    emailAddr.setPadding(35, 0, 0, 30);
+                    currLayout.addView(emailAddr);
+
+                    totalFriends = i + 1;
                 }
-
-                if (i == eachEmail.length - 1) {
-                    eachEmail[i] = eachEmail[i].replace("]", "");
-                }
-
-                eachEmail[i] = eachEmail[i].replaceAll("^\"|\"$", "");
-
-                emailAddr.setText(eachEmail[i]);
-                emailAddr.setTextSize(18);
-                emailAddr.setTextColor(Color.BLACK);
-                emailAddr.setPadding(35, 10, 0, 20);
-                currLayout.addView(emailAddr);
             }
+
+            Utility.numOfFriends = totalFriends;
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -77,6 +91,13 @@ public class FriendListPage extends AppCompatActivity {
             }
         });
 
+        backToMain = findViewById(R.id.backToMain);
+        backToMain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openMainPage();
+            }
+        });
     }
 
     public void openSendReqPage() {
@@ -86,6 +107,11 @@ public class FriendListPage extends AppCompatActivity {
 
     public void openFriendReqListPage() {
         Intent intent = new Intent(this, FriendRequestLists.class);
+        startActivity(intent);
+    }
+
+    public void openMainPage() {
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
@@ -121,7 +147,7 @@ public class FriendListPage extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            return friendEmails;
+            return friendList;
         }
 
 

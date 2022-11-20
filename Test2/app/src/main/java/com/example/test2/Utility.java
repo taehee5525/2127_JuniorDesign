@@ -7,5 +7,9 @@ public class Utility {
 
     public static String userName;
 
-    public String friendEmail;
+    public static String friendEmail;
+
+    public static int numOfFriends;
+
+    public static String transactionID;
 }

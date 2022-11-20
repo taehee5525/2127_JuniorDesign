@@ -14,6 +14,9 @@
         android:theme="@style/Theme.Test2"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ChooseFriendPage"
+            android:exported="false" />
+        <activity
             android:name=".FriendRequestLists"
             android:exported="false" />
         <activity
@@ -33,9 +36,6 @@
             android:exported="false" />
         <activity
             android:name=".CreateAccFail"
-            android:exported="false" />
-        <activity
-            android:name=".LoginSuccess"
             android:exported="false" />
         <activity
             android:name=".LoginFail"
