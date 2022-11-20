@@ -113,6 +113,12 @@ public class LoginActivity extends AppCompatActivity {
                         CustomTask task = new CustomTask();
                         String result = task.execute(Utility.userEmailAddr, pwd).get();
 
+                        CustomTask_getBalance task2 = new CustomTask_getBalance();
+                        String balance = task2.execute().get();
+                        Utility.userBalance = Double.parseDouble(balance);
+
+                        Log.w("balance", Utility.userBalance + "");
+
                         Log.w("login token generated", result);
 
                         if (result.length() > 2) {
@@ -210,8 +216,34 @@ public class LoginActivity extends AppCompatActivity {
 
             return Utility.token;
         }
+    }
 
+    class CustomTask_getBalance extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... strings) {
+            JSONObject req = new JSONObject();
+            JSONObject res = new JSONObject();
 
+            String result = "";
+
+            try {
+                req.put("token", Utility.token);
+            } catch (Exception ignored) {
+
+            }
+
+            Map<String, String> paramMap = new HashMap<>();
+            paramMap.put("token", Utility.token);
+
+            try {
+                res = apicall.callGet("http://10.0.2.2:8080/transactions/getUserBalance", headerMap, paramMap);
+                result = res.get("userBalance").toString();
+            }  catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return result;
+        }
     }
 
 }

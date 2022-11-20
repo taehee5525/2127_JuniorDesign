@@ -76,7 +76,6 @@ public class ChooseFriendPage extends AppCompatActivity {
                 emailAddr.setTextColor(Color.DKGRAY);
                 emailAddr.setGravity(Gravity.CENTER);
                 emailAddr.setAllCaps(false);
-                emailAddr.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.rounded_button, getTheme()));
                 emailAddr.setBackgroundColor(Color.parseColor("#f6f6f6"));
                 emailAddr.setPadding(35, 10, 0, 20);
                 currLayout.addView(emailAddr);

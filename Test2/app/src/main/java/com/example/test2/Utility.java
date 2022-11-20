@@ -12,4 +12,6 @@ public class Utility {
     public static int numOfFriends;
 
     public static String transactionID;
+
+    public static double userBalance;
 }

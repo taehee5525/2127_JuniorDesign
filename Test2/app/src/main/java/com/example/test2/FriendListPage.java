@@ -146,11 +146,8 @@ public class FriendListPage extends AppCompatActivity {
             }  catch (Exception e) {
                 e.printStackTrace();
             }
-
             return friendList;
         }
-
-
     }
 
 }
