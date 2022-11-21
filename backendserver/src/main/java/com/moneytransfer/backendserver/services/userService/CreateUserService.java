@@ -10,9 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 public class CreateUserService {
 
     private UserRepo userRepo;
+    private AccountLookupService als;
 
-    public CreateUserService(UserRepo userRepo) {
+    public CreateUserService(UserRepo userRepo, AccountLookupService als) {
         this.userRepo = userRepo;
+        this.als = als;
     }
 
     public boolean createUser(String email, String name, String password, String phoneNumber) {
@@ -33,6 +35,7 @@ public class CreateUserService {
 //            user.setPhoneNumber(phoneNumber);
 //        }
         userRepo.save(user);
+        als.alsAdd(user.getUserEmail());
 
         return true;
     }
