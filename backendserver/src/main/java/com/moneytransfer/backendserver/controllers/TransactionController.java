@@ -207,7 +207,7 @@ public class TransactionController {
         return res.toString();
     }
 
-    @PutMapping(value = "transactions/confirmTransaction")
+    @PostMapping(value = "transactions/confirmTransaction")
     @ResponseBody
     public String confirmTransaction(@RequestBody String data) throws UnsupportedEncodingException {
 

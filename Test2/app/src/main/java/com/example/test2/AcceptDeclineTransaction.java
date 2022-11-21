@@ -86,7 +86,7 @@ public class AcceptDeclineTransaction extends AppCompatActivity {
                 req.put("transactionId", Utility.transactionID);
                 req.put("confirmed", confirmed);
 
-                res = apicall.callPut("http://techpay.eastus.cloudapp.azure.com:8080/transactions/confirmTransaction", headerMap, req);
+                res = apicall.callPost("http://techpay.eastus.cloudapp.azure.com:8080/transactions/confirmTransaction", headerMap, req);
                 str = res.getBoolean("confirmed");
             } catch (Exception e) {
                 e.printStackTrace();

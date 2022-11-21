@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button friendBtn, chooseFriendBtn, sendMoneyBtn, requestMoneyBtn, signOutBtn, checkPendingTransBtn;
         TextView userName, userEmailAddress, balanceAmount;
-        EditText moneyAmt;
+        EditText moneyAmt, noteText;
 
         userName = findViewById(R.id.username);
         userName.setText("Hi, " + Utility.userName);
@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         moneyAmt = (EditText) findViewById(R.id.moneyAmt);
+        noteText = findViewById(R.id.noteText);
 
         sendMoneyBtn = findViewById(R.id.sendMoneyBtn);
         sendMoneyBtn.setOnClickListener(new View.OnClickListener() {
@@ -95,8 +96,10 @@ public class MainActivity extends AppCompatActivity {
                             Snackbar mySnackbar = Snackbar.make(findViewById(R.id.myCoordinateLayout), "Send money request Sent", Snackbar.LENGTH_SHORT);
                             mySnackbar.show();
                             moneyAmt.setText(null);
+                            noteText.setText(null);
                         } else {
-                            openTransactionFail();
+                            Snackbar mySnackbar = Snackbar.make(findViewById(R.id.myCoordinateLayout), "Failed to send money. Please choose a friend", Snackbar.LENGTH_SHORT);
+                            mySnackbar.show();
                         }
                     } catch (Exception ignored) {
 
@@ -104,7 +107,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
 
         requestMoneyBtn = findViewById(R.id.requestMoneyBtn);
         requestMoneyBtn.setOnClickListener(new View.OnClickListener() {
@@ -126,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
                             Snackbar mySnackbar = Snackbar.make(findViewById(R.id.myCoordinateLayout), "Request money sent", Snackbar.LENGTH_SHORT);
                             mySnackbar.show();
                             moneyAmt.setText(null);
+                            noteText.setText(null);
                         } else {
                             Snackbar mySnackbar = Snackbar.make(findViewById(R.id.myCoordinateLayout), "Failed to request money. Please choose a friend", Snackbar.LENGTH_SHORT);
                             mySnackbar.show();
@@ -144,7 +147,6 @@ public class MainActivity extends AppCompatActivity {
                 openLogin();
             }
         });
-
     }
 
     private void openFriendList() {
@@ -203,7 +205,7 @@ public class MainActivity extends AppCompatActivity {
             try {
                 req.put("token", Utility.token);
                 req.put("email", Utility.friendEmail);
-                req.put("amt", amount);
+                req.put("amount", amount);
 
                 res = apicall.callPost("http://techpay.eastus.cloudapp.azure.com:8080/transactions/sendMoneyINT", headerMap, req);
                 str = res.getBoolean("isSuccess");
