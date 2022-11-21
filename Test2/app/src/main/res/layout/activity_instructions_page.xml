@@ -45,11 +45,10 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:layout_marginBottom="135dp"
-        android:text="1.The user can log in using email and password New users can move onto Create Account page
-           \n\n 2. The user can create an account Returning users can move back to the Login page
-           \n\n 3. The user should enter the amount to send. The user can optionally leave a personal note.
-           \nThe credit score of the recipient is shown to prevent scams.
-            \n 4. Confirmation Once the transaction is completed, the user can view payment information (amount sent, payee's name, transaction date/time)"
+        android:text="1. Returning users can log in by entering their email and password. New users can create an account by clicking on 'CREATE ACCOUNT' on the Login Screen.
+           \n\n 2. Once logged in, a user can choose a friend/recipient, enter an amount, and either send or request money. An optional Note field can also be filled out.
+           \n\n 3. Additional information like profile info and the current balance can also be seen on this screen. Clicking on the Friends button will take the user to a new screen where currently added friends will be shown. Users can also add a new friend here as well.
+            \n\n 4. Once a transaction is successfully completed, the user will be notified."
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
