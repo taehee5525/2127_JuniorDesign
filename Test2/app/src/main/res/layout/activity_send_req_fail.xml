@@ -26,7 +26,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="40dp"
         android:gravity="center"
-        android:text="Friend Request Sent Failed"
+        android:text="Sending Friend Request\nFailed"
         android:textColor="#8B0000"
         android:textSize="29sp"
         android:textStyle="bold|italic"
