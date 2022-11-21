@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -32,7 +31,7 @@ public class FriendListPage extends AppCompatActivity {
 
         LinearLayout currLayout = findViewById(R.id.friendListLayout);
 
-        Button sendFriendReq, friendReqListBtn, backToMain;
+        Button sendFriendReq, friendReqListBtn, backToMainBtn;
         CustomTask task = new CustomTask();
 
         int totalFriends = 0;
@@ -67,19 +66,17 @@ public class FriendListPage extends AppCompatActivity {
                     totalFriends = i + 1;
                 }
             }
-
             Utility.numOfFriends = totalFriends;
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-
         sendFriendReq = findViewById(R.id.addFriendBtn);
         sendFriendReq.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openSendReqPage();
+                openSendReq();
             }
         });
 
@@ -87,30 +84,30 @@ public class FriendListPage extends AppCompatActivity {
         friendReqListBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openFriendReqListPage();
+                openFriendReqList();
             }
         });
 
-        backToMain = findViewById(R.id.backToMain);
-        backToMain.setOnClickListener(new View.OnClickListener() {
+        backToMainBtn = findViewById(R.id.backToMainBtn);
+        backToMainBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openMainPage();
+                openMain();
             }
         });
     }
 
-    public void openSendReqPage() {
+    private void openSendReq() {
         Intent intent = new Intent(this, SendFriendRequestPage.class);
         startActivity(intent);
     }
 
-    public void openFriendReqListPage() {
+    private void openFriendReqList() {
         Intent intent = new Intent(this, FriendRequestLists.class);
         startActivity(intent);
     }
 
-    public void openMainPage() {
+    private void openMain() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
@@ -135,7 +132,7 @@ public class FriendListPage extends AppCompatActivity {
             paramMap.put("token", Utility.token);
 
             try {
-                res = apicall.callGet("http://10.0.2.2:8080/friends/getFriendList", headerMap, paramMap);
+                res = apicall.callGet("http://techpay.eastus.cloudapp.azure.com:8080/friends/getFriendList", headerMap, paramMap);
                 friendEmails = res.get("friendEmails").toString();
                 friendNames = res.get("friendNames").toString();
                 friendList = res.get("friendList").toString();
@@ -143,7 +140,7 @@ public class FriendListPage extends AppCompatActivity {
                 Log.w("friendEmails", friendEmails);
                 Log.w("friendNames", friendNames);
                 Log.w("friendList", friendList);
-            }  catch (Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             return friendList;

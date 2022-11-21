@@ -1,6 +1,7 @@
 package com.example.test2;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.content.Intent;
 import android.view.View;
@@ -19,7 +20,9 @@ public class PayeeInfoActivity extends AppCompatActivity {
         button = (Button) findViewById(R.id.completeTransaction);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) { openTransactionSuccess(); }
+            public void onClick(View view) {
+                openTransactionSuccess();
+            }
         });
     }
 

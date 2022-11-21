@@ -10,7 +10,7 @@
         android:id="@+id/imageView3"
         android:layout_width="191dp"
         android:layout_height="188dp"
-        android:layout_marginTop="132dp"
+        android:layout_marginTop="148dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -25,16 +25,15 @@
         android:text="Friend Request Sent\nSuccessfully"
         android:textColor="#2962FF"
         android:textSize="25sp"
-        android:textStyle="bold|italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
     <Button
-        android:id="@+id/gotoMainPageBtn"
-        android:layout_width="369dp"
-        android:layout_height="61dp"
+        android:id="@+id/backToMainBtn"
+        android:layout_width="249dp"
+        android:layout_height="56dp"
         android:layout_gravity="start"
         android:layout_marginStart="21dp"
         android:layout_marginEnd="21dp"

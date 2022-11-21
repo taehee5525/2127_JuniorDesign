@@ -20,7 +20,7 @@ public class HiServer {
         req.put("password", pw);
         try {
             res = apicall.callPost(urlForSignUp, headerMap, req);
-        }  catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         if (res.get("isSuccess") == "true") {
@@ -38,11 +38,11 @@ public class HiServer {
         req.put("password", pw);
         try {
             res = apicall.callPost(urlForSignIn, headerMap, req);
-        }  catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         if (res.get("isSuccess") == "true") {
-            return (String)res.get("token");
+            return (String) res.get("token");
         }
         return "";
     }

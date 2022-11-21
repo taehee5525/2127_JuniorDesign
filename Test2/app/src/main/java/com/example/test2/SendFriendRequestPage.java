@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.test2.ui.login.LoginActivity;
 import com.example.test2.ui.login.MainActivity;
 
 import org.json.JSONException;
@@ -25,7 +24,6 @@ public class SendFriendRequestPage extends AppCompatActivity {
     private Map<String, String> headerMap = new HashMap<>();
     private ApiCallMaker apicall = new ApiCallMaker();
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,10 +31,10 @@ public class SendFriendRequestPage extends AppCompatActivity {
 
         email = (EditText) findViewById(R.id.username);
 
-        Button sendReq, backToMain;
+        Button sendFriendReqBtn, backToMainBtn;
 
-        backToMain = (Button) findViewById(R.id.gotoMainPageBtn);
-        backToMain.setOnClickListener(new View.OnClickListener() {
+        backToMainBtn = (Button) findViewById(R.id.backToMainBtn);
+        backToMainBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openMain();
@@ -44,8 +42,8 @@ public class SendFriendRequestPage extends AppCompatActivity {
         });
 
 
-        sendReq = (Button) findViewById(R.id.addFriendBtn);
-        sendReq.setOnClickListener(new View.OnClickListener() {
+        sendFriendReqBtn = (Button) findViewById(R.id.sendFriendReqBtn);
+        sendFriendReqBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 try {
@@ -54,9 +52,9 @@ public class SendFriendRequestPage extends AppCompatActivity {
                     Log.w("add friend", result);
 
                     if (result.contains("t")) {
-                        openSendReqSuccPage();
+                        openSendReqSuc();
                     } else {
-                        openSendReqFailPage();
+                        openSendReqFail();
                     }
                 } catch (Exception ignored) {
 
@@ -71,12 +69,12 @@ public class SendFriendRequestPage extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void openSendReqSuccPage() {
+    private void openSendReqSuc() {
         Intent intent = new Intent(this, SendRequestSucc.class);
         startActivity(intent);
     }
 
-    private void openSendReqFailPage() {
+    private void openSendReqFail() {
         Intent intent = new Intent(this, SendRequestFail.class);
         startActivity(intent);
     }
@@ -96,14 +94,12 @@ public class SendFriendRequestPage extends AppCompatActivity {
             }
 
             try {
-                res = apicall.callPost("http://10.0.2.2:8080/friends/request", headerMap, req);
+                res = apicall.callPost("http://techpay.eastus.cloudapp.azure.com:8080/friends/request", headerMap, req);
                 str = res.getBoolean("isSuccess");
             } catch (Exception e) {
                 e.printStackTrace();
             }
             return str + "";
         }
-
-
     }
 }

@@ -7,17 +7,14 @@ import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.Layout;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.example.test2.ui.login.MainActivity;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -33,18 +30,18 @@ public class PendingTransactions extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pending_transactions);
 
-        Button backToMain = findViewById(R.id.backToMain);
-        backToMain.setOnClickListener(new View.OnClickListener() {
+        LinearLayout currLayout = findViewById(R.id.pendingTransactionLayout);
+
+        Button backToMainBtn = findViewById(R.id.backToMainBtn);
+        backToMainBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openMainPage();
+                openMain();
             }
         });
 
-        LinearLayout currLayout = findViewById(R.id.pendingTransactionLayout);
 
         CustomTask task = new CustomTask();
-
         try {
             String pendingList = task.execute().get();
             String[] pending = pendingList.split("\\},");
@@ -77,7 +74,7 @@ public class PendingTransactions extends AppCompatActivity {
                 drawable.setCornerRadius(20);
                 drawable.setStroke(2, Color.DKGRAY);
 
-                each_pending.setText("Email:" + email + "\n" + "Amount: " + amount );
+                each_pending.setText("Email:" + email + "\n" + "Amount: " + amount);
                 each_pending.setTextSize(18);
                 each_pending.setTextColor(Color.BLACK);
                 each_pending.setBackground(drawable);
@@ -104,7 +101,7 @@ public class PendingTransactions extends AppCompatActivity {
         }
     }
 
-    private void openMainPage() {
+    private void openMain() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
@@ -130,10 +127,10 @@ public class PendingTransactions extends AppCompatActivity {
             paramMap.put("token", Utility.token);
 
             try {
-                res = apicall.callGet("http://10.0.2.2:8080/transactions/getPendingTransactionListThatUserNeedToConfirm", headerMap, paramMap);
+                res = apicall.callGet("http://techpay.eastus.cloudapp.azure.com:8080/transactions/getPendingTransactionListThatUserNeedToConfirm", headerMap, paramMap);
                 result = res.get("pendingTransaction").toString();
                 Log.w("result", result);
-            }  catch (Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 

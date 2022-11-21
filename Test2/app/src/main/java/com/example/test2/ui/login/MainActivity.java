@@ -2,6 +2,7 @@ package com.example.test2.ui.login;
 
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -13,7 +14,6 @@ import android.widget.TextView;
 
 import com.example.test2.ApiCallMaker;
 import com.example.test2.FriendListPage;
-import com.example.test2.PayeeInfoActivity;
 import com.example.test2.PendingTransactions;
 import com.example.test2.R;
 import com.example.test2.ChooseFriendPage;
@@ -46,15 +46,13 @@ public class MainActivity extends AppCompatActivity {
         userEmailAddress.setText(Utility.userEmailAddr);
 
         balanceAmount = findViewById(R.id.balanceAmount);
-        balanceAmount.setText("$" + Utility.userBalance);
-
-
+        balanceAmount.setText("$ " + String.format("%.2f", Utility.userBalance));
 
         friendBtn = findViewById(R.id.friendListBtn);
         friendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openFriendListPage();
+                openFriendList();
             }
         });
 
@@ -70,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         chooseFriendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openChooseFriendPage();
+                openChooseFriend();
             }
         });
 
@@ -84,6 +82,8 @@ public class MainActivity extends AppCompatActivity {
 
                 if (moneyAmount.isEmpty()) {
                     moneyAmt.setError("Please enter amount");
+                } else if (Double.parseDouble(moneyAmount) > Utility.userBalance) {
+                    moneyAmt.setError("Not enough balance. Please check your balance");
                 } else {
                     try {
                         amount = Double.parseDouble(moneyAmount);
@@ -141,33 +141,33 @@ public class MainActivity extends AppCompatActivity {
         signOutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openLoginPage();
+                openLogin();
             }
         });
 
     }
 
-    public void openFriendListPage() {
+    private void openFriendList() {
         Intent intent = new Intent(this, FriendListPage.class);
         startActivity(intent);
     }
 
-    public void openPendingTransactions() {
+    private void openPendingTransactions() {
         Intent intent = new Intent(this, PendingTransactions.class);
         startActivity(intent);
     }
 
-    public void openChooseFriendPage() {
+    private void openChooseFriend() {
         Intent intent = new Intent(this, ChooseFriendPage.class);
         startActivity(intent);
     }
 
-    public void openLoginPage() {
+    private void openLogin() {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
 
-    public void openTransactionFail() {
+    private void openTransactionFail() {
         Intent intent = new Intent(this, TransactionFail.class);
         startActivity(intent);
     }
@@ -184,9 +184,9 @@ public class MainActivity extends AppCompatActivity {
                 req.put("email", Utility.friendEmail);
                 req.put("amount", amount);
 
-                res = apicall.callPost("http://10.0.2.2:8080/transactions/requestMoneyINT", headerMap, req);
+                res = apicall.callPost("http://techpay.eastus.cloudapp.azure.com:8080/transactions/requestMoneyINT", headerMap, req);
                 result = res.getBoolean("isSuccess");
-            }  catch (Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             return result + "";
@@ -205,7 +205,7 @@ public class MainActivity extends AppCompatActivity {
                 req.put("email", Utility.friendEmail);
                 req.put("amt", amount);
 
-                res = apicall.callPost("http://10.0.2.2:8080/transactions/sendMoneyINT", headerMap, req);
+                res = apicall.callPost("http://techpay.eastus.cloudapp.azure.com:8080/transactions/sendMoneyINT", headerMap, req);
                 str = res.getBoolean("isSuccess");
             } catch (Exception e) {
                 e.printStackTrace();

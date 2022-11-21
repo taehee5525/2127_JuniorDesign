@@ -21,7 +21,7 @@
         app:layout_constraintTop_toBottomOf="@id/addFriendBtn" />
 
     <Button
-        android:id="@+id/backToMain"
+        android:id="@+id/backToMainBtn"
         android:layout_width="274dp"
         android:layout_height="48dp"
         android:layout_marginTop="12dp"
@@ -42,7 +42,7 @@
         android:backgroundTint="#A4925A"
         android:text="Friend Requests"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/backToMain" />
+        app:layout_constraintTop_toBottomOf="@id/backToMainBtn" />
 
     <Button
         android:id="@+id/addFriendBtn"
@@ -53,7 +53,7 @@
         android:backgroundTint="#A4925A"
         android:text="Add Friend"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/backToMain"
+        app:layout_constraintTop_toBottomOf="@id/backToMainBtn"
         tools:ignore="MissingConstraints" />
 
     <ScrollView

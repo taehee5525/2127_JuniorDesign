@@ -1,12 +1,8 @@
 package com.example.test2;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
-import androidx.core.content.res.ResourcesCompat;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -25,7 +21,6 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class ChooseFriendPage extends AppCompatActivity {
     private ApiCallMaker apicall = new ApiCallMaker();
@@ -37,13 +32,12 @@ public class ChooseFriendPage extends AppCompatActivity {
         setContentView(R.layout.activity_choose_friend_page);
 
         LinearLayout currLayout = findViewById(R.id.chooseFriendListLayout);
-        int drawableRoundBtn = R.drawable.rounded_button;
 
-        Button main = findViewById(R.id.backToMain);
-        main.setOnClickListener(new View.OnClickListener() {
+        Button backToMainBtn = findViewById(R.id.backToMainBtn);
+        backToMainBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openMainPage();
+                openMain();
             }
         });
 
@@ -90,7 +84,7 @@ public class ChooseFriendPage extends AppCompatActivity {
                             Utility.friendEmail = eachEmail[currAddr].substring(matchStart, matchEnd);
                         }
                         Log.w("friend email", Utility.friendEmail);
-                        openMainPage();
+                        openMain();
                     }
                 });
             }
@@ -101,7 +95,7 @@ public class ChooseFriendPage extends AppCompatActivity {
 
     }
 
-    public void openMainPage() {
+    private void openMain() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
@@ -124,11 +118,11 @@ public class ChooseFriendPage extends AppCompatActivity {
             paramMap.put("token", Utility.token);
 
             try {
-                res = apicall.callGet("http://10.0.2.2:8080/friends/getFriendList", headerMap, paramMap);
+                res = apicall.callGet("http://techpay.eastus.cloudapp.azure.com:8080/friends/getFriendList", headerMap, paramMap);
                 friendList = res.get("friendList").toString();
 
                 Log.w("friendList", friendList);
-            }  catch (Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 

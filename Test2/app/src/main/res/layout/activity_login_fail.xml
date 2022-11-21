@@ -28,7 +28,6 @@
         android:text="Login Failed"
         android:textColor="#8B0000"
         android:textSize="32sp"
-        android:textStyle="italic"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
@@ -46,8 +45,8 @@
 
     <Button
         android:id="@+id/backToLoginBtn"
-        android:layout_width="369dp"
-        android:layout_height="61dp"
+        android:layout_width="249dp"
+        android:layout_height="56dp"
         android:layout_gravity="start"
         android:layout_marginStart="21dp"
         android:layout_marginEnd="21dp"

@@ -2,8 +2,7 @@ package com.example.test2;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,7 +13,6 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
 
 public class AcceptDeclineTransaction extends AppCompatActivity {
     private final ApiCallMaker apicall = new ApiCallMaker();
@@ -39,6 +37,11 @@ public class AcceptDeclineTransaction extends AppCompatActivity {
                 try {
                     String acceptResult = task.execute(Utility.token, Utility.transactionID, "Y").get();
                     Log.w("accept result", acceptResult);
+
+                    if (acceptResult.contains("true")) {
+                        openTransactionSuc();
+                    }
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -53,11 +56,22 @@ public class AcceptDeclineTransaction extends AppCompatActivity {
                 try {
                     String declinedResult = task.execute(Utility.token, Utility.transactionID, "n").get();
                     Log.w("decline result", declinedResult);
+                    openTransactionDeclined();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
+    }
+
+    private void openTransactionSuc() {
+        Intent intent = new Intent(this, TransactionSuccess.class);
+        startActivity(intent);
+    }
+
+    private void openTransactionDeclined() {
+        Intent intent = new Intent(this, TransactionDeclined.class);
+        startActivity(intent);
     }
 
     class CustomTask extends AsyncTask<String, Void, String> {
@@ -72,7 +86,7 @@ public class AcceptDeclineTransaction extends AppCompatActivity {
                 req.put("transactionId", Utility.transactionID);
                 req.put("confirmed", confirmed);
 
-                res = apicall.callPut("http://10.0.2.2:8080/transactions/confirmTransaction", headerMap, req);
+                res = apicall.callPut("http://techpay.eastus.cloudapp.azure.com:8080/transactions/confirmTransaction", headerMap, req);
                 str = res.getBoolean("confirmed");
             } catch (Exception e) {
                 e.printStackTrace();

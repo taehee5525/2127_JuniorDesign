@@ -24,6 +24,7 @@ public class FriendRequestLists extends AppCompatActivity {
     private ApiCallMaker apicall = new ApiCallMaker();
     private Map<String, String> headerMap = new HashMap<>();
     public List<String> friendRequestsList = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +62,7 @@ public class FriendRequestLists extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        Button approveFriendBtn, declineBtn ;
+        Button approveFriendBtn, declineBtn;
 
         approveFriendBtn = findViewById(R.id.approveFriendBtn);
         approveFriendBtn.setOnClickListener(new View.OnClickListener() {
@@ -98,6 +99,7 @@ public class FriendRequestLists extends AppCompatActivity {
 
 
     }
+
     class CustomTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... strings) {
@@ -116,9 +118,9 @@ public class FriendRequestLists extends AppCompatActivity {
             paramMap.put("token", Utility.token);
 
             try {
-                res = apicall.callGet("http://10.0.2.2:8080/friends/getRequestList", headerMap, paramMap);
+                res = apicall.callGet("http://techpay.eastus.cloudapp.azure.com:8080/friends/getRequestList", headerMap, paramMap);
                 friendRequestList = res.get("requestList").toString();
-            }  catch (Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
@@ -142,9 +144,9 @@ public class FriendRequestLists extends AppCompatActivity {
             }
 
             try {
-                res = apicall.callPut("http://10.0.2.2:8080/friends/requestAccept", headerMap, req);
+                res = apicall.callPut("http://techpay.eastus.cloudapp.azure.com:8080/friends/requestAccept", headerMap, req);
                 //System.out.println(res + "\n");
-            }  catch (Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
@@ -166,10 +168,10 @@ public class FriendRequestLists extends AppCompatActivity {
             }
 
             try {
-                res = apicall.callPut("http://10.0.2.2:8080/friends/requestAccept", headerMap, req);
+                res = apicall.callPut("http://techpay.eastus.cloudapp.azure.com:8080/friends/requestAccept", headerMap, req);
                 friendRequestsList.remove(0);
                 //System.out.println(res + "\n");
-            }  catch (Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 

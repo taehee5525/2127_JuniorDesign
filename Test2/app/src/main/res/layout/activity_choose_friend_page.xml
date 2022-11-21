@@ -7,7 +7,7 @@
     tools:context=".ChooseFriendPage">
 
     <Button
-        android:id="@+id/backToMain"
+        android:id="@+id/backToMainBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -31,7 +31,7 @@
         android:textStyle="bold|italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/backToMain" />
+        app:layout_constraintTop_toBottomOf="@+id/backToMainBtn" />
 
     <ScrollView
         android:id="@+id/scrollView2"

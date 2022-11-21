@@ -1,4 +1,5 @@
 package com.example.test2;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.BufferedWriter;
@@ -6,67 +7,73 @@ import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.net.HttpURLConnection;
 import java.util.Map;
+
 import org.json.JSONObject; // add library manually using ./tempLibFiles/json-20220924.jar file. This will be added using gradle in Android Studio.
 //reference for gradle: https://mvnrepository.com/artifact/org.json/json/20220924
 
 
 /**
- *  Class for make API Call
+ * Class for make API Call
  */
 public class ApiCallMaker {
 
     /**
      * Method for call API with GET method.
-     * @param Url url to send
+     *
+     * @param Url       url to send
      * @param headerMap header option map <K = option name, V = option value>
      * @return return as JSONobject.
      * @throws Exception if some parameter are missed.
      */
-    public JSONObject callGet(String Url, Map<String, String> headerMap, Map<String, String> paramMap) throws Exception{
+    public JSONObject callGet(String Url, Map<String, String> headerMap, Map<String, String> paramMap) throws Exception {
         return callAPI("GET", Url, headerMap, null, paramMap);
     }
 
     /**
      * Method for call API with POST method.
-     * @param Url url to send
+     *
+     * @param Url       url to send
      * @param headerMap header option map <K = option name, V = option value>
-     * @param obj JSON object to send
+     * @param obj       JSON object to send
      * @return return as JSONobject.
      * @throws Exception if some parameter are missed.
      */
-    public JSONObject callPost(String Url, Map<String, String> headerMap, JSONObject obj) throws Exception{
+    public JSONObject callPost(String Url, Map<String, String> headerMap, JSONObject obj) throws Exception {
         return callAPI("POST", Url, headerMap, obj, null);
     }
 
     /**
      * Method for call API with PUT method.
-     * @param Url url to send
+     *
+     * @param Url       url to send
      * @param headerMap header option map <K = option name, V = option value>
-     * @param obj JSON object to send
+     * @param obj       JSON object to send
      * @return return as JSONobject.
      * @throws Exception if some parameter are missed.
      */
-    public JSONObject callPut(String Url, Map<String, String> headerMap, JSONObject obj) throws Exception{
+    public JSONObject callPut(String Url, Map<String, String> headerMap, JSONObject obj) throws Exception {
         return callAPI("PUT", Url, headerMap, obj, null);
     }
 
     /**
      * Method for call API with DELETE method.
-     * @param Url url to send
+     *
+     * @param Url       url to send
      * @param headerMap header option map <K = option name, V = option value>
      * @return return as JSONobject.
      * @throws Exception if some parameter are missed.
      */
-    public JSONObject callDelete(String Url, Map<String, String> headerMap) throws Exception{
+    public JSONObject callDelete(String Url, Map<String, String> headerMap) throws Exception {
         return callAPI("DELETE", Url, headerMap, null, null);
     }
 
     /**
      * Method for make API call
-     * @param method method of API
-     * @param Url address
+     *
+     * @param method    method of API
+     * @param Url       address
      * @param headerMap header option map <K = option name, V = option value>
-     * @param obj object to send.
+     * @param obj       object to send.
      * @return return as JSONobject.
      * @throws Exception if some parameter are missed.
      */
@@ -89,12 +96,12 @@ public class ApiCallMaker {
             Url += paramStr;
         }
 
-        if (!method.equalsIgnoreCase("GET") && !method.equalsIgnoreCase("POST") && !method.equalsIgnoreCase("PUT") && !method.equalsIgnoreCase("DELETE")){
+        if (!method.equalsIgnoreCase("GET") && !method.equalsIgnoreCase("POST") && !method.equalsIgnoreCase("PUT") && !method.equalsIgnoreCase("DELETE")) {
             throw new Exception("Method of API must be specified. Please check again.");
         }
 
         URL url = new URL(Url);
-        HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod(method);
 
         //if header has options
@@ -106,7 +113,7 @@ public class ApiCallMaker {
             connection.setDoInput(true); //input required
         }
         if (method.equalsIgnoreCase("POST") || method.equalsIgnoreCase("PUT")) {
-             connection.setDoOutput(true); //output required
+            connection.setDoOutput(true); //output required
         }
 
         if ((method.equalsIgnoreCase("POST") || method.equalsIgnoreCase("PUT"))) {
@@ -120,7 +127,7 @@ public class ApiCallMaker {
         BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
         StringBuilder res = new StringBuilder();
         String line = null;
-        while((line = br.readLine()) != null) {
+        while ((line = br.readLine()) != null) {
             res.append(line);
         }
 

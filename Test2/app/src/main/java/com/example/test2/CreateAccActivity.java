@@ -187,7 +187,7 @@ public class CreateAccActivity extends AppCompatActivity {
             }
 
             try {
-                res = apicall.callPost("http://10.0.2.2:8080/users/mkuser", headerMap, req);
+                res = apicall.callPost("http://techpay.eastus.cloudapp.azure.com:8080/users/mkuser", headerMap, req);
                 str = res.getBoolean("isSuccess");
 
             } catch (Exception e) {
