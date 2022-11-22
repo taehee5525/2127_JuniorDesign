@@ -52,7 +52,6 @@ public class PendingTransactions extends AppCompatActivity {
         try {
             String pendingList = task.execute().get();
             String[] pending = pendingList.split("\\},");
-            String email = "";
 
             if (!pendingList.contains("\"")) {
                 TextView noPending = new TextView(this);
@@ -65,8 +64,6 @@ public class PendingTransactions extends AppCompatActivity {
                 for (int i = 0; i < pending.length; i++) {
                     Button each_pending = new Button(this);
                     String[] pending_comma = pending[i].split(",");
-                    String amt = pending_comma[1];
-                    double amount = Double.parseDouble(amt.replaceAll("[^0-9]", ""));
 
                     if (i == 0) {
                         pending[i] = pending[i].replace("[", "");
@@ -76,14 +73,22 @@ public class PendingTransactions extends AppCompatActivity {
                         pending[i] = pending[i].replace("]", "");
                     }
 
-                    Matcher matcher = Patterns.EMAIL_ADDRESS.matcher(pending[i]);
-                    while (matcher.find()) {
-                        int matchStart = matcher.start(0);
-                        int matchEnd = matcher.end(0);
-                        email = pending[i].substring(matchStart, matchEnd);
-                    }
+                    String amt = pending_comma[1];
+                    String payerEmail = pending_comma[6];
+                    String payeeEmail = pending_comma[8];
+                    double amount = Double.parseDouble(amt.replaceAll("[^0-9]", ""));
 
-                    each_pending.setText("Email: " + email + "\n" + "Amount: " + amount);
+                    payerEmail = payerEmail.replace("\"", "");
+                    payerEmail = payerEmail.replace(":", "");
+                    payerEmail = payerEmail.replace("payerEmail", "");
+
+                    payeeEmail = payeeEmail.replace("\"", "");
+                    payeeEmail = payeeEmail.replace(":", "");
+                    payeeEmail = payeeEmail.replace("payeeEmail", "");
+                    payeeEmail = payeeEmail.replace("}]", "");
+
+
+                    each_pending.setText("Payer: " + payerEmail + "\n" + "Payee: " + payeeEmail + "\n" + "Amount: " + amount);
                     each_pending.setTextSize(18);
                     each_pending.setTextColor(Color.BLACK);
                     each_pending.setGravity(Gravity.CENTER);

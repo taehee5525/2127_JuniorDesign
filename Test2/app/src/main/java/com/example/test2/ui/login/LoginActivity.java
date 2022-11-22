@@ -206,7 +206,7 @@ public class LoginActivity extends AppCompatActivity {
                 res = apicall.callPost("http://techpay.eastus.cloudapp.azure.com:8080/users/userlogin", headerMap, req);
                 Utility.token = res.get("token").toString();
                 Utility.userName = res.get("name").toString();
-
+                Utility.timestamp = System.currentTimeMillis();
             } catch (Exception e) {
                 e.printStackTrace();
             }

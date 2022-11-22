@@ -45,20 +45,25 @@ public class AcceptDeclineTransaction extends AppCompatActivity {
             public void onClick(View view) {
                 confirmed = true;
                 CustomTask task = new CustomTask();
-                try {
-                    String acceptResult = task.execute(Utility.token, Utility.transactionID, confirmed + "").get();
-                    Log.w("accept result", acceptResult);
+                if (Utility.isExpiredToken(Utility.token)) {
+                    openTimeExpMsg();
+                } else {
+                    try {
+                        String acceptResult = task.execute(Utility.token, Utility.transactionID, confirmed + "").get();
+                        Log.w("accept result", acceptResult);
 
-                    CustomTask_getBalance task2 = new CustomTask_getBalance();
-                    String balance = task2.execute().get();
-                    Utility.userBalance = Double.parseDouble(balance);
-                    Log.w("user balance", Utility.userBalance + "");
+                        CustomTask_getBalance task2 = new CustomTask_getBalance();
+                        String balance = task2.execute().get();
+                        Utility.userBalance = Double.parseDouble(balance);
+                        Log.w("user balance", Utility.userBalance + "");
 
-                    openTransactionSuc();
+                        openTransactionSuc();
 
-                } catch (Exception e) {
-                    e.printStackTrace();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
+
             }
         });
 
@@ -67,18 +72,22 @@ public class AcceptDeclineTransaction extends AppCompatActivity {
             public void onClick(View view) {
                 confirmed = false;
                 CustomTask task = new CustomTask();
-                try {
-                    String declinedResult = task.execute(Utility.token, Utility.transactionID, confirmed + "").get();
-                    Log.w("decline result", declinedResult);
+                if (Utility.isExpiredToken(Utility.token)) {
+                    openTimeExpMsg();
+                } else {
+                    try {
+                        String declinedResult = task.execute(Utility.token, Utility.transactionID, confirmed + "").get();
+                        Log.w("decline result", declinedResult);
 
-                    CustomTask_getBalance task2 = new CustomTask_getBalance();
-                    String balance = task2.execute().get();
-                    Utility.userBalance = Double.parseDouble(balance);
-                    Log.w("user balance", Utility.userBalance + "");
+                        CustomTask_getBalance task2 = new CustomTask_getBalance();
+                        String balance = task2.execute().get();
+                        Utility.userBalance = Double.parseDouble(balance);
+                        Log.w("user balance", Utility.userBalance + "");
 
-                    openTransactionDeclined();
-                } catch (Exception e) {
-                    e.printStackTrace();
+                        openTransactionDeclined();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });
@@ -96,6 +105,11 @@ public class AcceptDeclineTransaction extends AppCompatActivity {
 
     private void openPendingTran() {
         Intent intent = new Intent(this, PendingTransactions.class);
+        startActivity(intent);
+    }
+
+    private void openTimeExpMsg() {
+        Intent intent = new Intent(this, TimeExpireMsg.class);
         startActivity(intent);
     }
 

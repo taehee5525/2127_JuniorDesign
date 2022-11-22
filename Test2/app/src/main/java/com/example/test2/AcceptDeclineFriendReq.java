@@ -42,16 +42,18 @@ public class AcceptDeclineFriendReq extends AppCompatActivity {
         acceptBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                //api call while passing true as boolean parameter
-                CustomTask2accept task2 = new CustomTask2accept();
-                try {
-                    String friendRequestResult = task2.execute(Utility.token, Utility.friendReqEmail, "decline").get();
-
-                    openFriendAccepted();
-                } catch (Exception e) {
-                    e.printStackTrace();
+                if (Utility.isExpiredToken(Utility.token)) {
+                    openTimeExpMsg();
+                } else {
+                    CustomTask2accept task2 = new CustomTask2accept();
+                    try {
+                        String friendRequestResult = task2.execute(Utility.token, Utility.friendReqEmail, "decline").get();
+                        openFriendAccepted();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
+
             }
         });
 
@@ -59,15 +61,18 @@ public class AcceptDeclineFriendReq extends AppCompatActivity {
         declineBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (Utility.isExpiredToken(Utility.token)) {
+                    openTimeExpMsg();
+                } else {
+                    //api call while passing true as boolean parameter
+                    CustomTask3decline task3 = new CustomTask3decline();
+                    try {
+                        String friendRequestResult = task3.execute(Utility.token, Utility.friendReqEmail, "decline").get();
 
-                //api call while passing true as boolean parameter
-                CustomTask3decline task3 = new CustomTask3decline();
-                try {
-                    String friendRequestResult = task3.execute(Utility.token, Utility.friendReqEmail, "decline").get();
-
-                    openFriendDeclined();
-                } catch (Exception e) {
-                    e.printStackTrace();
+                        openFriendDeclined();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });
@@ -85,6 +90,11 @@ public class AcceptDeclineFriendReq extends AppCompatActivity {
 
     private void openFriendDeclined() {
         Intent intent = new Intent(this, FriendRequestDeclined.class);
+        startActivity(intent);
+    }
+
+    private void openTimeExpMsg() {
+        Intent intent = new Intent(this, TimeExpireMsg.class);
         startActivity(intent);
     }
 

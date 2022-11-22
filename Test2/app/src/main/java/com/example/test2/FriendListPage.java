@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,6 +32,12 @@ public class FriendListPage extends AppCompatActivity {
         setContentView(R.layout.activity_friend_list);
 
         LinearLayout currLayout = findViewById(R.id.friendListLayout);
+        LinearLayout remBtnLayout = findViewById(R.id.removeBtnLayout);
+
+        GradientDrawable drawable = new GradientDrawable();
+        drawable.setShape(GradientDrawable.RECTANGLE);
+        drawable.setCornerRadius(20);
+        drawable.setStroke(2, Color.RED);
 
         Button sendFriendReq, friendReqListBtn, backToMainBtn;
         CustomTask task = new CustomTask();
@@ -44,6 +51,7 @@ public class FriendListPage extends AppCompatActivity {
             if (friendList.contains("\"")) {
                 for (int i = 0; i < eachEmail.length; i++) {
                     TextView emailAddr = new TextView(this);
+                    Button removeBtn = new Button(this);
 
                     eachEmail[i] = eachEmail[i].replace("}", "");
                     eachEmail[i] = eachEmail[i].replaceAll("\"", "");
@@ -63,9 +71,32 @@ public class FriendListPage extends AppCompatActivity {
                     emailAddr.setTextColor(Color.BLACK);
                     emailAddr.setGravity(Gravity.CENTER);
                     emailAddr.setBackgroundColor(Color.parseColor("#f6f6f6"));
-                    emailAddr.setPadding(35, 0, 0, 30);
+                    emailAddr.setPadding(35, 10, 0, 25);
                     currLayout.addView(emailAddr);
 
+                    removeBtn.setText("remove");
+                    removeBtn.setTextSize(18);
+                    removeBtn.setGravity(Gravity.CENTER_HORIZONTAL);
+                    removeBtn.setTextColor(Color.RED);
+                    removeBtn.setBackground(drawable);
+                    removeBtn.setPadding(0, 10, 0, 25);
+                    remBtnLayout.addView(removeBtn);
+
+                    int curr = i;
+
+                    removeBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            CustomTask_remFri task2 = new CustomTask_remFri();
+                            Utility.friendDelEmail = eachEmail[curr];
+                            try {
+                                String removeFriend = task2.execute().get();
+                                openFriendList();
+                            } catch (Exception ignored) {
+
+                            }
+                        }
+                    });
                     totalFriends = i + 1;
                 }
             }
@@ -102,6 +133,11 @@ public class FriendListPage extends AppCompatActivity {
 
     private void openSendReq() {
         Intent intent = new Intent(this, SendFriendRequestPage.class);
+        startActivity(intent);
+    }
+
+    private void openFriendList() {
+        Intent intent = new Intent(this, FriendListPage.class);
         startActivity(intent);
     }
 
@@ -142,6 +178,24 @@ public class FriendListPage extends AppCompatActivity {
             }
 
             return friendList;
+        }
+    }
+
+    class CustomTask_remFri extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... strings) {
+            JSONObject req = new JSONObject();
+            JSONObject res = new JSONObject();
+
+            try {
+                req.put("token", Utility.token);
+                req.put("email", Utility.friendDelEmail);
+                res = apicall.callPost("http://techpay.eastus.cloudapp.azure.com:8080/friends/removeFriend", headerMap, req);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return "removed";
         }
     }
 }

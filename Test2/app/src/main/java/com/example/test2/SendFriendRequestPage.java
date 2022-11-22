@@ -46,20 +46,23 @@ public class SendFriendRequestPage extends AppCompatActivity {
         sendFriendReqBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-                    CustomTask task = new CustomTask();
-                    String result = task.execute(email.getText().toString()).get();
-                    Log.w("add friend", result);
+                if (Utility.isExpiredToken(Utility.token)) {
+                    openTimeExpMsg();
+                } else {
+                    try {
+                        CustomTask task = new CustomTask();
+                        String result = task.execute(email.getText().toString()).get();
+                        Log.w("add friend", result);
 
-                    if (result.contains("t")) {
-                        openSendReqSuc();
-                    } else {
-                        openSendReqFail();
+                        if (result.contains("t")) {
+                            openSendReqSuc();
+                        } else {
+                            openSendReqFail();
+                        }
+                    } catch (Exception ignored) {
+
                     }
-                } catch (Exception ignored) {
-
                 }
-
             }
         });
     }
@@ -76,6 +79,11 @@ public class SendFriendRequestPage extends AppCompatActivity {
 
     private void openSendReqFail() {
         Intent intent = new Intent(this, SendRequestFail.class);
+        startActivity(intent);
+    }
+
+    private void openTimeExpMsg() {
+        Intent intent = new Intent(this, TimeExpireMsg.class);
         startActivity(intent);
     }
 
