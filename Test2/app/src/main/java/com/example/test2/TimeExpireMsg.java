@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.test2.ui.login.LoginActivity;
 import com.example.test2.ui.login.MainActivity;
 
 public class TimeExpireMsg extends AppCompatActivity {
@@ -20,13 +21,13 @@ public class TimeExpireMsg extends AppCompatActivity {
         backToMainBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openMain();
+                openLogin();
             }
         });
     }
 
-    private void openMain() {
-        Intent intent = new Intent(this, MainActivity.class);
+    private void openLogin() {
+        Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
 }
