@@ -94,4 +94,33 @@ public class AccountLookupService implements ApplicationListener<EventPacket>{
     }
 
 
+    private void getParty(String email) {
+        JSONObject obj = new JSONObject();
+        obj.put("email", email);
+        eventPublisher.publishEvent(new EventPacket(2, obj, this));
+
+        JSONObject res = new JSONObject();
+
+        Map<String, String> paramMap = new HashMap<>();
+        Map<String, String> headerMap = new HashMap<>();
+        headerMap.put("Host", "http://localhost:8080");
+        headerMap.put("Accept", Util.headerMap.get("partiesAccept"));
+        headerMap.put("Content-Type", Util.headerMap.get("partiesContentType"));
+        headerMap.put("Date", Util.headerMap.get("tempHeaderDate"));
+        headerMap.put("FSPIOP-Source", Util.FSP_NAME);
+        headerMap.put("FSPIOP-Destination", "Account Lookup");
+        paramMap.put("currency", Util.CURRENCY);
+
+
+        try {
+            res = apicall.callGet(Util.urlMap.get("Account_Lookup_Service") + "/parties/ACCOUNT_ID/" + email
+                    , headerMap, paramMap, false);
+            logger.info("SYNC API CALL: Spring -> ALS (\"" + email + "\") <Receiving an information of a Party from Moja>");
+        }  catch (Exception e) {
+            logger.info("SYNC API CALL: Exception is Occurred");
+            e.printStackTrace();
+        }
+    }
+
+
 }
