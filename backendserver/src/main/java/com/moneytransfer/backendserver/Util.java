@@ -7,18 +7,24 @@ import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Util {
 
     public final static long TOKEN_EXPIRE_LIMIT = 300000; // 300000ms == 300s = 5mins
-    public static final String FSP_NAME = "moneyTransfer";
+    public static final String FSP_NAME = "techpayfsp";
     public static final Long RESPONSE_WAIT_LIMIT = 10000L;
     public final static String CURRENCY = "USD";
+    public final static ZonedDateTime now = ZonedDateTime.now();
+    public final static String date = now.format(DateTimeFormatter.RFC_1123_DATE_TIME);
     public static final Map<String, String> urlMap = new HashMap<String, String>() {
         {
             put("Central_Ledger", "http://central-ledger.local");
             put("Account_Lookup_Service", "http://account-lookup-service.local");
             put("endPoint", "http://localhost:8080/");
+            put("Quoting_Service", "http://quoting-service.local");
+            put("Transaction_Request_Service", "http://transaction-request-service.local");
         }
     };
 
@@ -29,7 +35,13 @@ public class Util {
         {
             put("participantsAccept", "application/vnd.interoperability.participants+json;version=1");
             put("participantsContentType", "application/vnd.interoperability.participants+json;version=1.0");
-            put("tempHeaderDate", "Thu, 24 Jan 2019 10:22:12 GMT");
+            put("tempHeaderDate", date);
+            put("partiesAccept", "application/vnd.interoperability.parties+json;version=1");
+            put("partiesContentType", "application/vnd.interoperability.parties+json;version=1.0");
+            put("quotesAccept", "application/vnd.interoperability.quotes+json;version=1");
+            put("quotesContentType", "application/vnd.interoperability.quotes+json;version=1.0");
+            put("transactionAccept", "application/vnd.interoperability.transactionRequest+json;version=1");
+            put("transactionContentType", "application/vnd.interoperability.transactionRequest+json;version=1.0");
         }
     };
 
@@ -94,4 +106,5 @@ public class Util {
             return ret;
         }
     }
+
 }
