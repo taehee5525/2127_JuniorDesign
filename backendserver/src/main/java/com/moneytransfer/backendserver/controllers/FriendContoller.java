@@ -78,7 +78,7 @@ public class FriendContoller {
     @PostMapping(value = "friends/requestAccept")
     @ResponseBody
     public String acceptRequestFriend(@RequestBody String data) throws UnsupportedEncodingException {
-        JSONObject req = new JSONObject(data);
+        JSONObject req = new JSONObject(Util.errorDecoder(data));
 
         String requesterToken = req.get("token").toString();
         String friendEmail = req.get("email").toString();

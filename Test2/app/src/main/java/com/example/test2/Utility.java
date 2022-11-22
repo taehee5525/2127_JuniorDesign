@@ -14,4 +14,6 @@ public class Utility {
     public static String transactionID;
 
     public static double userBalance;
+
+    public static String friendReqEmail;
 }

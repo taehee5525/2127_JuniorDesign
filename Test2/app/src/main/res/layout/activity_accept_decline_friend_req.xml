@@ -4,16 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AcceptDeclineTransaction">
+    tools:context=".AcceptDeclineFriendReq">
 
     <Button
-        android:id="@+id/backToPendTransBtn"
+        android:id="@+id/backToFriendReqListBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="4dp"
         android:background="@android:color/transparent"
-        android:text="Back To Pending Transaction"
+        android:text="Back To Friend Requests"
         android:textColor="#2962FF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.059"
@@ -21,12 +21,13 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/amountText"
+        android:id="@+id/acceptFriendText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="284dp"
+        android:layout_marginTop="260dp"
         android:fontFamily="@font/ptsans_bold"
-        android:text="Accept the amount?"
+        android:gravity="center"
+        android:text="Accept friend request?"
         android:textSize="32sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -43,7 +44,7 @@
         app:layout_constraintEnd_toStartOf="@id/declineBtn"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/amountText" />
+        app:layout_constraintTop_toBottomOf="@id/acceptFriendText" />
 
     <Button
         android:id="@+id/declineBtn"
@@ -54,7 +55,6 @@
         android:backgroundTint="#f43d2e"
         android:text="Decline"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/amountText" />
-
+        app:layout_constraintTop_toBottomOf="@id/acceptFriendText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

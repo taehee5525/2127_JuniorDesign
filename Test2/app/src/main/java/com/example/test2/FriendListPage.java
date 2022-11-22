@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -60,6 +61,8 @@ public class FriendListPage extends AppCompatActivity {
                     emailAddr.setText(eachEmail[i]);
                     emailAddr.setTextSize(18);
                     emailAddr.setTextColor(Color.BLACK);
+                    emailAddr.setGravity(Gravity.CENTER);
+                    emailAddr.setBackgroundColor(Color.parseColor("#f6f6f6"));
                     emailAddr.setPadding(35, 0, 0, 30);
                     currLayout.addView(emailAddr);
 
@@ -118,8 +121,6 @@ public class FriendListPage extends AppCompatActivity {
             JSONObject res = new JSONObject();
             JSONObject req = new JSONObject();
 
-            String friendEmails = "";
-            String friendNames = "";
             String friendList = "";
 
             try {
@@ -133,18 +134,14 @@ public class FriendListPage extends AppCompatActivity {
 
             try {
                 res = apicall.callGet("http://techpay.eastus.cloudapp.azure.com:8080/friends/getFriendList", headerMap, paramMap);
-                friendEmails = res.get("friendEmails").toString();
-                friendNames = res.get("friendNames").toString();
                 friendList = res.get("friendList").toString();
 
-                Log.w("friendEmails", friendEmails);
-                Log.w("friendNames", friendNames);
                 Log.w("friendList", friendList);
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
             return friendList;
         }
     }
-
 }

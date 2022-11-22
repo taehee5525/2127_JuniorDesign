@@ -9,9 +9,11 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.test2.ui.login.MainActivity;
 
@@ -32,6 +34,11 @@ public class PendingTransactions extends AppCompatActivity {
 
         LinearLayout currLayout = findViewById(R.id.pendingTransactionLayout);
 
+        GradientDrawable drawable = new GradientDrawable();
+        drawable.setShape(GradientDrawable.RECTANGLE);
+        drawable.setCornerRadius(20);
+        drawable.setStroke(2, Color.DKGRAY);
+
         Button backToMainBtn = findViewById(R.id.backToMainBtn);
         backToMainBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,55 +54,57 @@ public class PendingTransactions extends AppCompatActivity {
             String[] pending = pendingList.split("\\},");
             String email = "";
 
-            for (int i = 0; i < pending.length; i++) {
-                Button each_pending = new Button(this);
+            if (!pendingList.contains("\"")) {
+                TextView noPending = new TextView(this);
+                noPending.setText("You don't have any pending transactions");
+                noPending.setTextColor(Color.RED);
+                noPending.setGravity(Gravity.CENTER);
+                currLayout.addView(noPending);
 
-                String[] pending_comma = pending[i].split(",");
-                String amt = pending_comma[1];
-                double amount = Double.parseDouble(amt.replaceAll("[^0-9]", ""));
+            } else {
+                for (int i = 0; i < pending.length; i++) {
+                    Button each_pending = new Button(this);
+                    String[] pending_comma = pending[i].split(",");
+                    String amt = pending_comma[1];
+                    double amount = Double.parseDouble(amt.replaceAll("[^0-9]", ""));
 
-                if (i == 0) {
-                    pending[i] = pending[i].replace("[", "");
-                }
-
-                if (i == pending.length - 1) {
-                    pending[i] = pending[i].replace("]", "");
-                }
-
-                Matcher matcher = Patterns.EMAIL_ADDRESS.matcher(pending[i]);
-                while (matcher.find()) {
-                    int matchStart = matcher.start(0);
-                    int matchEnd = matcher.end(0);
-                    email = pending[i].substring(matchStart, matchEnd);
-                }
-
-                GradientDrawable drawable = new GradientDrawable();
-                drawable.setShape(GradientDrawable.RECTANGLE);
-                drawable.setCornerRadius(20);
-                drawable.setStroke(2, Color.DKGRAY);
-
-                each_pending.setText("Email:" + email + "\n" + "Amount: " + amount);
-                each_pending.setTextSize(18);
-                each_pending.setTextColor(Color.BLACK);
-                each_pending.setBackground(drawable);
-                each_pending.setPadding(35, 10, 0, 30);
-
-                currLayout.addView(each_pending);
-
-                each_pending.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        String this_transaction = pending_comma[7];
-                        this_transaction = this_transaction.replace("\"", "");
-                        this_transaction = this_transaction.replace(":", "");
-                        this_transaction = this_transaction.replace("transactionId", "");
-                        Utility.transactionID = this_transaction;
-                        Log.w("transId", Utility.transactionID);
-                        openAccpetDTransaction();
+                    if (i == 0) {
+                        pending[i] = pending[i].replace("[", "");
                     }
-                });
-            }
 
+                    if (i == pending.length - 1) {
+                        pending[i] = pending[i].replace("]", "");
+                    }
+
+                    Matcher matcher = Patterns.EMAIL_ADDRESS.matcher(pending[i]);
+                    while (matcher.find()) {
+                        int matchStart = matcher.start(0);
+                        int matchEnd = matcher.end(0);
+                        email = pending[i].substring(matchStart, matchEnd);
+                    }
+
+                    each_pending.setText("Email: " + email + "\n" + "Amount: " + amount);
+                    each_pending.setTextSize(18);
+                    each_pending.setTextColor(Color.BLACK);
+                    each_pending.setGravity(Gravity.CENTER);
+                    each_pending.setBackground(drawable);
+                    each_pending.setPadding(35, 10, 0, 30);
+                    currLayout.addView(each_pending);
+
+                    each_pending.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            String this_transaction = pending_comma[7];
+                            this_transaction = this_transaction.replace("\"", "");
+                            this_transaction = this_transaction.replace(":", "");
+                            this_transaction = this_transaction.replace("transactionId", "");
+                            Utility.transactionID = this_transaction;
+                            Log.w("transId", Utility.transactionID);
+                            openAccpetDTransaction();
+                        }
+                    });
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -129,7 +138,7 @@ public class PendingTransactions extends AppCompatActivity {
             try {
                 res = apicall.callGet("http://techpay.eastus.cloudapp.azure.com:8080/transactions/getPendingTransactionListThatUserNeedToConfirm", headerMap, paramMap);
                 result = res.get("pendingTransaction").toString();
-                Log.w("result", result);
+                Log.w("pending transactions", result);
             } catch (Exception e) {
                 e.printStackTrace();
             }

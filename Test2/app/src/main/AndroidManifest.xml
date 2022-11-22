@@ -14,6 +14,15 @@
         android:theme="@style/Theme.Test2"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".FriendRequestDeclined"
+            android:exported="false" />
+        <activity
+            android:name=".FriendRequestAccepted"
+            android:exported="false" />
+        <activity
+            android:name=".AcceptDeclineFriendReq"
+            android:exported="false" />
+        <activity
             android:name=".TransactionDeclined"
             android:exported="false" />
         <activity

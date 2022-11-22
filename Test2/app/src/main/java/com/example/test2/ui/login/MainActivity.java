@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         userEmailAddress.setText(Utility.userEmailAddr);
 
         balanceAmount = findViewById(R.id.balanceAmount);
-        balanceAmount.setText("$ " + String.format("%.2f", Utility.userBalance));
+        balanceAmount.setText("$" + String.format("%.2f", Utility.userBalance));
 
         friendBtn = findViewById(R.id.friendListBtn);
         friendBtn.setOnClickListener(new View.OnClickListener() {
@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
                         Log.w("Valid transaction check", result);
 
                         if (result.contains("true")) {
-                            Snackbar mySnackbar = Snackbar.make(findViewById(R.id.myCoordinateLayout), "Send money request Sent", Snackbar.LENGTH_SHORT);
+                            Snackbar mySnackbar = Snackbar.make(findViewById(R.id.myCoordinateLayout), "Send money request sent", Snackbar.LENGTH_SHORT);
                             mySnackbar.show();
                             moneyAmt.setText(null);
                             noteText.setText(null);

@@ -3,6 +3,8 @@ package com.example.test2;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,7 +32,6 @@ public class FriendRequestLists extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_request);
-
         LinearLayout currLayout = findViewById(R.id.requestListLayout);
 
         Button backToFriendBtn, approveFriendBtn, declineBtn;
@@ -48,67 +49,63 @@ public class FriendRequestLists extends AppCompatActivity {
             String friendRequestStr = task.execute().get();
             String[] eachEmail = friendRequestStr.split(",");
 
-            for (int i = 0; i < eachEmail.length; i++) {
-                TextView emailAddr = new TextView(this);
+            if (!friendRequestStr.contains("\"")) {
+                TextView noFriendReq = new TextView(this);
+                noFriendReq.setText("You don't have any friend requests");
+                noFriendReq.setTextColor(Color.RED);
+                noFriendReq.setGravity(Gravity.CENTER);
+                currLayout.addView(noFriendReq);
+            } else {
+                for (int i = 0; i < eachEmail.length; i++) {
+                    Button emailAddr = new Button(this);
 
-                if (i == 0) {
-                    eachEmail[i] = eachEmail[i].replace("[", "");
+                    if (i == 0) {
+                        eachEmail[i] = eachEmail[i].replace("[", "");
+                    }
+
+                    if (i == eachEmail.length - 1) {
+                        eachEmail[i] = eachEmail[i].replace("]", "");
+                    }
+
+                    eachEmail[i] = eachEmail[i].replaceAll("^\"|\"$", "");
+
+                    GradientDrawable drawable = new GradientDrawable();
+                    drawable.setShape(GradientDrawable.RECTANGLE);
+                    drawable.setCornerRadius(20);
+                    drawable.setStroke(2, Color.DKGRAY);
+
+                    emailAddr.setText(eachEmail[i]);
+                    emailAddr.setTextSize(18);
+                    emailAddr.setAllCaps(false);
+                    emailAddr.setGravity(Gravity.CENTER);
+                    emailAddr.setBackground(drawable);
+                    emailAddr.setPadding(35, 10, 0, 20);
+                    currLayout.addView(emailAddr);
+
+                    int currReq = i;
+                    emailAddr.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Utility.friendReqEmail = eachEmail[currReq];
+                            Log.w("selected request email", Utility.friendReqEmail);
+                            openAccpetDFriendReq();
+                        }
+                    });
                 }
-
-                if (i == eachEmail.length - 1) {
-                    eachEmail[i] = eachEmail[i].replace("]", "");
-                }
-
-                eachEmail[i] = eachEmail[i].replaceAll("^\"|\"$", "");
-
-                friendRequestsList.add(eachEmail[i]);
-
-                emailAddr.setText(eachEmail[i]);
-                emailAddr.setTextSize(18);
-                emailAddr.setPadding(35, 10, 0, 20);
-                currLayout.addView(emailAddr);
             }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        approveFriendBtn = findViewById(R.id.approveFriendBtn);
-        approveFriendBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                //api call while passing true as boolean parameter
-                CustomTask2accept task2 = new CustomTask2accept();
-
-                try {
-                    String friendRequestResult = task2.execute(Utility.token, friendRequestsList.get(0), "decline").get();
-                    //need to also add refreshing the page here
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-
-        declineBtn = findViewById(R.id.declineBtn);
-        declineBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                //api call while passing true as boolean parameter
-                CustomTask3decline task3 = new CustomTask3decline();
-                try {
-                    String friendRequestResult = task3.execute(Utility.token, friendRequestsList.get(0), "decline").get();
-                    //need to also add refreshing the page here
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
     }
 
     private void openFriendList() {
         Intent intent = new Intent(this, FriendListPage.class);
+        startActivity(intent);
+    }
+
+    private void openAccpetDFriendReq() {
+        Intent intent = new Intent(this, AcceptDeclineFriendReq.class);
         startActivity(intent);
     }
 
@@ -139,56 +136,4 @@ public class FriendRequestLists extends AppCompatActivity {
             return friendRequestList;
         }
     }
-
-    class CustomTask2accept extends AsyncTask<String, Void, String> {
-        @Override
-        protected String doInBackground(String... strings) {
-            JSONObject res = new JSONObject();
-            JSONObject req = new JSONObject();
-
-            try {
-                req.put("token", Utility.token);
-                req.put("email", friendRequestsList.get(0));
-                req.put("accept", "accept");
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-            try {
-                res = apicall.callPost("http://techpay.eastus.cloudapp.azure.com:8080/friends/requestAccept", headerMap, req);
-                //System.out.println(res + "\n");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            return "accepted"; //acceptFriendReq() in Main.java is a void method and doesn't return anything
-        }
-    }
-
-    class CustomTask3decline extends AsyncTask<String, Void, String> {
-        @Override
-        protected String doInBackground(String... strings) {
-            JSONObject res = new JSONObject();
-            JSONObject req = new JSONObject();
-            try {
-                req.put("token", Utility.token);
-                req.put("email", friendRequestsList.get(0));
-                req.put("accept", "decline");
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-            try {
-                res = apicall.callPost("http://techpay.eastus.cloudapp.azure.com:8080/friends/requestAccept", headerMap, req);
-                friendRequestsList.remove(0);
-                //System.out.println(res + "\n");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            return "declined"; //acceptFriendReq() in Main.java is a void method and doesn't return anything
-        }
-    }
-
 }

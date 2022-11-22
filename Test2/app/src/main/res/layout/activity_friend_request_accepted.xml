@@ -4,45 +4,46 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CreateAccSuccess">
+    tools:context=".FriendRequestAccepted">
 
     <ImageView
-        android:id="@+id/techLogo"
+        android:id="@+id/tpaylogo"
         android:layout_width="180dp"
         android:layout_height="154dp"
-        android:layout_marginTop="164dp"
+        android:layout_marginTop="172dp"
+        android:contentDescription="tpaylogo image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/t_pay_image" />
+        app:srcCompat="@drawable/t_pay_image"
+        tools:ignore="ImageContrastCheck" />
 
     <TextView
-        android:id="@+id/createAccSuccMsg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Create Account Successful"
+        android:id="@+id/textSuccess"
+        android:layout_width="363dp"
+        android:layout_height="86dp"
+        android:layout_marginTop="12dp"
+        android:gravity="center"
+        android:text="You've successfully accepted the friend request"
         android:textColor="#2962FF"
-        android:textSize="32sp"
+        android:textSize="27sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.486"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/techLogo" />
+        app:layout_constraintTop_toBottomOf="@id/tpaylogo" />
 
     <Button
-        android:id="@+id/goToLoginBtn"
+        android:id="@+id/backToMainBtn"
         android:layout_width="249dp"
         android:layout_height="56dp"
         android:layout_gravity="start"
-        android:layout_marginStart="21dp"
-        android:layout_marginEnd="21dp"
-        android:layout_marginBottom="172dp"
+        android:layout_marginTop="28dp"
         android:backgroundTint="#B3A369"
-        android:text="Go to Login Page"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="Return to Main Page"
+        android:textColor="#ffffffff"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/createAccSuccMsg"
-        app:layout_constraintVertical_bias="0.527" />
+        app:layout_constraintTop_toBottomOf="@id/textSuccess"
+        tools:ignore="DuplicateSpeakableTextCheck,TextContrastCheck" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

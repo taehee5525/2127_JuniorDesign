@@ -211,7 +211,7 @@ public class TransactionController {
     @ResponseBody
     public String confirmTransaction(@RequestBody String data) throws UnsupportedEncodingException {
 
-        JSONObject req = new JSONObject(data);
+        JSONObject req = new JSONObject(Util.errorDecoder(data));
 
         String requesterToken = req.get("token").toString();
         String transactionId = req.get("transactionId").toString();

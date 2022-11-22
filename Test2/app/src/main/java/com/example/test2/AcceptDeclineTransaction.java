@@ -8,6 +8,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+
+import com.example.test2.ui.login.LoginActivity;
 
 import org.json.JSONObject;
 
@@ -24,10 +27,18 @@ public class AcceptDeclineTransaction extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_accept_decline_transaction);
 
-        Button acceptBtn, declineBtn;
+        Button backToPendTransBtn, acceptBtn, declineBtn;
 
+        backToPendTransBtn = findViewById(R.id.backToPendTransBtn);
         acceptBtn = findViewById(R.id.acceptBtn);
         declineBtn = findViewById(R.id.declineBtn);
+
+        backToPendTransBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openPendingTran();
+            }
+        });
 
         acceptBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -35,12 +46,15 @@ public class AcceptDeclineTransaction extends AppCompatActivity {
                 confirmed = true;
                 CustomTask task = new CustomTask();
                 try {
-                    String acceptResult = task.execute(Utility.token, Utility.transactionID, "Y").get();
+                    String acceptResult = task.execute(Utility.token, Utility.transactionID, confirmed + "").get();
                     Log.w("accept result", acceptResult);
 
-                    if (acceptResult.contains("true")) {
-                        openTransactionSuc();
-                    }
+                    CustomTask_getBalance task2 = new CustomTask_getBalance();
+                    String balance = task2.execute().get();
+                    Utility.userBalance = Double.parseDouble(balance);
+                    Log.w("user balance", Utility.userBalance + "");
+
+                    openTransactionSuc();
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -54,8 +68,14 @@ public class AcceptDeclineTransaction extends AppCompatActivity {
                 confirmed = false;
                 CustomTask task = new CustomTask();
                 try {
-                    String declinedResult = task.execute(Utility.token, Utility.transactionID, "n").get();
+                    String declinedResult = task.execute(Utility.token, Utility.transactionID, confirmed + "").get();
                     Log.w("decline result", declinedResult);
+
+                    CustomTask_getBalance task2 = new CustomTask_getBalance();
+                    String balance = task2.execute().get();
+                    Utility.userBalance = Double.parseDouble(balance);
+                    Log.w("user balance", Utility.userBalance + "");
+
                     openTransactionDeclined();
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -74,12 +94,16 @@ public class AcceptDeclineTransaction extends AppCompatActivity {
         startActivity(intent);
     }
 
+    private void openPendingTran() {
+        Intent intent = new Intent(this, PendingTransactions.class);
+        startActivity(intent);
+    }
+
     class CustomTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... strings) {
             JSONObject req = new JSONObject();
             JSONObject res = new JSONObject();
-            boolean str = false;
 
             try {
                 req.put("token", Utility.token);
@@ -87,11 +111,36 @@ public class AcceptDeclineTransaction extends AppCompatActivity {
                 req.put("confirmed", confirmed);
 
                 res = apicall.callPost("http://techpay.eastus.cloudapp.azure.com:8080/transactions/confirmTransaction", headerMap, req);
-                str = res.getBoolean("confirmed");
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            return str + "";
+            return "confirmed";
+        }
+    }
+
+    class CustomTask_getBalance extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... strings) {
+            JSONObject req = new JSONObject();
+            JSONObject res = new JSONObject();
+            String result = "";
+
+            try {
+                req.put("token", Utility.token);
+            } catch (Exception ignored) {
+
+            }
+
+            Map<String, String> paramMap = new HashMap<>();
+            paramMap.put("token", Utility.token);
+
+            try {
+                res = apicall.callGet("http://techpay.eastus.cloudapp.azure.com:8080/transactions/getUserBalance", headerMap, paramMap);
+                result = res.get("userBalance").toString();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return result;
         }
     }
 }
