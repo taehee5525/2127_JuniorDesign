@@ -19,16 +19,14 @@
 
     <TextView
         android:id="@+id/createAccSuccMsg"
-        android:layout_width="365dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="20dp"
+        android:layout_marginTop="20dp"
         android:text="Create Account Successful"
-        android:textColor="#1313e4"
+        android:textColor="#2962FF"
         android:textSize="32sp"
-        android:textStyle="italic"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.486"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/techLogo" />
 
@@ -46,5 +44,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/createAccSuccMsg"
-        app:layout_constraintVertical_bias="0.79" />
+        app:layout_constraintVertical_bias="0.527" />
 </androidx.constraintlayout.widget.ConstraintLayout>

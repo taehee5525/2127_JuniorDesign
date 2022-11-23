@@ -2,6 +2,7 @@ package com.example.test2.ui.login;
 
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -13,9 +14,10 @@ import android.widget.TextView;
 
 import com.example.test2.ApiCallMaker;
 import com.example.test2.FriendListPage;
-import com.example.test2.PayeeInfoActivity;
+import com.example.test2.PendingTransactions;
 import com.example.test2.R;
 import com.example.test2.ChooseFriendPage;
+import com.example.test2.TimeExpireMsg;
 import com.example.test2.TransactionFail;
 import com.example.test2.Utility;
 import com.google.android.material.snackbar.Snackbar;
@@ -35,21 +37,35 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button friendBtn, chooseFriendBtn, sendMoneyBtn, requestMoneyBtn, signOutBtn;
-        TextView userName, userEmailAddress;
-        EditText moneyAmt;
+        Button friendBtn, chooseFriendBtn, sendMoneyBtn, requestMoneyBtn, signOutBtn, checkPendingTransBtn;
+        TextView userName, userEmailAddress, balanceAmount;
+        EditText moneyAmt, noteText;
 
         userName = findViewById(R.id.username);
         userName.setText("Hi, " + Utility.userName);
         userEmailAddress = findViewById(R.id.userEmailAddr);
         userEmailAddress.setText(Utility.userEmailAddr);
 
+        balanceAmount = findViewById(R.id.balanceAmount);
+        balanceAmount.setText("$" + String.format("%.2f", Utility.userBalance));
 
-        friendBtn = (Button) findViewById(R.id.friendListBtn);
+        friendBtn = findViewById(R.id.friendListBtn);
         friendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openFriendListPage();
+                openFriendList();
+            }
+        });
+
+        checkPendingTransBtn = findViewById(R.id.checkPendingTransBtn);
+        checkPendingTransBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (Utility.isExpiredToken(Utility.token)) {
+                    openTimeExpMsg();
+                } else {
+                    openPendingTransactions();
+                }
             }
         });
 
@@ -57,70 +73,85 @@ public class MainActivity extends AppCompatActivity {
         chooseFriendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openChooseFriendPage();
+                if (Utility.isExpiredToken(Utility.token)) {
+                    openTimeExpMsg();
+                } else {
+                    openChooseFriend();
+                }
             }
         });
 
         moneyAmt = (EditText) findViewById(R.id.moneyAmt);
+        noteText = findViewById(R.id.noteText);
 
         sendMoneyBtn = findViewById(R.id.sendMoneyBtn);
         sendMoneyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String token = Utility.token;
-                String email = Utility.friendEmail;
-                String amt = moneyAmt.getText().toString();
-                CustomTask2_sendMoney task = new CustomTask2_sendMoney();
-                String result = null;
-                if (amt.isEmpty()) {
-                    moneyAmt.setError("Please enter amount");
+                if (Utility.isExpiredToken(Utility.token)) {
+                    openTimeExpMsg();
                 } else {
-                    try {
-                        amount = Double.parseDouble(amt);
-                        result = task.execute(token, email, amount + "").get();
-                        Log.w("Valid transaction check", result);
-                    } catch (Exception ignored) {
+                    String moneyAmount = moneyAmt.getText().toString();
 
-                    }
-
-                    if (result.contains("true")) {
-                        Snackbar mySnackbar = Snackbar.make(findViewById(R.id.myCoordinateLayout), "Send money request Sent", Snackbar.LENGTH_SHORT);
-                        mySnackbar.show();
-                        moneyAmt.setText(null);
+                    if (moneyAmount.isEmpty()) {
+                        moneyAmt.setError("Please enter amount");
+                    } else if (Double.parseDouble(moneyAmount) > Utility.userBalance) {
+                        moneyAmt.setError("Not enough balance. Please check your balance");
                     } else {
-                        openTransactionFail();
+                        try {
+                            amount = Double.parseDouble(moneyAmount);
+                            CustomTask2_sendMoney task2 = new CustomTask2_sendMoney();
+                            String result = task2.execute(Utility.token, Utility.friendEmail, amount + "").get();
+                            Log.w("Valid transaction check", result);
+
+                            if (result.contains("true")) {
+                                Snackbar mySnackbar = Snackbar.make(findViewById(R.id.myCoordinateLayout), "Send money request sent", Snackbar.LENGTH_SHORT);
+                                mySnackbar.show();
+                                moneyAmt.setText(null);
+                                noteText.setText(null);
+                            } else {
+                                Snackbar mySnackbar = Snackbar.make(findViewById(R.id.myCoordinateLayout), "Failed to send money. Please choose a friend", Snackbar.LENGTH_SHORT);
+                                mySnackbar.show();
+                            }
+                        } catch (Exception ignored) {
+
+                        }
                     }
                 }
             }
         });
 
-
         requestMoneyBtn = findViewById(R.id.requestMoneyBtn);
         requestMoneyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String moneyAmount = moneyAmt.getText().toString();
-
-                if (moneyAmount.isEmpty()) {
-                    moneyAmt.setError("Please enter amount");
+                if (Utility.isExpiredToken(Utility.token)) {
+                    openTimeExpMsg();
                 } else {
-                    try {
-                        amount = Double.parseDouble(moneyAmount);
-                        Log.w("amount", amount + "");
-                        CustomTask_requestMoney task = new CustomTask_requestMoney();
-                        String result = task.execute(Utility.token, Utility.friendEmail, amount + "").get();
-                        Log.w("result", result);
+                    String moneyAmount = moneyAmt.getText().toString();
 
-                        if (result.contains("true")) {
-                            Snackbar mySnackbar = Snackbar.make(findViewById(R.id.myCoordinateLayout), "Request money sent", Snackbar.LENGTH_SHORT);
-                            mySnackbar.show();
-                            moneyAmt.setText(null);
-                        } else {
-                            Snackbar mySnackbar = Snackbar.make(findViewById(R.id.myCoordinateLayout), "Failed to request money. Please choose a friend", Snackbar.LENGTH_SHORT);
-                            mySnackbar.show();
+                    if (moneyAmount.isEmpty()) {
+                        moneyAmt.setError("Please enter amount");
+                    } else {
+                        try {
+                            amount = Double.parseDouble(moneyAmount);
+                            Log.w("amount", amount + "");
+                            CustomTask_requestMoney task = new CustomTask_requestMoney();
+                            String result = task.execute(Utility.token, Utility.friendEmail, amount + "").get();
+                            Log.w("result", result);
+
+                            if (result.contains("true")) {
+                                Snackbar mySnackbar = Snackbar.make(findViewById(R.id.myCoordinateLayout), "Request money sent", Snackbar.LENGTH_SHORT);
+                                mySnackbar.show();
+                                moneyAmt.setText(null);
+                                noteText.setText(null);
+                            } else {
+                                Snackbar mySnackbar = Snackbar.make(findViewById(R.id.myCoordinateLayout), "Failed to request money. Please choose a friend", Snackbar.LENGTH_SHORT);
+                                mySnackbar.show();
+                            }
+                        } catch (Exception ignored) {
+
                         }
-                    } catch (Exception ignored) {
-
                     }
                 }
             }
@@ -130,29 +161,38 @@ public class MainActivity extends AppCompatActivity {
         signOutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openLoginPage();
+                openLogin();
             }
         });
-
     }
 
-    public void openFriendListPage() {
+    private void openFriendList() {
         Intent intent = new Intent(this, FriendListPage.class);
         startActivity(intent);
     }
 
-    public void openChooseFriendPage() {
+    private void openPendingTransactions() {
+        Intent intent = new Intent(this, PendingTransactions.class);
+        startActivity(intent);
+    }
+
+    private void openChooseFriend() {
         Intent intent = new Intent(this, ChooseFriendPage.class);
         startActivity(intent);
     }
 
-    public void openLoginPage() {
+    private void openLogin() {
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
 
-    public void openTransactionFail() {
+    private void openTransactionFail() {
         Intent intent = new Intent(this, TransactionFail.class);
+        startActivity(intent);
+    }
+
+    private void openTimeExpMsg() {
+        Intent intent = new Intent(this, TimeExpireMsg.class);
         startActivity(intent);
     }
 
@@ -168,9 +208,9 @@ public class MainActivity extends AppCompatActivity {
                 req.put("email", Utility.friendEmail);
                 req.put("amount", amount);
 
-                res = apicall.callPost("http://10.0.2.2:8080/transactions/requestMoneyINT", headerMap, req);
+                res = apicall.callPost("http://techpay.eastus.cloudapp.azure.com:8080/transactions/requestMoneyINT", headerMap, req);
                 result = res.getBoolean("isSuccess");
-            }  catch (Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
             return result + "";
@@ -181,15 +221,15 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(String... strings) {
             JSONObject req = new JSONObject();
-            JSONObject res;
+            JSONObject res = new JSONObject();
             boolean str = false;
 
             try {
                 req.put("token", Utility.token);
                 req.put("email", Utility.friendEmail);
-                req.put("amt", amount);
+                req.put("amount", amount);
 
-                res = apicall.callPost("http://10.0.2.2:8080/transactions/requestMoneyINT", headerMap, req);
+                res = apicall.callPost("http://techpay.eastus.cloudapp.azure.com:8080/transactions/sendMoneyINT", headerMap, req);
                 str = res.getBoolean("isSuccess");
             } catch (Exception e) {
                 e.printStackTrace();

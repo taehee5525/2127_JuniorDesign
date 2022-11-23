@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,8 +32,14 @@ public class FriendListPage extends AppCompatActivity {
         setContentView(R.layout.activity_friend_list);
 
         LinearLayout currLayout = findViewById(R.id.friendListLayout);
+        LinearLayout remBtnLayout = findViewById(R.id.removeBtnLayout);
 
-        Button sendFriendReq, friendReqListBtn, backToMain;
+        GradientDrawable drawable = new GradientDrawable();
+        drawable.setShape(GradientDrawable.RECTANGLE);
+        drawable.setCornerRadius(20);
+        drawable.setStroke(2, Color.RED);
+
+        Button sendFriendReq, friendReqListBtn, backToMainBtn;
         CustomTask task = new CustomTask();
 
         int totalFriends = 0;
@@ -44,6 +51,7 @@ public class FriendListPage extends AppCompatActivity {
             if (friendList.contains("\"")) {
                 for (int i = 0; i < eachEmail.length; i++) {
                     TextView emailAddr = new TextView(this);
+                    Button removeBtn = new Button(this);
 
                     eachEmail[i] = eachEmail[i].replace("}", "");
                     eachEmail[i] = eachEmail[i].replaceAll("\"", "");
@@ -61,25 +69,48 @@ public class FriendListPage extends AppCompatActivity {
                     emailAddr.setText(eachEmail[i]);
                     emailAddr.setTextSize(18);
                     emailAddr.setTextColor(Color.BLACK);
-                    emailAddr.setPadding(35, 0, 0, 30);
+                    emailAddr.setGravity(Gravity.CENTER);
+                    emailAddr.setBackgroundColor(Color.parseColor("#f6f6f6"));
+                    emailAddr.setPadding(35, 10, 0, 25);
                     currLayout.addView(emailAddr);
 
+                    removeBtn.setText("remove");
+                    removeBtn.setTextSize(18);
+                    removeBtn.setGravity(Gravity.CENTER_HORIZONTAL);
+                    removeBtn.setTextColor(Color.RED);
+                    removeBtn.setBackground(drawable);
+                    removeBtn.setPadding(0, 10, 0, 25);
+                    remBtnLayout.addView(removeBtn);
+
+                    int curr = i;
+
+                    removeBtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            CustomTask_remFri task2 = new CustomTask_remFri();
+                            Utility.friendDelEmail = eachEmail[curr];
+                            try {
+                                String removeFriend = task2.execute().get();
+                                openFriendList();
+                            } catch (Exception ignored) {
+
+                            }
+                        }
+                    });
                     totalFriends = i + 1;
                 }
             }
-
             Utility.numOfFriends = totalFriends;
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-
         sendFriendReq = findViewById(R.id.addFriendBtn);
         sendFriendReq.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openSendReqPage();
+                openSendReq();
             }
         });
 
@@ -87,30 +118,35 @@ public class FriendListPage extends AppCompatActivity {
         friendReqListBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openFriendReqListPage();
+                openFriendReqList();
             }
         });
 
-        backToMain = findViewById(R.id.backToMain);
-        backToMain.setOnClickListener(new View.OnClickListener() {
+        backToMainBtn = findViewById(R.id.backToMainBtn);
+        backToMainBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openMainPage();
+                openMain();
             }
         });
     }
 
-    public void openSendReqPage() {
+    private void openSendReq() {
         Intent intent = new Intent(this, SendFriendRequestPage.class);
         startActivity(intent);
     }
 
-    public void openFriendReqListPage() {
+    private void openFriendList() {
+        Intent intent = new Intent(this, FriendListPage.class);
+        startActivity(intent);
+    }
+
+    private void openFriendReqList() {
         Intent intent = new Intent(this, FriendRequestLists.class);
         startActivity(intent);
     }
 
-    public void openMainPage() {
+    private void openMain() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
@@ -121,8 +157,6 @@ public class FriendListPage extends AppCompatActivity {
             JSONObject res = new JSONObject();
             JSONObject req = new JSONObject();
 
-            String friendEmails = "";
-            String friendNames = "";
             String friendList = "";
 
             try {
@@ -135,22 +169,33 @@ public class FriendListPage extends AppCompatActivity {
             paramMap.put("token", Utility.token);
 
             try {
-                res = apicall.callGet("http://10.0.2.2:8080/friends/getFriendList", headerMap, paramMap);
-                friendEmails = res.get("friendEmails").toString();
-                friendNames = res.get("friendNames").toString();
+                res = apicall.callGet("http://techpay.eastus.cloudapp.azure.com:8080/friends/getFriendList", headerMap, paramMap);
                 friendList = res.get("friendList").toString();
 
-                Log.w("friendEmails", friendEmails);
-                Log.w("friendNames", friendNames);
                 Log.w("friendList", friendList);
-            }  catch (Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
 
             return friendList;
         }
-
-
     }
 
+    class CustomTask_remFri extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... strings) {
+            JSONObject req = new JSONObject();
+            JSONObject res = new JSONObject();
+
+            try {
+                req.put("token", Utility.token);
+                req.put("email", Utility.friendDelEmail);
+                res = apicall.callPost("http://techpay.eastus.cloudapp.azure.com:8080/friends/removeFriend", headerMap, req);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return "removed";
+        }
+    }
 }

@@ -53,7 +53,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <Button
-        android:id="@+id/addFriendBtn"
+        android:id="@+id/sendFriendReqBtn"
         android:layout_width="300dp"
         android:layout_height="70dp"
         android:layout_gravity="start"
@@ -71,7 +71,7 @@
         app:layout_constraintTop_toBottomOf="@+id/username" />
 
     <Button
-        android:id="@+id/gotoMainPageBtn"
+        android:id="@+id/backToMainBtn"
         android:layout_width="300dp"
         android:layout_height="70dp"
         android:layout_gravity="start"
@@ -84,7 +84,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addFriendBtn" />
+        app:layout_constraintTop_toBottomOf="@+id/sendFriendReqBtn" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

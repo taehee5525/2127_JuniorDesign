@@ -9,10 +9,10 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="119dp"
-        android:layout_height="86dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="100dp"
+        android:layout_height="88dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/t_pay_image" />
@@ -21,22 +21,22 @@
         android:id="@+id/username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="144dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="24dp"
         android:text="Hi, Jane Doe"
         android:textSize="30sp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/userEmailAddr"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="144dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
         android:text="janedoe@gmail.com"
         android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
         app:layout_constraintTop_toBottomOf="@id/username" />
 
     <Button
@@ -44,13 +44,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="152dp"
+        android:layout_marginEnd="148dp"
         android:background="@android:color/transparent"
+        android:fontFamily="@font/ptsans_bold"
         android:gravity="center_vertical"
         android:text="friends"
         android:textAllCaps="false"
         android:textColor="#2962FF"
-        android:textSize="20sp"
+        android:textSize="17sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/userEmailAddr" />
 
@@ -60,18 +61,17 @@
         android:layout_height="73dp"
         android:layout_gravity="start"
         android:layout_marginStart="12dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="12dp"
         android:backgroundTint="#B3A369"
         android:enabled="true"
         android:text="Pending Transaction"
-        android:textAllCaps="false"
         android:textColor="#ffffffff"
         android:textSize="17sp"
         android:textStyle="bold"
         app:iconTint="#A4F4D218"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/friendListBtn" />
 
@@ -115,7 +115,7 @@
         app:layout_constraintTop_toBottomOf="@+id/chooseFriendBtn" />
 
     <EditText
-        android:id="@+id/note"
+        android:id="@+id/noteText"
         android:layout_width="313dp"
         android:layout_height="78dp"
         android:layout_marginStart="45dp"
@@ -147,7 +147,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.29"
         app:layout_constraintStart_toEndOf="@id/sendMoneyBtn"
-        app:layout_constraintTop_toBottomOf="@+id/note" />
+        app:layout_constraintTop_toBottomOf="@+id/noteText" />
 
     <Button
         android:id="@+id/sendMoneyBtn"
@@ -166,7 +166,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.063"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/note" />
+        app:layout_constraintTop_toBottomOf="@+id/noteText" />
 
     <Button
         android:id="@+id/signOutBtn"
@@ -183,6 +183,37 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/sendMoneyBtn" />
+
+    <LinearLayout
+        android:layout_width="108dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="4dp"
+        android:background="@drawable/edit_text_border"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/username"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="62dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:text="Balance:"
+            android:textColor="#545454"
+            android:textStyle="italic" />
+
+        <TextView
+            android:id="@+id/balanceAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="$0.00"
+            android:textSize="21sp" />
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

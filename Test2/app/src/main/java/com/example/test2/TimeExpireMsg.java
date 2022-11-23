@@ -10,24 +10,24 @@ import android.widget.Button;
 import com.example.test2.ui.login.LoginActivity;
 import com.example.test2.ui.login.MainActivity;
 
-public class TransactionFail extends AppCompatActivity {
+public class TimeExpireMsg extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_transaction_fail);
+        setContentView(R.layout.activity_time_expire_msg);
 
         Button backToMainBtn = findViewById(R.id.backToMainBtn);
         backToMainBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openMainPage();
+                openLogin();
             }
         });
     }
 
-    private void openMainPage() {
-        Intent intent = new Intent(this, MainActivity.class);
+    private void openLogin() {
+        Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
 }

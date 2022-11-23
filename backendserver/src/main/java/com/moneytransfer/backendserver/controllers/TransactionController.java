@@ -207,11 +207,11 @@ public class TransactionController {
         return res.toString();
     }
 
-    @PutMapping(value = "transactions/confirmTransaction")
+    @PostMapping(value = "transactions/confirmTransaction")
     @ResponseBody
     public String confirmTransaction(@RequestBody String data) throws UnsupportedEncodingException {
 
-        JSONObject req = new JSONObject(data);
+        JSONObject req = new JSONObject(Util.errorDecoder(data));
 
         String requesterToken = req.get("token").toString();
         String transactionId = req.get("transactionId").toString();

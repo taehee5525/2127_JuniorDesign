@@ -390,7 +390,7 @@ public class Main {
 
         try {
             res = apicall.callPut(addrMap.get("endPoint") + addrMap.get("confirmTransaction"), headerMap, req);
-            //System.out.println(res + "\n");
+            System.out.println(res + "\n");
         }  catch (Exception e) {
             e.printStackTrace();
         }

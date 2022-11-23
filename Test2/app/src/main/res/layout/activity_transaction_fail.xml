@@ -14,11 +14,12 @@
 
     <ImageView
         android:id="@+id/tpaylogo"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_marginTop="170dp"
+        android:layout_width="180dp"
+        android:layout_height="154dp"
+        android:layout_marginTop="172dp"
         android:contentDescription="tpaylogo image"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/t_pay_image"
@@ -28,30 +29,40 @@
         android:id="@+id/textFail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="400dp"
+        android:layout_marginTop="8dp"
         android:text="Transaction Failed"
         android:textColor="#8B0000"
         android:textSize="32sp"
-        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tpaylogo" />
+
+    <TextView
+        android:id="@+id/textTryAgain"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Please try one more time"
+        android:textColor="@color/black"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textFail" />
 
     <Button
-        android:id="@+id/completeTransaction"
-        android:layout_width="369dp"
-        android:layout_height="61dp"
+        android:id="@+id/backToMainBtn"
+        android:layout_width="249dp"
+        android:layout_height="56dp"
         android:layout_gravity="start"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="64dp"
-        android:backgroundTint="#bf9b30"
+        android:layout_marginTop="72dp"
+        android:backgroundTint="#B3A369"
         android:text="Return to Main Page"
         android:textColor="#ffffffff"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textFail"
-        app:layout_constraintVertical_bias="0.0"
         tools:ignore="DuplicateSpeakableTextCheck,TextContrastCheck" />
 
 

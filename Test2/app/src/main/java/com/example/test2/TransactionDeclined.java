@@ -7,26 +7,25 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.test2.ui.login.LoginActivity;
 import com.example.test2.ui.login.MainActivity;
 
-public class TransactionFail extends AppCompatActivity {
+public class TransactionDeclined extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_transaction_fail);
+        setContentView(R.layout.activity_transaction_declined);
 
         Button backToMainBtn = findViewById(R.id.backToMainBtn);
         backToMainBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openMainPage();
+                openMain();
             }
         });
     }
 
-    private void openMainPage() {
+    private void openMain() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }

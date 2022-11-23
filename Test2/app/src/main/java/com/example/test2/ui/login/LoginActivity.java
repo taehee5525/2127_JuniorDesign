@@ -22,7 +22,6 @@ import com.example.test2.InstructionsPage;
 import com.example.test2.LoginFail;
 import com.example.test2.ApiCallMaker;
 import com.example.test2.Utility;
-import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,9 +31,6 @@ import java.util.Map;
 
 
 public class LoginActivity extends AppCompatActivity {
-
-    private ImageButton imgButton;
-    private Button signupBtn, loginBtn;
     private EditText username, password;
     private boolean usernameState, passwordState;
 
@@ -45,6 +41,9 @@ public class LoginActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        ImageButton imgButton;
+        Button signupBtn, loginBtn;
 
         imgButton = (ImageButton) findViewById(R.id.helpBtn);
         signupBtn = (Button) findViewById(R.id.btnSignUp);
@@ -59,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
         imgButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openHelpPage();
+                openInstructions();
             }
         });
 
@@ -103,27 +102,31 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 // to check if email and password are in correct format
                 if (usernameState && passwordState) {
-                    Log.w("login", "login...");
+                    Log.w("login", "login started...");
                     try {
                         Utility.userEmailAddr = username.getText().toString();
                         String pwd = password.getText().toString();
 
-                        Log.w("id and password", Utility.userEmailAddr + ", " + pwd);
+                        Log.w("user email and password", Utility.userEmailAddr + ", " + pwd);
 
-                        CustomTask task = new CustomTask();
+                        CustomTask_login task = new CustomTask_login();
                         String result = task.execute(Utility.userEmailAddr, pwd).get();
 
-                        Log.w("login token generated", result);
+                        Log.w("login token", result);
 
                         if (result.length() > 2) {
-                            Snackbar mySnackbar = Snackbar.make(findViewById(R.id.container), "Login Successful", Snackbar.LENGTH_SHORT);
-                            mySnackbar.show();
+                            CustomTask_getBalance task2 = new CustomTask_getBalance();
+                            String balance = task2.execute().get();
+                            Utility.userBalance = Double.parseDouble(balance);
+                            Log.w("user balance", Utility.userBalance + "");
                             openMain();
+
                         } else {
                             openLoginFail();
                         }
 
                     } catch (Exception ignored) {
+
                     }
 
                 } else {
@@ -166,7 +169,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void openHelpPage() {
+    private void openInstructions() {
         Intent intent = new Intent(this, InstructionsPage.class);
         startActivity(intent);
     }
@@ -186,7 +189,7 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    class CustomTask extends AsyncTask<String, Void, String> {
+    class CustomTask_login extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... strings) {
             JSONObject req = new JSONObject();
@@ -200,18 +203,41 @@ public class LoginActivity extends AppCompatActivity {
             }
 
             try {
-                res = apicall.callPost("http://10.0.2.2:8080/users/userlogin", headerMap, req);
+                res = apicall.callPost("http://techpay.eastus.cloudapp.azure.com:8080/users/userlogin", headerMap, req);
                 Utility.token = res.get("token").toString();
                 Utility.userName = res.get("name").toString();
-
+                Utility.timestamp = System.currentTimeMillis();
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
             return Utility.token;
         }
-
-
     }
 
+    class CustomTask_getBalance extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... strings) {
+            JSONObject req = new JSONObject();
+            JSONObject res = new JSONObject();
+            String result = "";
+
+            try {
+                req.put("token", Utility.token);
+            } catch (Exception ignored) {
+
+            }
+
+            Map<String, String> paramMap = new HashMap<>();
+            paramMap.put("token", Utility.token);
+
+            try {
+                res = apicall.callGet("http://techpay.eastus.cloudapp.azure.com:8080/transactions/getUserBalance", headerMap, paramMap);
+                result = res.get("userBalance").toString();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return result;
+        }
+    }
 }
