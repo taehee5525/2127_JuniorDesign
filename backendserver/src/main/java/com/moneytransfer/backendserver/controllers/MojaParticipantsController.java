@@ -37,6 +37,9 @@ public class MojaParticipantsController implements ApplicationListener<EventPack
         } else if(event.getEventCode() == 2) {
             String email = event.getData().get("email").toString();
             waitings.put(email, "ALSAddCheck");
+        } else if(event.getEventCode() == 4) {
+            String email = event.getData().get("email").toString();
+            waitings.put(email, "ExtUserCheck");
         }
     }
 
@@ -58,6 +61,13 @@ public class MojaParticipantsController implements ApplicationListener<EventPack
             obj.put("result", "doesNotHave");
             obj.put("email", email);
             eventPublisher.publishEvent(new EventPacket(3, obj, this));
+        } else if (purpose.equalsIgnoreCase("ExtUserCheck")) {
+            logger.info("SYNC API RES: ALS -> Spring (\"" + email + "\") <Result: Moja does not have email info>");
+            waitings.remove(email);
+            JSONObject obj = new JSONObject();
+            obj.put("result", "NotFound");
+            obj.put("email", email);
+            eventPublisher.publishEvent(new EventPacket(5, obj, this));
         }
     }
 
@@ -88,6 +98,16 @@ public class MojaParticipantsController implements ApplicationListener<EventPack
             obj.put("result", "checked");
             obj.put("email", email);
             eventPublisher.publishEvent(new EventPacket(3, obj, this));
+        } else if (purpose.equalsIgnoreCase("ExtUserCheck")) {
+            logger.info("SYNC API RES: ALS -> Spring (\"" + email + "\") <Result: Moja has email info>");
+            waitings.remove(email);
+            JSONObject req = new JSONObject(data);
+            String fspId = req.get("fspId").toString();
+            JSONObject obj = new JSONObject();
+            obj.put("result", "Found");
+            obj.put("email", email);
+            obj.put("fspId", fspId);
+            eventPublisher.publishEvent(new EventPacket(5, obj, this));
         }
     }
 }

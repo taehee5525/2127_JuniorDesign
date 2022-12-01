@@ -91,8 +91,8 @@ public class MojaSyncHelpService  implements ApplicationListener<EventPacket>, D
         headerMap.put("FSPIOP-Destination", "Account Lookup");
 
         try {
-            res = apicall.callDelete(Util.urlMap.get("Account_Lookup_Service") + "/participants/ACCOUNT_ID/" + email
-                    , headerMap, false);
+            res = new JSONObject(apicall.callDelete(Util.urlMap.get("Account_Lookup_Service") + "/participants/ACCOUNT_ID/" + email
+                    , headerMap, false));
             logger.info("SYNC API CALL: Spring -> ALS (lookup \"" + email + "\") <Removing User from Moja>");
         }  catch (Exception e) {
             logger.error("SYNC API CALL: Exception is Occurred");
@@ -117,8 +117,8 @@ public class MojaSyncHelpService  implements ApplicationListener<EventPacket>, D
         headerMap.put("FSPIOP-Destination", "Account Lookup");
 
         try {
-            res = apicall.callGet(Util.urlMap.get("Account_Lookup_Service") + "/participants/ACCOUNT_ID/" + email
-                    , headerMap, paramMap, false);
+            res = new JSONObject(apicall.callGet(Util.urlMap.get("Account_Lookup_Service") + "/participants/ACCOUNT_ID/" + email
+                    , headerMap, paramMap, false));
             logger.info("SYNC API CALL: Spring -> ALS (\"" + email + "\") <Looking up User from Moja>");
         }  catch (Exception e) {
             logger.info("SYNC API CALL: Exception is Occurred");
