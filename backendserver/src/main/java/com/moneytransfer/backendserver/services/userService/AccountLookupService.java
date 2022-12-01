@@ -72,8 +72,6 @@ public class AccountLookupService implements ApplicationListener<EventPacket>{
         obj.put("email", email);
         eventPublisher.publishEvent(new EventPacket(2, obj, this));
 
-        JSONObject res = new JSONObject();
-
         Map<String, String> paramMap = new HashMap<>();
         Map<String, String> headerMap = new HashMap<>();
         headerMap.put("Host", "http://localhost:8080");
@@ -84,7 +82,7 @@ public class AccountLookupService implements ApplicationListener<EventPacket>{
         headerMap.put("FSPIOP-Destination", "Account Lookup");
 
         try {
-            res = apicall.callGet(Util.urlMap.get("Account_Lookup_Service") + "/participants/ACCOUNT_ID/" + email
+            String res = apicall.callGet(Util.urlMap.get("Account_Lookup_Service") + "/participants/ACCOUNT_ID/" + email
                     , headerMap, paramMap, false);
             logger.info("SYNC API CALL: Spring -> ALS (\"" + email + "\") <Looking up User from Moja>");
         }  catch (Exception e) {
@@ -99,8 +97,6 @@ public class AccountLookupService implements ApplicationListener<EventPacket>{
         obj.put("email", email);
         eventPublisher.publishEvent(new EventPacket(2, obj, this));
 
-        JSONObject res = new JSONObject();
-
         Map<String, String> paramMap = new HashMap<>();
         Map<String, String> headerMap = new HashMap<>();
         headerMap.put("Host", "http://localhost:8080");
@@ -113,7 +109,7 @@ public class AccountLookupService implements ApplicationListener<EventPacket>{
 
 
         try {
-            res = apicall.callGet(Util.urlMap.get("Account_Lookup_Service") + "/parties/ACCOUNT_ID/" + email
+            String res = apicall.callGet(Util.urlMap.get("Account_Lookup_Service") + "/parties/ACCOUNT_ID/" + email
                     , headerMap, paramMap, false);
             logger.info("SYNC API CALL: Spring -> ALS (\"" + email + "\") <Receiving an information of a Party from Moja>");
         }  catch (Exception e) {

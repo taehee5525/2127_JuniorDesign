@@ -14,6 +14,7 @@ public class EventPacket extends ApplicationEvent {
      * 4: MojaUserLookupService -> MojaParticipantsController (lookup external user)
      * 5: MojaParticipantsController -> MojaUserLookupService (lookup external user)
      * 6: MojaUserLookupService -> --- MojaUserLookupController (lookup external user)
+     * 7: MojaUserLookupController -> --- MojaUserLookupService (lookup external user)
      */
 
     private JSONObject data;

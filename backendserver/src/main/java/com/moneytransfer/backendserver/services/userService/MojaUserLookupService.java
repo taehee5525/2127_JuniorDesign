@@ -25,6 +25,9 @@ public class MojaUserLookupService implements ApplicationListener<EventPacket> {
     private static Logger logger = LoggerFactory.getLogger(BackendserverApplication.class);
     private Map<String, String> stateMap = new HashMap<>();
     private Map<String, String> fspIdMap = new HashMap<>();
+    private Map<String, JSONObject> objMap = new HashMap<>();
+
+
     @Autowired
     public ApplicationEventPublisher eventPublisher;
 
@@ -61,6 +64,21 @@ public class MojaUserLookupService implements ApplicationListener<EventPacket> {
         synchronized (stateMap) {
             stateMap.put(email, "REQUEST_Party");
         }
+
+        Thread thread = new Thread() {
+            public void run() {
+                try {
+                    this.sleep(Util.FSP_RESPONSE_WAIT_LIMIT);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                synchronized (stateMap) {
+                    stateMap.put(email, "FAIL");
+                }
+            }
+        };
+        thread.start();
+
         partyLookUp(endPoint, email);
         while(stateMap.get(email).equalsIgnoreCase("REQUEST_Party")) {
             wait();
@@ -69,7 +87,21 @@ public class MojaUserLookupService implements ApplicationListener<EventPacket> {
             }
         }
 
+        if (stateMap.get(email).equalsIgnoreCase("FAIL")) {
+            synchronized (stateMap) {
+                stateMap.remove(email);
+            }
+            return null;
+        }
 
+        JSONObject ret = objMap.get(email);
+        synchronized (objMap) {
+            objMap.remove(email);
+        }
+        synchronized (stateMap) {
+            stateMap.remove(email);
+        }
+        return ret;
     }
 
     private void partyLookUp(String url, String email) {
@@ -187,6 +219,16 @@ public class MojaUserLookupService implements ApplicationListener<EventPacket> {
                 }
                 notifyAll();
             }
+        } else if (event.getEventCode() == 7) {
+            String email = event.getData().get("email").toString();
+
+            synchronized (objMap) {
+                objMap.put(email, event.getData());
+            }
+            synchronized (stateMap) {
+                stateMap.put(email, "FIN");
+            }
+            notifyAll();
         }
     }
 }
