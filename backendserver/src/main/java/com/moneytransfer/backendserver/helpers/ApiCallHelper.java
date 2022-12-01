@@ -1,9 +1,6 @@
 package com.moneytransfer.backendserver.helpers;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.BufferedWriter;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.net.URL;
 import java.net.HttpURLConnection;
 import java.util.Map;
@@ -117,7 +114,10 @@ public class ApiCallHelper {
             bw.close();
         }
 
-        BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+        InputStream is = connection.getResponseCode() >= 400 ? connection.getErrorStream() : connection.getInputStream();
+
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(is));
         StringBuilder res = new StringBuilder();
         String line = null;
         while((line = br.readLine()) != null) {

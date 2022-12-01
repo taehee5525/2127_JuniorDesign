@@ -35,11 +35,9 @@ public class MojaUserLookupController implements ApplicationListener<EventPacket
     private static Logger logger = LoggerFactory.getLogger(BackendserverApplication.class);
 
     @GetMapping(value = "extuserlookup/ACCOUNT_ID/{email}")
+    @ResponseBody
     public String getRequest(@PathVariable String email) throws InterruptedException {
-        logger.info("TESTTESTTEST");
-        JSONObject ret = new JSONObject();
-        ret.put("error", "error");
-        ret = mojaUserLookupService.partyLookup(email);
+        JSONObject ret = mojaUserLookupService.partyLookup(email);
         return ret.toString();
     }
 

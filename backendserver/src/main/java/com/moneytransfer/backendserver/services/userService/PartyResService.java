@@ -43,7 +43,7 @@ public class PartyResService {
 
         String url = endPointString(endPointLookup(fspDest));
         try {
-            apicall.callPut(url + "/parties/ACCOUNT_ID/" + email, headerMap, ret);
+            apicall.callPut(url + "ACCOUNT_ID/" + email, headerMap, ret);
             logger.info("Party API CALL: Spring -> " + fspDest + " (\"" + email + "\") <sending user information>");
         } catch (Exception e) {
             logger.error("exception occurred while sending put party response.");
@@ -116,7 +116,7 @@ public class PartyResService {
 
         for (int i = 0; i < res.length(); i++) {
             JSONObject obj = res.getJSONObject(i);
-            if (obj.get("type").toString().equalsIgnoreCase("FSPIOP_CALLBACK_URL_PARTIES_ID_PUT")) {
+            if (obj.get("type").toString().equalsIgnoreCase("FSPIOP_CALLBACK_URL_PARTIES_SUB_ID_PUT")) {
                 return obj.get("value").toString();
             }
         }
