@@ -1,8 +1,11 @@
 package com.moneytransfer.backendserver.controllers;
 
+import com.moneytransfer.backendserver.BackendserverApplication;
 import com.moneytransfer.backendserver.exceptions.AuthException;
 import com.moneytransfer.backendserver.services.userService.PartyResService;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -19,11 +22,13 @@ public class PartyController {
     }
 
     private PartyResService partyResService;
+    private static Logger logger = LoggerFactory.getLogger(BackendserverApplication.class);
 
-    @PutMapping(value = "parties/ACCOUNT_ID/{email}")
-    public void errResponse(@RequestBody String data, @PathVariable String email) {
-
-        
+    @GetMapping(value = "parties/ACCOUNT_ID/{email}")
+    public void getRequest(@PathVariable String email, @RequestHeader(value = "FSPIOP-Source") String fspSrc) {
+        logger.info("SYNC API RES: " + fspSrc + " -> Spring (\"" + email + "\") <Get party information request>");
+        Thread thread = new Thread(() -> partyResService.partyCallBack(email, fspSrc));
+        thread.start();
     }
 
 }
