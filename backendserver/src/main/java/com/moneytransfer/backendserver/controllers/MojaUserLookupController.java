@@ -35,7 +35,7 @@ public class MojaUserLookupController implements ApplicationListener<EventPacket
     private static Logger logger = LoggerFactory.getLogger(BackendserverApplication.class);
 
     @GetMapping(value = "extuserlookup/ACCOUNT_ID/{email}")
-    public String getRequest(@PathVariable String email, @RequestHeader(value = "FSPIOP-Source") String fspSrc) throws InterruptedException {
+    public String getRequest(@PathVariable String email) throws InterruptedException {
         logger.info("TESTTESTTEST");
         JSONObject ret = new JSONObject();
         ret.put("error", "error");

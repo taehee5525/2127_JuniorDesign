@@ -14,6 +14,7 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,7 +37,7 @@ public class MojaUserLookupService implements ApplicationListener<EventPacket> {
      * @param email
      * @throws InterruptedException
      */
-    public JSONObject partyLookup (String email) throws InterruptedException {
+    public synchronized JSONObject partyLookup (String email) throws InterruptedException {
         synchronized (stateMap) {
             stateMap.put(email, "REQUEST_Participants");
         }
@@ -120,7 +121,7 @@ public class MojaUserLookupService implements ApplicationListener<EventPacket> {
         headerMap.put("FSPIOP-Destination", "Account Lookup");
 
         try {
-            res = new JSONObject(apicall.callGet(url + email, headerMap, paramMap, false));
+            apicall.callGet(url + email, headerMap, paramMap, false);
             logger.info("SYNC API CALL: Spring -> ALS (\"" + email + "\") <Looking up User from Moja>");
         }  catch (Exception e) {
             logger.info("SYNC API CALL: Exception is Occurred");
@@ -136,7 +137,7 @@ public class MojaUserLookupService implements ApplicationListener<EventPacket> {
             if (input.charAt(i) == '/') {
                 cnt++;
             }
-            sb.append(input);
+            sb.append(input.charAt(i));
             i++;
         }
         return sb.toString();
@@ -155,7 +156,7 @@ public class MojaUserLookupService implements ApplicationListener<EventPacket> {
         headerMap.put("FSPIOP-Destination", "Account Lookup");
 
         try {
-            res = new JSONArray(apicall.callGet(Util.urlMap.get("Account_Lookup_Service") + "/participants/" + fspId + "/endpoints"
+            res = new JSONArray(apicall.callGet(Util.urlMap.get("Central_Ledger") + "/participants/" + fspId + "/endpoints"
                     , headerMap, paramMap, true));
             logger.info("Ledger API CALL: Spring -> Central-Ledger (\"" + fspId + "\") <lookup fsp endpoint>");
         }  catch (Exception e) {
@@ -164,7 +165,7 @@ public class MojaUserLookupService implements ApplicationListener<EventPacket> {
         }
 
         for (int i = 0; i < res.length(); i++) {
-            JSONObject obj = new JSONObject(res.get(i));
+            JSONObject obj = res.getJSONObject(i);
             if (obj.get("type").toString().equalsIgnoreCase("FSPIOP_CALLBACK_URL_PARTIES_SUB_ID_GET")) {
                 return obj.get("value").toString();
             }
@@ -191,8 +192,8 @@ public class MojaUserLookupService implements ApplicationListener<EventPacket> {
         headerMap.put("FSPIOP-Destination", "Account Lookup");
 
         try {
-            res = new JSONObject(apicall.callGet(Util.urlMap.get("Account_Lookup_Service") + "/participants/ACCOUNT_ID/" + email
-                    , headerMap, paramMap, false));
+            apicall.callGet(Util.urlMap.get("Account_Lookup_Service") + "/participants/ACCOUNT_ID/" + email
+                    , headerMap, paramMap, false);
             logger.info("SYNC API CALL: Spring -> ALS (\"" + email + "\") <Looking up User from Moja>");
         }  catch (Exception e) {
             logger.info("SYNC API CALL: Exception is Occurred");
@@ -201,7 +202,7 @@ public class MojaUserLookupService implements ApplicationListener<EventPacket> {
     }
 
     @Override
-    public void onApplicationEvent(EventPacket event) {
+    public synchronized void onApplicationEvent(EventPacket event) {
         if(event.getEventCode() == 5) {
             String email = event.getData().get("email").toString();
             if(event.getData().get("result").toString().equalsIgnoreCase("NotFound")) {

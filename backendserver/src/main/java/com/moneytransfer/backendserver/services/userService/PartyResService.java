@@ -5,6 +5,7 @@ import com.moneytransfer.backendserver.Util;
 import com.moneytransfer.backendserver.helpers.ApiCallHelper;
 import com.moneytransfer.backendserver.objects.User2;
 import com.moneytransfer.backendserver.repositories.UserRepo;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,8 +40,10 @@ public class PartyResService {
         headerMap.put("Date", Util.headerMap.get("tempHeaderDate"));
         headerMap.put("FSPIOP-Source", Util.FSP_NAME);
         headerMap.put("FSPIOP-Destination", fspDest);
+
+        String url = endPointString(endPointLookup(fspDest));
         try {
-            apicall.callPut(Util.urlMap.get("Account_Lookup_Service") + "/parties/ACCOUNT_ID/" + email, headerMap, ret);
+            apicall.callPut(url + "/parties/ACCOUNT_ID/" + email, headerMap, ret);
             logger.info("Party API CALL: Spring -> " + fspDest + " (\"" + email + "\") <sending user information>");
         } catch (Exception e) {
             logger.error("exception occurred while sending put party response.");
@@ -74,6 +77,50 @@ public class PartyResService {
         ret.put("party", party);
 
         return ret;
+    }
+
+    private String endPointString(String input) {
+        int cnt = 0;
+        int i = 0;
+        StringBuffer sb = new StringBuffer();
+        while(cnt < 4) {
+            if (input.charAt(i) == '/') {
+                cnt++;
+            }
+            sb.append(input.charAt(i));
+            i++;
+        }
+        return sb.toString();
+    }
+
+    private String endPointLookup(String fspId) {
+        JSONArray res = new JSONArray();
+
+        Map<String, String> paramMap = new HashMap<>();
+        Map<String, String> headerMap = new HashMap<>();
+        headerMap.put("Host", "http://localhost:8080");
+        headerMap.put("Accept", Util.headerMap.get("participantsAccept"));
+        headerMap.put("Content-type", Util.headerMap.get("participantsContentType"));
+        headerMap.put("Date", Util.headerMap.get("tempHeaderDate"));
+        headerMap.put("FSPIOP-Source", Util.FSP_NAME);
+        headerMap.put("FSPIOP-Destination", "Account Lookup");
+
+        try {
+            res = new JSONArray(apicall.callGet(Util.urlMap.get("Central_Ledger") + "/participants/" + fspId + "/endpoints"
+                    , headerMap, paramMap, true));
+            logger.info("Ledger API CALL: Spring -> Central-Ledger (\"" + fspId + "\") <lookup fsp endpoint>");
+        }  catch (Exception e) {
+            logger.info("Ledger API CALL: Exception is Occurred");
+            e.printStackTrace();
+        }
+
+        for (int i = 0; i < res.length(); i++) {
+            JSONObject obj = res.getJSONObject(i);
+            if (obj.get("type").toString().equalsIgnoreCase("FSPIOP_CALLBACK_URL_PARTIES_ID_PUT")) {
+                return obj.get("value").toString();
+            }
+        }
+        return "";
     }
 
 
