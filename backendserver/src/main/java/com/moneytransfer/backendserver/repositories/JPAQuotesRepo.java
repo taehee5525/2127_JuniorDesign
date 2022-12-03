@@ -37,7 +37,6 @@ public interface JPAQuotesRepo extends JpaRepository<Quotes, Long>, QuotesRepo{
     @Modifying
     @Query("UPDATE Quotes set completed = true WHERE quotesId = :id")
     void updateQuotes(@Param("quotesID") UUID id, boolean completed);
-    @Query
     @Override
     List<Quotes> findAll();
 }
