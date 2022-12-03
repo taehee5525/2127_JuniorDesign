@@ -16,7 +16,8 @@ public interface JPAQuotesRepo extends JpaRepository<Quotes, Long>, QuotesRepo{
 
     @Override
     @Modifying
-    @Query("delete from Quotes q where q.quotes_id = :id")
+    @Query("delete from Quotes q where q.quotesId = :id")
     void deleteByQuotesId(UUID id);
-
+    @Override
+    List<Quotes> findAll();
 }

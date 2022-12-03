@@ -14,15 +14,15 @@ public class Quotes {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Id
-    private UUID quotes_id;
-    private String userNote;
-    private boolean completed;
+    private UUID quotesId;
+    private String userNote = "";
+    private boolean completed = false;
 
     public UUID getId() {
-        return quotes_id;
+        return quotesId;
     }
 
-    public void setId() { quotes_id = Util.generateQuotingUID(); }
+    public void setId(UUID uid) { quotesId = uid; }
 
     public void setUserNote(String userNote) {
         this.userNote = userNote;

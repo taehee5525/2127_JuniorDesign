@@ -111,8 +111,6 @@ public class Util {
 
     public static UUID generateQuotingUID() { return UUID.randomUUID(); }
 
-    public static UUID generateTransactionUID() {
-        return UUID.randomUUID();
-    }
+    public static UUID generateTransactionUID() { return UUID.randomUUID(); }
 
 }
