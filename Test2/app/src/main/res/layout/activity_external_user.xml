@@ -7,78 +7,66 @@
     tools:context=".ExternalUser">
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="115dp"
-        android:layout_height="88dp"
+        android:layout_width="162dp"
+        android:layout_height="127dp"
         android:layout_marginTop="28dp"
-        android:layout_marginBottom="24dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/t_pay_image"
         tools:ignore="ImageContrastCheck" />
 
+
     <TextView
         android:id="@+id/textView"
-        android:layout_width="253dp"
-        android:layout_height="49dp"
-        android:layout_marginTop="132dp"
+        android:layout_width="200dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="120dp"
+        android:layout_marginTop="32dp"
         android:text="External User"
         android:textColor="#000000"
         android:textSize="32sp"
         android:textStyle="bold|italic"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.67"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <EditText
-        android:id="@+id/username"
-        android:layout_width="380dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="220dp"
+        android:id="@+id/extUserEmail"
+        android:layout_width="322dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="5dp"
         android:autofillHints=""
+        android:background="@drawable/edit_text_border"
         android:hint="@string/prompt_email"
         android:inputType="textEmailAddress"
         android:minHeight="48dp"
+        android:paddingLeft="20dp"
         android:selectAllOnFocus="true"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-    <EditText
-        android:id="@+id/fsp"
-        android:layout_width="380dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="8dp"
-        android:autofillHints=""
-        android:hint="Financial Service Provider"
-        android:inputType="number"
-        android:minHeight="48dp"
-        android:selectAllOnFocus="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/username" />
 
     <Button
-        android:id="@+id/completeTransaction"
-        android:layout_width="369dp"
-        android:layout_height="61dp"
+        android:id="@+id/backToMainBtn"
+        android:layout_width="300dp"
+        android:layout_height="70dp"
         android:layout_gravity="start"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="64dp"
-        android:backgroundTint="#bf9b30"
-        android:text="Submit"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/rounded_button"
+        android:text="Back to Main"
         android:textColor="#ffffffff"
-        android:textSize="17sp"
-        android:textStyle="bold"
-        app:iconTint="#A4F4D218"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fsp"
-        app:layout_constraintVertical_bias="0.0"
-        tools:ignore="DuplicateSpeakableTextCheck,TextContrastCheck" />
+        app:layout_constraintTop_toBottomOf="@+id/username" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
