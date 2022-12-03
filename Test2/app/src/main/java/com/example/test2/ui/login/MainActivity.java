@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.test2.ApiCallMaker;
+import com.example.test2.ExternalUser;
 import com.example.test2.FriendListPage;
 import com.example.test2.PendingTransactions;
 import com.example.test2.R;
@@ -37,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button friendBtn, chooseFriendBtn, sendMoneyBtn, requestMoneyBtn, signOutBtn, checkPendingTransBtn;
+        Button friendBtn, chooseFriendBtn, sendMoneyBtn, requestMoneyBtn, signOutBtn, checkPendingTransBtn, chooseExtUser;
         TextView userName, userEmailAddress, balanceAmount;
         EditText moneyAmt, noteText;
 
@@ -65,6 +66,18 @@ public class MainActivity extends AppCompatActivity {
                     openTimeExpMsg();
                 } else {
                     openPendingTransactions();
+                }
+            }
+        });
+
+        chooseExtUser = findViewById(R.id.chooseExtUser);
+        chooseExtUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (Utility.isExpiredToken(Utility.token)) {
+                    openTimeExpMsg();
+                } else {
+                    openExternalUser();
                 }
             }
         });
@@ -168,6 +181,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void openFriendList() {
         Intent intent = new Intent(this, FriendListPage.class);
+        startActivity(intent);
+    }
+    private void openExternalUser() {
+        Intent intent = new Intent(this, ExternalUser.class);
         startActivity(intent);
     }
 

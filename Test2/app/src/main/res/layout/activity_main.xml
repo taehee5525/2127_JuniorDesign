@@ -94,7 +94,7 @@
         app:layout_constraintTop_toBottomOf="@+id/checkPendingTransBtn" />
 
     <Button
-        android:id="@+id/chooseExUser"
+        android:id="@+id/chooseExtUser"
         android:layout_width="151dp"
         android:layout_height="58dp"
         android:layout_gravity="start"
