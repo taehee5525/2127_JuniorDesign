@@ -1,6 +1,5 @@
 package com.moneytransfer.backendserver.objects;
 
-import com.moneytransfer.backendserver.Util;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,8 +14,10 @@ public class Quotes {
     private Long id;
     @Id
     private UUID quotesId;
-    private String userNote = "";
-    private boolean completed = false;
+    private String userNote;
+    private boolean completed;
+    private String payerName;
+    private String payeeName;
 
     public UUID getId() {
         return quotesId;
@@ -33,4 +34,8 @@ public class Quotes {
     public void setCompleted(boolean completed) { this.completed = completed; }
 
     public boolean getCompleted() {return completed;}
+    public String getPayerName() {return this.payerName;}
+    public String getPayeeName() {return this.payeeName;}
+    public void setPayerName(String payerName) {this.payerName = payerName;}
+    public void setPayeeName(String payeeName) {this.payeeName = payeeName;}
 }

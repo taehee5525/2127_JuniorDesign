@@ -15,4 +15,7 @@ public interface QuotesRepo {
     void deleteByQuotesId(UUID id);
 
     List<Quotes> findAll();
+    List<Quotes> findQuotesByPayerName(String name);
+    List<Quotes> findQuotesByPayeeName(String name);
+    void updateQuotes(UUID id, boolean completed);
 }
