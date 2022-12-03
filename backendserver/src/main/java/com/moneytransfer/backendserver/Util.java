@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Random;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.UUID;
 
 public class Util {
 
@@ -106,6 +107,12 @@ public class Util {
         } finally {
             return ret;
         }
+    }
+
+    public static UUID generateQuotingUID() { return UUID.randomUUID(); }
+
+    public static UUID generateTransactionUID() {
+        return UUID.randomUUID();
     }
 
 }
