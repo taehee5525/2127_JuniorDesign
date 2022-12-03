@@ -60,21 +60,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/username" />
-    <EditText
-        android:id="@+id/bankaccount"
-        android:layout_width="380dp"
-        android:layout_height="55dp"
-        android:layout_marginTop="8dp"
-        android:hint="Bank Account Number"
-        android:imeActionLabel="@string/action_sign_in_short"
-        android:imeOptions="actionDone"
-        android:inputType="numberPassword"
-        android:selectAllOnFocus="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fsp" />
-
-
 
     <Button
         android:id="@+id/completeTransaction"
@@ -91,7 +76,7 @@
         app:iconTint="#A4F4D218"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bankaccount"
+        app:layout_constraintTop_toBottomOf="@+id/fsp"
         app:layout_constraintVertical_bias="0.0"
         tools:ignore="DuplicateSpeakableTextCheck,TextContrastCheck" />
 
