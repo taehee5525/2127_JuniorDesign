@@ -40,16 +40,14 @@ public class ExternalUser extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 extUserEmail = extUserEmailTextField.getText().toString();
+                CustomTask task = new CustomTask();
 
                 if (Utility.isExpiredToken(Utility.token)) {
                     openTimeExpMsg();
                 } else {
-                    CustomTask task2 = new CustomTask();
                     try {
-                        String state = task2.execute().get();
-                    } catch (ExecutionException e) {
-                        e.printStackTrace();
-                    } catch (InterruptedException e) {
+                        String state = task.execute().get();
+                    } catch (ExecutionException | InterruptedException e) {
                         e.printStackTrace();
                     }
                     openMain();
@@ -78,23 +76,21 @@ public class ExternalUser extends AppCompatActivity {
             String state = "";
 
             try {
-                req.put("token", Utility.token);
+                req.put("email", extUserEmail);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
             Map<String, String> paramMap = new HashMap<>();
-            paramMap.put("token", Utility.token);
 
             try {
-                res = apicall.callGet("http://techpay.eastus.cloudapp.azure.com:8080/extuserlookup/ACCOUNT_ID/" + extUserEmail, headerMap, paramMap);
+                res = apicall.callGet("http://techpay.eastus.cloudapp.azure.com:8080/extuserlookup/ACCOUNT_ID/" + extUserEmail,
+                        headerMap, paramMap);
                 state = res.get("name").toString();
-
                 Log.w("state", state);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
             return state;
         }
     }
