@@ -1,0 +1,1 @@
+![Mojaloop Installation](images/Mojaloop_Install.png)
