@@ -74,6 +74,11 @@ public class FriendRequestLists extends AppCompatActivity {
                 try {
                     String friendRequestResult = task2.execute(Utility.token, friendRequestsList.get(0), "decline").get();
                     //need to also add refreshing the page here
+                    finish();
+                    overridePendingTransition(0, 0);
+                    startActivity(getIntent());
+                    overridePendingTransition(0, 0);
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -90,6 +95,11 @@ public class FriendRequestLists extends AppCompatActivity {
                 try {
                     String friendRequestResult = task3.execute(Utility.token, friendRequestsList.get(0), "decline").get();
                     //need to also add refreshing the page here
+                    finish();
+                    overridePendingTransition(0, 0);
+                    startActivity(getIntent());
+                    overridePendingTransition(0, 0);
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

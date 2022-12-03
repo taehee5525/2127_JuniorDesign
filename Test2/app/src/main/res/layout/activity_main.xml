@@ -47,7 +47,7 @@
         android:layout_marginEnd="152dp"
         android:background="@android:color/transparent"
         android:gravity="center_vertical"
-        android:text="friends"
+        android:text="Friends"
         android:textAllCaps="false"
         android:textColor="#2962FF"
         android:textSize="20sp"
