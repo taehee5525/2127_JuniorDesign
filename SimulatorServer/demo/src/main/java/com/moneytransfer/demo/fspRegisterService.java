@@ -124,24 +124,6 @@ public class fspRegisterService {
         }
     }
 
-    public void registerParty(String fspName, String participantEmail) {
-        Map<String, String> headerMap = new HashMap<>();
-        headerMap.put("Content-type", Util.headerMap.get(participantsContentType));
-        headerMap.put("Accept", Util.headerMap.get(participantsAccept));
-
-        JSONObject paramMap = new JSONObject();
-        paramMap.put("fspId", fspName);
-        paramMap.put("currency", Util.CURRENCY);
-
-        try {
-            apicall.callPost(Util.urlMap.get("Account_Lookup_Service") + "/participants/ACCOUNT_ID" + participantEmail, headerMap, paramMap, false);
-            logger.info("Registering a Participant of the (\"" + fspName + "\") to the Mojaloop.");
-        }  catch (Exception e) {
-            logger.error("SYNC API CALL: Exception is Occurred");
-            e.printStackTrace();
-        }
-    }
-
     /**
      * method to get Fsp names
      * @return
