@@ -34,6 +34,8 @@ public class ImageSelect extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.image_select);
 
+        BSelectImage = findViewById(R.id.BSelectImage);
+        IVPreviewImage = findViewById(R.id.IVPreviewImage);
 
         BSelectImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,7 +53,60 @@ public class ImageSelect extends AppCompatActivity {
         startActivityForResult(Intent.createChooser(i, "Select Picture"), SELECT_PICTURE);
     }
 
+    // this function is triggered when user selects the image from imageChooser
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
+        if (resultCode == RESULT_OK) {
+            if (requestCode == SELECT_PICTURE) {
+
+                // Get the url of the image from data
+                Uri selectedImageUri = data.getData();
+
+                if (null != selectedImageUri) {
+                    // update the preview image in the layout
+                    //comment below line out if using bit conversion instead
+                    IVPreviewImage.setImageURI(selectedImageUri);
+                    InputStream iStream = null;
+                    try {
+                        iStream = getContentResolver().openInputStream(selectedImageUri);
+                        byte[] inputData = getBytes(iStream);
+
+                        //log various info in logcat
+                        Log.w("filestreampath", selectedImageUri.getPath());
+                        Log.w("URI", String.valueOf(selectedImageUri));
+                        Log.w("byte[] data", String.valueOf(inputData));
+
+                        //uncomment the below section if using bit conversion instead
+                        /*
+                        Bitmap bmp = BitmapFactory.decodeByteArray(inputData, 0, inputData.length);
+                        ImageView image = (ImageView) findViewById(R.id.IVPreviewImage);
+                        //image.setAdjustViewBounds(true);
+                        image.setImageBitmap(Bitmap.createScaledBitmap(bmp, image.getWidth(), image.getHeight(), false));
+                        image.setAdjustViewBounds(true);
+                        image.setCropToPadding(true);
+
+                         */
+                    } catch (Exception e) {
+                        Log.w("byte[] data", "FAILED");
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+    }
+
+    public byte[] getBytes(InputStream inputStream) throws IOException {
+        ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
+        int bufferSize = 1024;
+        byte[] buffer = new byte[bufferSize];
+
+        int len = 0;
+        while ((len = inputStream.read(buffer)) != -1) {
+            byteBuffer.write(buffer, 0, len);
+        }
+        return byteBuffer.toByteArray();
+    }
 
 
 }
