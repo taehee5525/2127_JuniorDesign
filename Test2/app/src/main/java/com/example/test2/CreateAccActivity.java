@@ -87,7 +87,9 @@ public class CreateAccActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // to check if email and password are in correct format
+//                System.out.println("clicked");
                 if (nameState & usernameState & passwordState & checkBox.isChecked()) {
+                    System.out.println("if");
                     try {
                         String name = personName.getText().toString();
                         String id = username.getText().toString();
@@ -110,6 +112,10 @@ public class CreateAccActivity extends AppCompatActivity {
                     } catch (Exception ignored) {
                     }
                 } else {
+//                    System.out.println("else");
+//                    System.out.println(nameState);
+//                    System.out.println(usernameState);
+//                    System.out.println(passwordState);
                     if (personName.getText().toString().length() < 3) {
                         personName.setError("Full name is required");
                     }
@@ -118,7 +124,7 @@ public class CreateAccActivity extends AppCompatActivity {
                         username.setError("Please enter a valid email address");
                     }
 
-                    if (password.getText().toString().length() < 5) {
+                    if (password.getText().toString().length() <= 5) {
                         password.setError("Please enter at least 6 characters");
                     }
 
