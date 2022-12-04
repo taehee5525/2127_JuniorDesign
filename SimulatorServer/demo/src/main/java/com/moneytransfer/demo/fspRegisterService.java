@@ -152,6 +152,29 @@ public class fspRegisterService {
         return fspNameSet;
     }
 
+    public void initPositionAndLimit(String fspName, String value) {
+        Map<String, String> headerMap = new HashMap<>();
+        headerMap.put("Content-type", "application/json");
+
+        JSONObject paramMap = new JSONObject();
+        JSONObject limitMap = new JSONObject();
+        limitMap.put("type", "NET_DEBIT_CAP");
+        limitMap.put("value", value);
+
+        paramMap.put("currency", Util.CURRENCY);
+        paramMap.put("limit", limitMap);
+        paramMap.put("initialPosition", "0");
+        
+        try {
+            apicall.callPost(Util.urlMap.get("Central_Ledger") + "/participants/"
+                    + fspName + "/initialPositionAndLimits", headerMap, paramMap, false);
+            logger.info("Settling Initial Position and Limit of (\"" + fspName + "\") to the Mojaloop.");
+        }  catch (Exception e) {
+            logger.error("SYNC API CALL: Exception is Occurred");
+            e.printStackTrace();
+        }
+    }
+
 
 
 }
