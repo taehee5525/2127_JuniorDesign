@@ -10,5 +10,4 @@ public class Settings {
         userMap.put("fsp1", "Andrew@gmail.com");
         userMap.put("fsp2", "John@gmail.com");
     }
-
 }
