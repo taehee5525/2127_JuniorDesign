@@ -13,7 +13,7 @@ import java.util.UUID;
 
 public class Util {
 
-    public final static long TOKEN_EXPIRE_LIMIT = 300000; // 300000ms == 300s = 5mins
+    public final static long TOKEN_EXPIRE_LIMIT = 3600000; // 300000ms == 300s = 5mins
     public static final String FSP_NAME = "techpayfsp";
     public static final Long RESPONSE_WAIT_LIMIT = 10000L;
     public static final Long FSP_RESPONSE_WAIT_LIMIT = 5000L;

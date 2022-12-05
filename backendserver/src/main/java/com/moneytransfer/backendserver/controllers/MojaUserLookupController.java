@@ -38,6 +38,11 @@ public class MojaUserLookupController implements ApplicationListener<EventPacket
     @ResponseBody
     public String getRequest(@PathVariable String email) throws InterruptedException {
         JSONObject ret = mojaUserLookupService.partyLookup(email);
+        if (ret != null) {
+            return ret.toString();
+        }
+        ret = new JSONObject();
+        ret.put("error", "not found.");
         return ret.toString();
     }
 
@@ -50,8 +55,8 @@ public class MojaUserLookupController implements ApplicationListener<EventPacket
 
             String partyIdType = req.get("partyIdType").toString();
             String partyIdentifier = req.get("partyIdentifier").toString();
-            JSONObject party = new JSONObject(req.get("party"));
-            JSONObject partyIdInfo = new JSONObject(party.get("partyIdInfo"));
+            JSONObject party = new JSONObject(req.get("party").toString());
+            JSONObject partyIdInfo = new JSONObject(party.get("partyIdInfo").toString());
             String fspId = partyIdInfo.get("fspId").toString();
             String name = party.get("name").toString();
 

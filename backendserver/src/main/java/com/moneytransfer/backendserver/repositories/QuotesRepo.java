@@ -17,5 +17,5 @@ public interface QuotesRepo {
     List<Quotes> findAll();
     List<Quotes> findQuotesByPayerName(String name);
     List<Quotes> findQuotesByPayeeName(String name);
-    void updateQuotes(UUID id, boolean completed);
+    void updateQuotes(UUID id);
 }
