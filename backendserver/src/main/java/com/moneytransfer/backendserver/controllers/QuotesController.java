@@ -26,7 +26,7 @@ public class QuotesController {
 
     @PutMapping(value = "quotes/{quotesId}")
     public void putQuotes(@RequestBody String body, @PathVariable UUID quotesID) {
-
+        
     }
 
 }
