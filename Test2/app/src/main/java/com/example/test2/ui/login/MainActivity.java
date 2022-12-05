@@ -27,6 +27,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
     private final ApiCallMaker apicall = new ApiCallMaker();
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
         Button friendBtn, chooseFriendBtn, sendMoneyBtn, requestMoneyBtn, signOutBtn, checkPendingTransBtn, chooseExtUser;
@@ -47,6 +49,15 @@ public class MainActivity extends AppCompatActivity {
         userEmailAddress = findViewById(R.id.userEmailAddr);
         userEmailAddress.setText(Utility.userEmailAddr);
 
+        CustomTask_getBalance tk = new CustomTask_getBalance();
+        try {
+            String str = tk.execute().get();
+            Utility.userBalance = Double.parseDouble(str);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         balanceAmount = findViewById(R.id.balanceAmount);
         balanceAmount.setText("$" + String.format("%.2f", Utility.userBalance));
 
@@ -212,6 +223,33 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, TimeExpireMsg.class);
         startActivity(intent);
     }
+
+    class CustomTask_getBalance extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... strings) {
+            JSONObject req = new JSONObject();
+            JSONObject res = new JSONObject();
+            String result = "";
+
+            try {
+                req.put("token", Utility.token);
+            } catch (Exception ignored) {
+
+            }
+
+            Map<String, String> paramMap = new HashMap<>();
+            paramMap.put("token", Utility.token);
+
+            try {
+                res = apicall.callGet("http://techpay.eastus.cloudapp.azure.com:8080/transactions/getUserBalance", headerMap, paramMap);
+                result = res.get("userBalance").toString();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return result;
+        }
+    }
+
 
     class CustomTask_requestMoney extends AsyncTask<String, Void, String> {
         @Override
