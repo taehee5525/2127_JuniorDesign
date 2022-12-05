@@ -10,6 +10,9 @@ sourceCompatibility = '11'
 
 repositories {
 	mavenCentral()
+	maven {
+		url "https://oss.sonatype.org/content/repositories/snapshots/"
+	}
 }
 
 dependencies {
@@ -21,7 +24,7 @@ dependencies {
 	//h2
 	runtimeOnly 'com.h2database:h2'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
+	implementation group: 'org.interledger', name: 'ilp-core', version: 'HEAD-SNAPSHOT'
 
 }
 
