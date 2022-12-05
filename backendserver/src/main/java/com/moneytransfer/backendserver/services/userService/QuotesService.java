@@ -67,7 +67,7 @@ public class QuotesService {
      * @param payerName Even though it says payerName, it should be an email
      * @param payeeName Even though it says payeeName, it should be an email
      */
-    public void postQuotes(String type, String amount, String userNote, String payerName, String payeeName) {
+    public void postQuotes(String type, String amount, String userNote, String payerName, String payeeName, String targetFSP, String currentFSP) {
         JSONObject req = new JSONObject();
 
         Map<String, String> headerMap = new HashMap<>();
@@ -76,31 +76,43 @@ public class QuotesService {
         headerMap.put("Content-type", Util.headerMap.get("quotesContentType"));
         headerMap.put("Date", Util.headerMap.get("tempHeaderDate"));
         headerMap.put("FSPIOP-Source", Util.FSP_NAME);
-        headerMap.put("FSPIOP-Destination", "simufsp");
+        headerMap.put("FSPIOP-Destination", targetFSP);
 
         // Create a quote and saves it internally
         Quotes quote = createNewQuotes(userNote, payerName, payeeName);
 
         req.put("quoteId", quote.getId());
 
+        // Temporary UUID used to create quotes.
+        // This can be overwritten with our own transaction ID later
+        req.put("transactionId", UUID.randomUUID());
+
         // Get party info using party look up
         // payerName will be the email ..
+
+        JSONObject payeePartyInfo = new JSONObject();
+        payeePartyInfo.put("partyIdType", "ACCOUNT_ID");
+        payeePartyInfo.put("partyIdentifer", payeeName);
+        payeePartyInfo.put("fspId", targetFSP);
+        req.put("payee", payeePartyInfo);
 
         // Personal info of the payer
         Optional<User2> PayerOpt = userRepo.findByUserEmail(payerName);
         User2 Payer = PayerOpt.get();
-
         JSONObject personalInfo = new JSONObject();
         JSONObject complexName = new JSONObject();
-
         complexName.put("firstName", Payer.getName());
         complexName.put("lastName", "TESTING");
-
         personalInfo.put("complexName", complexName);
+        req.put("personalInfo", personalInfo);
 
-        // Get party info using party look up
-        // payeeName will be the email ..
+        JSONObject payerPartyInfo = new JSONObject();
+        payerPartyInfo.put("partyIdType", "ACCOUNT_ID");
+        payerPartyInfo.put("partyIdentifier", payerName);
+        payerPartyInfo.put("fspId", currentFSP);
+        req.put("partyIdInfo", payerPartyInfo);
 
+        // Either Send or Receive
         req.put("amountType", type);
 
         // Creating amount data
@@ -116,8 +128,16 @@ public class QuotesService {
         transactionTypeData.put("initiatorType", "CONSUMER");
         req.put("transactionType", transactionTypeData.toString());
 
+        // Creating fees.. which will be 0
+        JSONObject fees = new JSONObject();
+        fees.put("amount", "0");
+        fees.put("currency", Util.CURRENCY);
+        req.put("fees", fees);
+
         req.put("note", quote.getUserNote());
 
+//        Debugging purpose
+//        System.out.println(req.toString());
         try {
             apicall.callPost(Util.urlMap.get("Quoting_Service"), headerMap, req, false);
             logger.info("SYNC API CALL: Spring -> Quoting Service");
@@ -126,7 +146,4 @@ public class QuotesService {
             e.printStackTrace();
         }
     }
-
-
-
 }
