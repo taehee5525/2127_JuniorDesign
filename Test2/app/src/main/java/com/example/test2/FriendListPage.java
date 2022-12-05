@@ -79,7 +79,7 @@ public class FriendListPage extends AppCompatActivity {
                     removeBtn.setGravity(Gravity.CENTER_HORIZONTAL);
                     removeBtn.setTextColor(Color.RED);
                     removeBtn.setBackground(drawable);
-                    removeBtn.setPadding(0, 10, 0, 25);
+                    removeBtn.setPadding(0, 37, 0, 37);
                     remBtnLayout.addView(removeBtn);
 
                     int curr = i;
