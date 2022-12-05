@@ -1,6 +1,7 @@
 package com.moneytransfer.backendserver.controllers;
 
 import com.moneytransfer.backendserver.BackendserverApplication;
+import com.moneytransfer.backendserver.objects.Quotes;
 import com.moneytransfer.backendserver.services.userService.QuotesService;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -34,6 +35,29 @@ public class QuotesController {
     @PostMapping(value = "quotes")
     public void postQuotes(@RequestBody String body) {
         JSONObject data = new JSONObject(body);
-    }
 
+        UUID quoteId = UUID.fromString(data.get("quoteId").toString());
+        String type = data.get("amountType").toString();
+        String targetFSP = "";
+        String currentFSP = "";
+
+        if (type == "SEND") {
+            // payer -> curr
+            // payee -> target
+            targetFSP = data.getJSONObject("payee").getJSONObject("partyIdInfo").get("fspId").toString();
+            currentFSP = data.getJSONObject("payer").getJSONObject("partyIdInfo").get("fspId").toString();
+        } else {
+            currentFSP = data.getJSONObject("payee").getJSONObject("partyIdInfo").get("fspId").toString();
+            targetFSP = data.getJSONObject("payer").getJSONObject("partyIdInfo").get("fspId").toString();
+        }
+
+        String payerName =  data.getJSONObject("payer").getJSONObject("partyIdInfo")
+                .get("partyIdentifier").toString();
+        String payeeName = data.getJSONObject("payee").getJSONObject("partyIdInfo")
+                .get("partyIdentifier").toString();
+        String amount = data.getJSONObject("amount").get("amount").toString();
+        String userNote = data.get("note").toString();
+
+        quotesService.saveCreatedQuotes(quoteId, type, amount, userNote, payerName, payeeName, targetFSP, currentFSP);
+    }
 }

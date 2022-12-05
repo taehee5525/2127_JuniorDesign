@@ -40,18 +40,28 @@ public class QuotesService {
      * @param payeeName Payee's email address
      * @return the Quotes object
      */
-    public Quotes createNewQuotes(String userNote, String payerName, String payeeName) {
+    public Quotes createNewQuotes(String type, String amount, String userNote, String payerName, String payeeName, String targetFSP, String currentFSP) {
         UUID id = Util.generateQuotingUID();
         while (quotesRepo.findByQuotesId(id).isPresent()) {
             id = Util.generateQuotingUID();
         }
 
+        Quotes quote = saveCreatedQuotes(id, type, amount, userNote, payerName, payeeName, targetFSP, currentFSP);
+
+        return quote;
+    }
+
+    public Quotes saveCreatedQuotes(UUID id, String type, String amount, String userNote, String payerName, String payeeName, String targetFSP, String currentFSP) {
         Quotes quote = new Quotes();
 
         quote.setId(id);
+        quote.setType(type);
+        quote.setAmount(amount);
         quote.setUserNote(userNote);
-        quote.setPayeeName(payeeName);
         quote.setPayerName(payerName);
+        quote.setPayeeName(payeeName);
+        quote.setTargetFSP(targetFSP);
+        quote.setCurrentFSP(currentFSP);
         quote.setCompleted(false);
 
         quotesRepo.save(quote);
@@ -79,7 +89,7 @@ public class QuotesService {
         headerMap.put("FSPIOP-Destination", targetFSP);
 
         // Create a quote and saves it internally
-        Quotes quote = createNewQuotes(userNote, payerName, payeeName);
+        Quotes quote = createNewQuotes(type, amount, userNote, payerName, payeeName, targetFSP, currentFSP);
 
         req.put("quoteId", quote.getId());
 
