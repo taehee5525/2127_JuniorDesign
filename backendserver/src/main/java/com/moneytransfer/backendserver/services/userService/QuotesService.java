@@ -75,7 +75,7 @@ public class QuotesService {
         headerMap.put("Accept", Util.headerMap.get("quotesAccept"));
         headerMap.put("Content-type", Util.headerMap.get("quotesContentType"));
         headerMap.put("Date", Util.headerMap.get("tempHeaderDate"));
-        headerMap.put("FSPIOP-Source", Util.FSP_NAME);
+        headerMap.put("FSPIOP-Source", currentFSP);
         headerMap.put("FSPIOP-Destination", targetFSP);
 
         // Create a quote and saves it internally
@@ -94,7 +94,11 @@ public class QuotesService {
         JSONObject payeePartyInfo = new JSONObject();
         payeePartyInfo.put("partyIdType", "ACCOUNT_ID");
         payeePartyInfo.put("partyIdentifier", payeeName);
-        payeePartyInfo.put("fspId", targetFSP);
+        if (type == "SEND") {
+            payeePartyInfo.put("fspId", targetFSP);
+        } else if (type == "RECEIVE") {
+            payeePartyInfo.put("fspId", currentFSP);
+        }
         payee.put("partyIdInfo", payeePartyInfo);
         req.put("payee", payee);
 
@@ -113,7 +117,11 @@ public class QuotesService {
         JSONObject payerPartyInfo = new JSONObject();
         payerPartyInfo.put("partyIdType", "ACCOUNT_ID");
         payerPartyInfo.put("partyIdentifier", payerName);
-        payerPartyInfo.put("fspId", currentFSP);
+        if (type == "SEND") {
+            payerPartyInfo.put("fspId", currentFSP);
+        } else if (type == "RECEIVE") {
+            payerPartyInfo.put("FspId", targetFSP);
+        }
         payer.put("partyIdInfo", payerPartyInfo);
         req.put("payer", payer);
 
