@@ -90,12 +90,16 @@ public class QuotesService {
         // Get party info using party look up
         // payerName will be the email ..
 
+        JSONObject payee = new JSONObject();
         JSONObject payeePartyInfo = new JSONObject();
         payeePartyInfo.put("partyIdType", "ACCOUNT_ID");
-        payeePartyInfo.put("partyIdentifer", payeeName);
+        payeePartyInfo.put("partyIdentifier", payeeName);
         payeePartyInfo.put("fspId", targetFSP);
-        req.put("payee", payeePartyInfo);
+        payee.put("partyIdInfo", payeePartyInfo);
+        req.put("payee", payee);
 
+
+        JSONObject payer = new JSONObject();
         // Personal info of the payer
         Optional<User2> PayerOpt = userRepo.findByUserEmail(payerName);
         User2 Payer = PayerOpt.get();
@@ -104,13 +108,14 @@ public class QuotesService {
         complexName.put("firstName", Payer.getName());
         complexName.put("lastName", "TESTING");
         personalInfo.put("complexName", complexName);
-        req.put("personalInfo", personalInfo);
+        payer.put("personalInfo", personalInfo);
 
         JSONObject payerPartyInfo = new JSONObject();
         payerPartyInfo.put("partyIdType", "ACCOUNT_ID");
         payerPartyInfo.put("partyIdentifier", payerName);
         payerPartyInfo.put("fspId", currentFSP);
-        req.put("partyIdInfo", payerPartyInfo);
+        payer.put("partyIdInfo", payerPartyInfo);
+        req.put("payer", payer);
 
         // Either Send or Receive
         req.put("amountType", type);
@@ -119,14 +124,18 @@ public class QuotesService {
         JSONObject amountData = new JSONObject();
         amountData.put("amount", amount);
         amountData.put("currency", Util.CURRENCY);
-        req.put("amount", amountData.toString());
+        req.put("amount", amountData);
 
         // Creating transaction type
         JSONObject transactionTypeData = new JSONObject();
         transactionTypeData.put("scenario", "TRANSFER");
-        transactionTypeData.put("initiator", payerName);
+        if (type == "SEND") {
+            transactionTypeData.put("initiator", "PAYER");
+        } else if (type == "RECEIVE") {
+            transactionTypeData.put("initiator", "PAYEE");
+        }
         transactionTypeData.put("initiatorType", "CONSUMER");
-        req.put("transactionType", transactionTypeData.toString());
+        req.put("transactionType", transactionTypeData);
 
         // Creating fees.. which will be 0
         JSONObject fees = new JSONObject();
