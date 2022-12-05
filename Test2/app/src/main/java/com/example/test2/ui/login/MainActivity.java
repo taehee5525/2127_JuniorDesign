@@ -112,6 +112,17 @@ public class MainActivity extends AppCompatActivity {
         sendMoneyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                CustomTask_getBalance tk = new CustomTask_getBalance();
+                try {
+                    String str = tk.execute().get();
+                    Utility.userBalance = Double.parseDouble(str);
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                balanceAmount.setText("$" + String.format("%.2f", Utility.userBalance));
+
                 if (Utility.isExpiredToken(Utility.token)) {
                     openTimeExpMsg();
                 } else {
@@ -142,6 +153,8 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 }
+
+
             }
         });
 
@@ -149,6 +162,18 @@ public class MainActivity extends AppCompatActivity {
         requestMoneyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                CustomTask_getBalance tk = new CustomTask_getBalance();
+                try {
+                    String str = tk.execute().get();
+                    Utility.userBalance = Double.parseDouble(str);
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                balanceAmount.setText("$" + String.format("%.2f", Utility.userBalance));
+
                 if (Utility.isExpiredToken(Utility.token)) {
                     openTimeExpMsg();
                 } else {
