@@ -8,8 +8,10 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -21,6 +23,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
 
 public class FriendListPage extends AppCompatActivity {
     private ApiCallMaker apicall = new ApiCallMaker();
@@ -56,7 +59,7 @@ public class FriendListPage extends AppCompatActivity {
                     eachEmail[i] = eachEmail[i].replace("}", "");
                     eachEmail[i] = eachEmail[i].replaceAll("\"", "");
                     eachEmail[i] = eachEmail[i].replace(":", " \nName: ");
-                    eachEmail[i] = eachEmail[i].replace("{", "Email: ");
+                    eachEmail[i] = eachEmail[i].replace("{", "");
 
                     if (i == 0) {
                         eachEmail[i] = eachEmail[i].replace("[", "");
@@ -79,16 +82,29 @@ public class FriendListPage extends AppCompatActivity {
                     removeBtn.setGravity(Gravity.CENTER_HORIZONTAL);
                     removeBtn.setTextColor(Color.RED);
                     removeBtn.setBackground(drawable);
-                    removeBtn.setPadding(0, 37, 0, 37);
+                    removeBtn.setPadding(0, 10, 0, 25);
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                            ViewGroup.LayoutParams.MATCH_PARENT,
+                            ViewGroup.LayoutParams.WRAP_CONTENT);
+
+                    params.setMargins(0, 28, 0, 35);
+                    removeBtn.setLayoutParams(params);
                     remBtnLayout.addView(removeBtn);
 
                     int curr = i;
+                    CustomTask_remFri task2 = new CustomTask_remFri();
 
                     removeBtn.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            CustomTask_remFri task2 = new CustomTask_remFri();
-                            Utility.friendDelEmail = eachEmail[curr];
+                            Matcher matcher = Patterns.EMAIL_ADDRESS.matcher(eachEmail[curr]);
+                            while (matcher.find()) {
+                                int matchStart = matcher.start(0);
+                                int matchEnd = matcher.end(0);
+                                Utility.friendDelEmail = eachEmail[curr].substring(matchStart, matchEnd);
+                            }
+
+                            Log.w("Utility.friendDelEmail", Utility.friendDelEmail);
                             try {
                                 String removeFriend = task2.execute().get();
                                 openFriendList();
