@@ -75,7 +75,7 @@ public class QuotesService {
         headerMap.put("Accept", Util.headerMap.get("quotesAccept"));
         headerMap.put("Content-type", Util.headerMap.get("quotesContentType"));
         headerMap.put("Date", Util.headerMap.get("tempHeaderDate"));
-        headerMap.put("FSPIOP-Source", Util.FSP_NAME);
+        headerMap.put("FSPIOP-Source", currentFSP);
         headerMap.put("FSPIOP-Destination", targetFSP);
 
         // Create a quote and saves it internally
@@ -90,12 +90,20 @@ public class QuotesService {
         // Get party info using party look up
         // payerName will be the email ..
 
+        JSONObject payee = new JSONObject();
         JSONObject payeePartyInfo = new JSONObject();
         payeePartyInfo.put("partyIdType", "ACCOUNT_ID");
-        payeePartyInfo.put("partyIdentifer", payeeName);
-        payeePartyInfo.put("fspId", targetFSP);
-        req.put("payee", payeePartyInfo);
+        payeePartyInfo.put("partyIdentifier", payeeName);
+        if (type == "SEND") {
+            payeePartyInfo.put("fspId", targetFSP);
+        } else if (type == "RECEIVE") {
+            payeePartyInfo.put("fspId", currentFSP);
+        }
+        payee.put("partyIdInfo", payeePartyInfo);
+        req.put("payee", payee);
 
+
+        JSONObject payer = new JSONObject();
         // Personal info of the payer
         Optional<User2> PayerOpt = userRepo.findByUserEmail(payerName);
         User2 Payer = PayerOpt.get();
@@ -104,13 +112,18 @@ public class QuotesService {
         complexName.put("firstName", Payer.getName());
         complexName.put("lastName", "TESTING");
         personalInfo.put("complexName", complexName);
-        req.put("personalInfo", personalInfo);
+        payer.put("personalInfo", personalInfo);
 
         JSONObject payerPartyInfo = new JSONObject();
         payerPartyInfo.put("partyIdType", "ACCOUNT_ID");
         payerPartyInfo.put("partyIdentifier", payerName);
-        payerPartyInfo.put("fspId", currentFSP);
-        req.put("partyIdInfo", payerPartyInfo);
+        if (type == "SEND") {
+            payerPartyInfo.put("fspId", currentFSP);
+        } else if (type == "RECEIVE") {
+            payerPartyInfo.put("FspId", targetFSP);
+        }
+        payer.put("partyIdInfo", payerPartyInfo);
+        req.put("payer", payer);
 
         // Either Send or Receive
         req.put("amountType", type);
@@ -119,14 +132,18 @@ public class QuotesService {
         JSONObject amountData = new JSONObject();
         amountData.put("amount", amount);
         amountData.put("currency", Util.CURRENCY);
-        req.put("amount", amountData.toString());
+        req.put("amount", amountData);
 
         // Creating transaction type
         JSONObject transactionTypeData = new JSONObject();
         transactionTypeData.put("scenario", "TRANSFER");
-        transactionTypeData.put("initiator", payerName);
+        if (type == "SEND") {
+            transactionTypeData.put("initiator", "PAYER");
+        } else if (type == "RECEIVE") {
+            transactionTypeData.put("initiator", "PAYEE");
+        }
         transactionTypeData.put("initiatorType", "CONSUMER");
-        req.put("transactionType", transactionTypeData.toString());
+        req.put("transactionType", transactionTypeData);
 
         // Creating fees.. which will be 0
         JSONObject fees = new JSONObject();

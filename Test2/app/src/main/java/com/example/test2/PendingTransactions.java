@@ -17,6 +17,8 @@ import android.widget.TextView;
 
 import com.example.test2.ui.login.MainActivity;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -49,71 +51,66 @@ public class PendingTransactions extends AppCompatActivity {
 
 
         CustomTask task = new CustomTask();
+        String res = new String();
+        JSONArray arr = new JSONArray();
         try {
-            String pendingList = task.execute().get();
-            String[] pending = pendingList.split("\\},");
-
-            if (!pendingList.contains("\"")) {
-                TextView noPending = new TextView(this);
-                noPending.setText("You don't have any pending transactions");
-                noPending.setTextColor(Color.RED);
-                noPending.setGravity(Gravity.CENTER);
-                currLayout.addView(noPending);
-
-            } else {
-                for (int i = 0; i < pending.length; i++) {
-                    Button each_pending = new Button(this);
-                    String[] pending_comma = pending[i].split(",");
-
-                    if (i == 0) {
-                        pending[i] = pending[i].replace("[", "");
-                    }
-
-                    if (i == pending.length - 1) {
-                        pending[i] = pending[i].replace("]", "");
-                    }
-
-                    String amt = pending_comma[1];
-                    String payerEmail = pending_comma[6];
-                    String payeeEmail = pending_comma[8];
-                    double amount = Double.parseDouble(amt.replaceAll("[^0-9]", ""));
-
-                    payerEmail = payerEmail.replace("\"", "");
-                    payerEmail = payerEmail.replace(":", "");
-                    payerEmail = payerEmail.replace("payerEmail", "");
-
-                    payeeEmail = payeeEmail.replace("\"", "");
-                    payeeEmail = payeeEmail.replace(":", "");
-                    payeeEmail = payeeEmail.replace("payeeEmail", "");
-                    payeeEmail = payeeEmail.replace("}]", "");
-
-
-                    each_pending.setText("Payer: " + payerEmail + "\n" + "Payee: " + payeeEmail + "\n" + "Amount: " + amount);
-                    each_pending.setTextSize(18);
-                    each_pending.setTextColor(Color.BLACK);
-                    each_pending.setGravity(Gravity.CENTER);
-                    each_pending.setBackground(drawable);
-                    each_pending.setPadding(35, 10, 0, 30);
-                    currLayout.addView(each_pending);
-
-                    each_pending.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            String this_transaction = pending_comma[7];
-                            this_transaction = this_transaction.replace("\"", "");
-                            this_transaction = this_transaction.replace(":", "");
-                            this_transaction = this_transaction.replace("transactionId", "");
-                            Utility.transactionID = this_transaction;
-                            Log.w("transId", Utility.transactionID);
-                            openAccpetDTransaction();
-                        }
-                    });
-                }
-            }
+            res = task.execute().get();
+            arr = new JSONArray(res);
         } catch (Exception e) {
-            e.printStackTrace();
+            return;
+            //do nothing
+        }
+
+        if (arr.length() == 0) {
+            TextView noPending = new TextView(this);
+            noPending.setText("You don't have any pending transactions");
+            noPending.setTextColor(Color.RED);
+            noPending.setGravity(Gravity.CENTER);
+            currLayout.addView(noPending);
+            return;
+        }
+
+        for (int i = 0; i < arr.length(); i++) {
+            JSONObject obj = new JSONObject();
+            try {
+                obj = arr.getJSONObject(i);
+
+                String amount = obj.get("amount").toString();
+                amount = "$" + amount;
+                String payerEmail = obj.get("payerEmail").toString();
+                String payeeEmail = obj.get("payeeEmail").toString();
+                double amountD = Double.parseDouble(amount);
+
+                Button each_pending = new Button(this);
+                each_pending.setText("Payer: " + payerEmail + "\n" + "Payee: " + payeeEmail + "\n" + "Amount: " + amount);
+                each_pending.setTextSize(18);
+                each_pending.setTextColor(Color.BLACK);
+                each_pending.setGravity(Gravity.CENTER);
+                each_pending.setBackground(drawable);
+                each_pending.setPadding(35, 10, 0, 30);
+                currLayout.addView(each_pending);
+                JSONObject finalObj = obj;
+                each_pending.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String this_transaction = null;
+                        try {
+                            this_transaction = finalObj.get("transactionId").toString();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        Utility.transactionID = this_transaction;
+                        Log.w("transId", Utility.transactionID);
+                        openAccpetDTransaction();
+                    }
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
+
+
 
     private void openMain() {
         Intent intent = new Intent(this, MainActivity.class);
