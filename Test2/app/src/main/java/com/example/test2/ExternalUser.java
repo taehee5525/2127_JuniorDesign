@@ -41,16 +41,22 @@ public class ExternalUser extends AppCompatActivity {
             public void onClick(View view) {
                 extUserEmail = extUserEmailTextField.getText().toString();
                 CustomTask task = new CustomTask();
+                String state = "";
 
                 if (Utility.isExpiredToken(Utility.token)) {
                     openTimeExpMsg();
                 } else {
                     try {
-                        String state = task.execute().get();
+                        state = task.execute().get();
                     } catch (ExecutionException | InterruptedException e) {
                         e.printStackTrace();
                     }
-                    openMain();
+
+                    if (state == null || state.isEmpty()) {
+                        openFailExternalUser();
+                    } else {
+                        openMain();
+                    }
                 }
             }
         });
@@ -64,6 +70,11 @@ public class ExternalUser extends AppCompatActivity {
     }
     private void openMain() {
         Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    private void openFailExternalUser() {
+        Intent intent = new Intent(this, FailedExternalUser.class);
         startActivity(intent);
     }
 

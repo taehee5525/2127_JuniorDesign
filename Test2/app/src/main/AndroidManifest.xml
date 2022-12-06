@@ -14,6 +14,9 @@
         android:theme="@style/Theme.Test2"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".FailedExternalUser"
+            android:exported="false" />
+        <activity
             android:name=".ExternalUser"
             android:exported="false" />
         <activity
