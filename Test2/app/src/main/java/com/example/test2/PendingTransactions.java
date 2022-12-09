@@ -11,6 +11,7 @@ import android.util.Log;
 import android.util.Patterns;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -35,11 +36,6 @@ public class PendingTransactions extends AppCompatActivity {
         setContentView(R.layout.activity_pending_transactions);
 
         LinearLayout currLayout = findViewById(R.id.pendingTransactionLayout);
-
-        GradientDrawable drawable = new GradientDrawable();
-        drawable.setShape(GradientDrawable.RECTANGLE);
-        drawable.setCornerRadius(20);
-        drawable.setStroke(2, Color.DKGRAY);
 
         Button backToMainBtn = findViewById(R.id.backToMainBtn);
         backToMainBtn.setOnClickListener(new View.OnClickListener() {
@@ -84,14 +80,24 @@ public class PendingTransactions extends AppCompatActivity {
                 Utility.payerEmailAddr = payerEmail;
                 Utility.amountReq = amountD;
 
+                GradientDrawable drawable = new GradientDrawable();
+                drawable.setStroke(2, Color.parseColor("#2998ff"));
+
                 Button each_pending = new Button(this);
                 each_pending.setText("Payer: " + payerEmail + "\n" + "Payee: " + payeeEmail + "\n" + "Amount: " + amount);
                 each_pending.setTextSize(18);
-                each_pending.setTextColor(Color.BLACK);
                 each_pending.setGravity(Gravity.CENTER);
                 each_pending.setBackground(drawable);
-                each_pending.setPadding(35, 10, 0, 30);
+                each_pending.setPadding(35, 15, 0, 30);
+//                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+//                        ViewGroup.LayoutParams.MATCH_PARENT,
+//                        ViewGroup.LayoutParams.WRAP_CONTENT);
+//
+//                params.setMargins(0, 0, 0, 3);
+//                each_pending.setLayoutParams(params);
                 currLayout.addView(each_pending);
+
+
                 JSONObject finalObj = obj;
                 each_pending.setOnClickListener(new View.OnClickListener() {
                     @Override

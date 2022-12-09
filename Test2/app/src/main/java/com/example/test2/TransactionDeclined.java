@@ -16,17 +16,17 @@ public class TransactionDeclined extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction_declined);
 
-        Button backToMainBtn = findViewById(R.id.backToMainBtn);
-        backToMainBtn.setOnClickListener(new View.OnClickListener() {
+        Button backToPendingTransactionBtn = findViewById(R.id.backToPendingTransactionBtn);
+        backToPendingTransactionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openMain();
+                openPendingTransaction();
             }
         });
     }
 
-    private void openMain() {
-        Intent intent = new Intent(this, MainActivity.class);
+    private void openPendingTransaction() {
+        Intent intent = new Intent(this, PendingTransactions.class);
         startActivity(intent);
     }
 }

@@ -6,17 +6,32 @@
     android:layout_height="match_parent"
     tools:context=".SendFriendRequestPage">
 
+    <Button
+        android:id="@+id/backToFriendsListBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="4dp"
+        android:background="@android:color/transparent"
+        android:text="Back to Friends List"
+        android:textColor="#2962FF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.059"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="162dp"
         android:layout_height="127dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="32dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/backToFriendsListBtn"
         app:srcCompat="@drawable/t_pay_image"
         tools:ignore="ImageContrastCheck" />
-
 
     <TextView
         android:id="@+id/textView"
@@ -58,7 +73,7 @@
         android:layout_height="70dp"
         android:layout_gravity="start"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="56dp"
         android:layout_marginEnd="8dp"
         android:background="@drawable/rounded_button"
         android:text="Send a Friend Request"
@@ -66,25 +81,8 @@
         android:textColor="#ffffffff"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/username" />
-
-    <Button
-        android:id="@+id/backToFriendsListBtn"
-        android:layout_width="300dp"
-        android:layout_height="70dp"
-        android:layout_gravity="start"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/rounded_button"
-        android:text="Back to Friends List"
-        android:textColor="#ffffffff"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sendFriendReqBtn" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

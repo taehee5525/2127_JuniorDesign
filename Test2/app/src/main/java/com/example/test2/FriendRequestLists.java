@@ -1,15 +1,18 @@
 package com.example.test2;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.GradientDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -70,16 +73,22 @@ public class FriendRequestLists extends AppCompatActivity {
                     eachEmail[i] = eachEmail[i].replaceAll("^\"|\"$", "");
 
                     GradientDrawable drawable = new GradientDrawable();
-                    drawable.setShape(GradientDrawable.RECTANGLE);
-                    drawable.setCornerRadius(20);
-                    drawable.setStroke(2, Color.DKGRAY);
+                    drawable.setStroke(2, Color.parseColor("#2998ff"));
 
                     emailAddr.setText(eachEmail[i]);
                     emailAddr.setTextSize(18);
                     emailAddr.setAllCaps(false);
                     emailAddr.setGravity(Gravity.CENTER);
                     emailAddr.setBackground(drawable);
-                    emailAddr.setPadding(35, 10, 0, 20);
+
+                    emailAddr.setPadding(0, 45, 0, 55);
+
+//                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+//                            ViewGroup.LayoutParams.MATCH_PARENT,
+//                            ViewGroup.LayoutParams.WRAP_CONTENT);
+//
+//                    params.setMargins(0, 0, 0, 3);
+//                    emailAddr.setLayoutParams(params);
                     currLayout.addView(emailAddr);
 
                     int currReq = i;
@@ -129,6 +138,7 @@ public class FriendRequestLists extends AppCompatActivity {
             try {
                 res = apicall.callGet("http://techpay.eastus.cloudapp.azure.com:8080/friends/getRequestList", headerMap, paramMap);
                 friendRequestList = res.get("requestList").toString();
+                Log.w("friendRequest", friendRequestList);
             } catch (Exception e) {
                 e.printStackTrace();
             }

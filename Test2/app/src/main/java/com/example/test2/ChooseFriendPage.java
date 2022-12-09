@@ -63,7 +63,7 @@ public class ChooseFriendPage extends AppCompatActivity {
                     eachEmail[i] = eachEmail[i].replace("}", "");
                     eachEmail[i] = eachEmail[i].replaceAll("\"", "");
                     eachEmail[i] = eachEmail[i].replace(":", " \nName: ");
-                    eachEmail[i] = eachEmail[i].replace("{", "Email: ");
+                    eachEmail[i] = eachEmail[i].replace("{", "");
 
                     if (i == 0) {
                         eachEmail[i] = eachEmail[i].replace("[", "");
@@ -76,9 +76,7 @@ public class ChooseFriendPage extends AppCompatActivity {
                     eachEmail[i] = eachEmail[i].replaceAll("^\"|\"$", "");
 
                     GradientDrawable drawable = new GradientDrawable();
-                    drawable.setShape(GradientDrawable.RECTANGLE);
-                    drawable.setCornerRadius(20);
-                    drawable.setStroke(2, Color.DKGRAY);
+                    drawable.setStroke(2, Color.parseColor("#003762"));
 
                     emailAddr.setText(eachEmail[i]);
                     emailAddr.setTextSize(18);

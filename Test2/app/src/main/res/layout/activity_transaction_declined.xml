@@ -42,13 +42,13 @@
         app:layout_constraintTop_toBottomOf="@id/textSuccess" />
 
     <Button
-        android:id="@+id/backToMainBtn"
-        android:layout_width="249dp"
-        android:layout_height="56dp"
+        android:id="@+id/backToPendingTransactionBtn"
+        android:layout_width="277dp"
+        android:layout_height="57dp"
         android:layout_gravity="start"
         android:layout_marginTop="28dp"
         android:backgroundTint="#B3A369"
-        android:text="Return to Main Page"
+        android:text="Back to Pending Transaction"
         android:textColor="#ffffffff"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
