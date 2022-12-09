@@ -21,6 +21,10 @@ public class Utility {
 
     public static long timestamp;
 
+    public static String payerEmailAddr;
+
+    public static double amountReq;
+
     public static boolean isExpiredToken(String token) {
         long startTime = Utility.timestamp; //time when token started
         long estimatedTime = System.currentTimeMillis() - startTime; //finds difference

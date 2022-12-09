@@ -31,13 +31,13 @@ public class SendFriendRequestPage extends AppCompatActivity {
 
         email = (EditText) findViewById(R.id.username);
 
-        Button sendFriendReqBtn, backToMainBtn;
+        Button sendFriendReqBtn, backToFriendsListBtn;
 
-        backToMainBtn = (Button) findViewById(R.id.backToMainBtn);
-        backToMainBtn.setOnClickListener(new View.OnClickListener() {
+        backToFriendsListBtn = (Button) findViewById(R.id.backToFriendsListBtn);
+        backToFriendsListBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openMain();
+                openFriendsList();
             }
         });
 
@@ -67,8 +67,8 @@ public class SendFriendRequestPage extends AppCompatActivity {
         });
     }
 
-    private void openMain() {
-        Intent intent = new Intent(this, MainActivity.class);
+    private void openFriendsList() {
+        Intent intent = new Intent(this, FriendListPage.class);
         startActivity(intent);
     }
 

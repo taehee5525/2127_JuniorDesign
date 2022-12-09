@@ -43,7 +43,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:text="Please try one more time"
+        android:text="You don't have enough balance"
         android:textColor="@color/black"
         android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -52,13 +52,13 @@
         app:layout_constraintTop_toBottomOf="@+id/textFail" />
 
     <Button
-        android:id="@+id/backToMainBtn"
-        android:layout_width="249dp"
-        android:layout_height="56dp"
+        android:id="@+id/backToPendingTransactionBtn"
+        android:layout_width="276dp"
+        android:layout_height="61dp"
         android:layout_gravity="start"
         android:layout_marginTop="72dp"
         android:backgroundTint="#B3A369"
-        android:text="Return to Main Page"
+        android:text="Back to Pending Transaction"
         android:textColor="#ffffffff"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

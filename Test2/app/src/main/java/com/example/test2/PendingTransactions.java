@@ -81,6 +81,9 @@ public class PendingTransactions extends AppCompatActivity {
                 String payeeEmail = obj.get("payeeEmail").toString();
                 double amountD = Double.parseDouble(amount.substring(1,amount.length()));
 
+                Utility.payerEmailAddr = payerEmail;
+                Utility.amountReq = amountD;
+
                 Button each_pending = new Button(this);
                 each_pending.setText("Payer: " + payerEmail + "\n" + "Payee: " + payeeEmail + "\n" + "Amount: " + amount);
                 each_pending.setTextSize(18);

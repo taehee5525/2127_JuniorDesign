@@ -57,7 +57,13 @@ public class AcceptDeclineTransaction extends AppCompatActivity {
                         Utility.userBalance = Double.parseDouble(balance);
                         Log.w("user balance", Utility.userBalance + "");
 
-                        openTransactionSuc();
+                        Log.w("utilbalance", Utility.amountReq + "");
+
+                        if (Utility.payerEmailAddr.equals(Utility.userEmailAddr) && Utility.amountReq > Utility.userBalance) {
+                            openTransactionFail();
+                        } else {
+                            openTransactionSuc();
+                        }
 
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -95,6 +101,11 @@ public class AcceptDeclineTransaction extends AppCompatActivity {
 
     private void openTransactionSuc() {
         Intent intent = new Intent(this, TransactionSuccess.class);
+        startActivity(intent);
+    }
+
+    private void openTransactionFail() {
+        Intent intent = new Intent(this, TransactionFail.class);
         startActivity(intent);
     }
 

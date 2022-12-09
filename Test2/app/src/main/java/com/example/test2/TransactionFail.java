@@ -17,17 +17,17 @@ public class TransactionFail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction_fail);
 
-        Button backToMainBtn = findViewById(R.id.backToMainBtn);
-        backToMainBtn.setOnClickListener(new View.OnClickListener() {
+        Button backToPendingTransactionBtn = findViewById(R.id.backToPendingTransactionBtn);
+        backToPendingTransactionBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openMainPage();
+                openPendingTransaction();
             }
         });
     }
 
-    private void openMainPage() {
-        Intent intent = new Intent(this, MainActivity.class);
+    private void openPendingTransaction() {
+        Intent intent = new Intent(this, PendingTransactions.class);
         startActivity(intent);
     }
 }

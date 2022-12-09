@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ExternalUser">
+
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="162dp"
@@ -21,14 +22,13 @@
         android:id="@+id/textView"
         android:layout_width="190dp"
         android:layout_height="41dp"
-        android:layout_marginStart="120dp"
         android:layout_marginTop="32dp"
         android:text="External User"
         android:textColor="#000000"
         android:textSize="32sp"
         android:textStyle="bold|italic"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
@@ -53,12 +53,12 @@
 
 
     <Button
-        android:id="@+id/backToMainBtn"
+        android:id="@+id/searchBtn"
         android:layout_width="300dp"
         android:layout_height="70dp"
         android:layout_gravity="start"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="80dp"
         android:layout_marginEnd="8dp"
         android:background="@drawable/rounded_button"
         android:text="Search"
@@ -68,6 +68,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/extUserEmail" />
 
+    <Button
+        android:id="@+id/backToMainBtn"
+        android:layout_width="300dp"
+        android:layout_height="70dp"
+        android:layout_gravity="start"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/rounded_button"
+        android:text="Back to Main"
+        android:textColor="#ffffffff"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/searchBtn" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

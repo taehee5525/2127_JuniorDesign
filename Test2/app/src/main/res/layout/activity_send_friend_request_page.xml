@@ -71,7 +71,7 @@
         app:layout_constraintTop_toBottomOf="@+id/username" />
 
     <Button
-        android:id="@+id/backToMainBtn"
+        android:id="@+id/backToFriendsListBtn"
         android:layout_width="300dp"
         android:layout_height="70dp"
         android:layout_gravity="start"
@@ -79,7 +79,7 @@
         android:layout_marginTop="28dp"
         android:layout_marginEnd="8dp"
         android:background="@drawable/rounded_button"
-        android:text="Back to Main"
+        android:text="Back to Friends List"
         android:textColor="#ffffffff"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.494"

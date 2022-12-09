@@ -29,14 +29,14 @@ public class ExternalUser extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_external_user);
 
-        Button backToMainBtn;
-        backToMainBtn = findViewById(R.id.backToMainBtn);
+        Button searchBtn = findViewById(R.id.searchBtn);
+        Button backToMainBtn = findViewById(R.id.backToMainBtn);
 
         EditText extUserEmailTextField;
         extUserEmailTextField = findViewById(R.id.extUserEmail);
 
 
-        backToMainBtn.setOnClickListener(new View.OnClickListener() {
+        searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 extUserEmail = extUserEmailTextField.getText().toString();
@@ -58,6 +58,13 @@ public class ExternalUser extends AppCompatActivity {
                         openMain();
                     }
                 }
+            }
+        });
+
+        backToMainBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openMain();
             }
         });
 

@@ -16,17 +16,17 @@ public class FriendRequestAccepted extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_request_accepted);
 
-        Button backToMainBtn = findViewById(R.id.backToMainBtn);
-        backToMainBtn.setOnClickListener(new View.OnClickListener() {
+        Button gotoFriendsListPage = findViewById(R.id.gotoFriendsListPage);
+        gotoFriendsListPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openMain();
+                openFriendList();
             }
         });
     }
 
-    private void openMain() {
-        Intent intent = new Intent(this, MainActivity.class);
+    private void openFriendList() {
+        Intent intent = new Intent(this, FriendListPage.class);
         startActivity(intent);
     }
 }
