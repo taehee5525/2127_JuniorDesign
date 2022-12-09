@@ -52,6 +52,9 @@ public class FriendListPage extends AppCompatActivity {
             String[] eachEmail = friendList.split(",");
 
             if (friendList.contains("\"")) {
+                TextView noFriends = findViewById(R.id.textView13);
+                noFriends.setText("");
+
                 for (int i = 0; i < eachEmail.length; i++) {
                     TextView emailAddr = new TextView(this);
                     Button removeBtn = new Button(this);

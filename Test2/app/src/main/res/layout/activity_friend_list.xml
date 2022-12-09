@@ -6,20 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".FriendListPage">
 
-    <TextView
-        android:id="@+id/textView15"
-        android:layout_width="161dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Friends List"
-        android:textColor="@color/black"
-        android:textSize="30sp"
-        android:textStyle="bold|italic"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/addFriendBtn" />
-
     <Button
         android:id="@+id/backToMainBtn"
         android:layout_width="wrap_content"
@@ -35,6 +21,18 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
+        android:id="@+id/addFriendBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#A4925A"
+        android:text="Add Friend"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/backToMainBtn"
+        tools:ignore="MissingConstraints" />
+
+    <Button
         android:id="@+id/friendReqListBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -47,27 +45,42 @@
         app:layout_constraintStart_toEndOf="@id/addFriendBtn"
         app:layout_constraintTop_toBottomOf="@id/backToMainBtn" />
 
-    <Button
-        android:id="@+id/addFriendBtn"
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="161dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Friends List"
+        android:textColor="@color/black"
+        android:textSize="30sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/addFriendBtn" />
+
+
+    <TextView
+        android:id="@+id/textView13"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
         android:layout_marginTop="16dp"
-        android:backgroundTint="#A4925A"
-        android:text="Add Friend"
+        android:text="You currently don't have any friends"
+        android:textColor="#FF0000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/backToMainBtn"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
     <ScrollView
         android:layout_width="204dp"
         android:layout_height="584dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="12dp"
         android:contentDescription="@string/app_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.211"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView15">
+        app:layout_constraintTop_toBottomOf="@+id/textView13">
 
         <LinearLayout
             android:id="@+id/friendListLayout"
@@ -79,11 +92,11 @@
     <ScrollView
         android:layout_width="118dp"
         android:layout_height="584dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="24dp"
         android:contentDescription="@string/app_name"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView15">
+        app:layout_constraintTop_toBottomOf="@id/textView13">
 
         <LinearLayout
             android:id="@+id/removeBtnLayout"
